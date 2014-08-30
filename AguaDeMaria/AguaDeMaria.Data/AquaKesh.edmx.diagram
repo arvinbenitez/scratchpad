@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b19b60ff4adf4815bf793e779123d096" Name="Diagram1">
+        <EntityTypeShape EntityType="AquaKeshModel.Customer" Width="1.5" PointX="3.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.CustomerType" Width="1.5" PointX="1.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.DeliveryReceipt" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.DeliveryReceiptDetail" Width="1.5" PointX="10.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.Order" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.OrderDetail" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.ProductType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.RefStatu" Width="1.5" PointX="5.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.ReturnReceipt" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.ReturnReceiptDetail" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.SalesInvoice" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.SalesInvoiceDetail" Width="1.5" PointX="11.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.UserAuth" Width="1.5" PointX="5.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AquaKeshModel.UserOAuthProvider" Width="1.5" PointX="8.75" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="AquaKeshModel.FK_Customer_CustomerType" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_DeliveryReceipt_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_ReturnReceipt_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_SalesInvoice_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_DeliveryReceipt_SalesInvoice" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_DeliveryReceiptDetail_DeliveryReceipt" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_DeliveryReceiptDetail_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_OrderDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_SalesInvoice_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_OrderDetail_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_ReturnReceiptDetail_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_SalesInvoiceDetail_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_ReturnReceiptDetail_ReturnReceipt" ManuallyRouted="false" />
+        <AssociationConnector Association="AquaKeshModel.FK_SalesInvoiceDetail_SalesInvoice" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

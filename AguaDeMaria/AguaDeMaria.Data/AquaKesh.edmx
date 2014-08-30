@@ -1,0 +1,1104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AquaKeshModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CustomerTypeId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="GPSCoordinate" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CustomerType">
+          <Key>
+            <PropertyRef Name="CustomerTypeId" />
+          </Key>
+          <Property Name="CustomerTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerType" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryReceipt">
+          <Key>
+            <PropertyRef Name="DeliveryReceiptId" />
+          </Key>
+          <Property Name="DeliveryReceiptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DRNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DRDate" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="SalesInvoiceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeliveryReceiptDetail">
+          <Key>
+            <PropertyRef Name="DeliveryReceiptDetailId" />
+          </Key>
+          <Property Name="DeliveryReceiptDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeliveryReceiptId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="BasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="IsInvetoriable" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RefStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnReceipt">
+          <Key>
+            <PropertyRef Name="ReturnReceiptId" />
+          </Key>
+          <Property Name="ReturnReceiptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReturnReceiptDate" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnReceiptDetail">
+          <Key>
+            <PropertyRef Name="ReturnReceiptDetailId" />
+          </Key>
+          <Property Name="ReturnReceiptId" Type="int" Nullable="false" />
+          <Property Name="ReturnReceiptDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SalesInvoice">
+          <Key>
+            <PropertyRef Name="SalesInvoiceId" />
+          </Key>
+          <Property Name="SalesInvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
+          <Property Name="OrderId" Type="int" />
+        </EntityType>
+        <EntityType Name="SalesInvoiceDetail">
+          <Key>
+            <PropertyRef Name="SalesInvoiceDetailId" />
+          </Key>
+          <Property Name="SalesInvoiceDetailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalesInvoiceId" Type="int" Nullable="false" />
+          <Property Name="ProductTypeId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAuth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="8000" />
+          <Property Name="Email" Type="varchar" MaxLength="8000" />
+          <Property Name="PrimaryEmail" Type="varchar" MaxLength="8000" />
+          <Property Name="FirstName" Type="varchar" MaxLength="8000" />
+          <Property Name="LastName" Type="varchar" MaxLength="8000" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="8000" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="BirthDateRaw" Type="varchar" MaxLength="8000" />
+          <Property Name="Country" Type="varchar" MaxLength="8000" />
+          <Property Name="Culture" Type="varchar" MaxLength="8000" />
+          <Property Name="FullName" Type="varchar" MaxLength="8000" />
+          <Property Name="Gender" Type="varchar" MaxLength="8000" />
+          <Property Name="Language" Type="varchar" MaxLength="8000" />
+          <Property Name="MailAddress" Type="varchar" MaxLength="8000" />
+          <Property Name="Nickname" Type="varchar" MaxLength="8000" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="8000" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="8000" />
+          <Property Name="Salt" Type="varchar" MaxLength="8000" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="8000" />
+          <Property Name="DigestHa1Hash" Type="varchar" MaxLength="8000" />
+          <Property Name="Roles" Type="varchar" MaxLength="8000" />
+          <Property Name="Permissions" Type="varchar" MaxLength="8000" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="RefId" Type="int" />
+          <Property Name="RefIdStr" Type="varchar" MaxLength="8000" />
+          <Property Name="Meta" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="UserOAuthProvider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserAuthId" Type="int" Nullable="false" />
+          <Property Name="Provider" Type="varchar" MaxLength="8000" />
+          <Property Name="UserId" Type="varchar" MaxLength="8000" />
+          <Property Name="UserName" Type="varchar" MaxLength="8000" />
+          <Property Name="FullName" Type="varchar" MaxLength="8000" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="8000" />
+          <Property Name="FirstName" Type="varchar" MaxLength="8000" />
+          <Property Name="LastName" Type="varchar" MaxLength="8000" />
+          <Property Name="Email" Type="varchar" MaxLength="8000" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="BirthDateRaw" Type="varchar" MaxLength="8000" />
+          <Property Name="Country" Type="varchar" MaxLength="8000" />
+          <Property Name="Culture" Type="varchar" MaxLength="8000" />
+          <Property Name="Gender" Type="varchar" MaxLength="8000" />
+          <Property Name="Language" Type="varchar" MaxLength="8000" />
+          <Property Name="MailAddress" Type="varchar" MaxLength="8000" />
+          <Property Name="Nickname" Type="varchar" MaxLength="8000" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="8000" />
+          <Property Name="TimeZone" Type="varchar" MaxLength="8000" />
+          <Property Name="RefreshToken" Type="varchar" MaxLength="8000" />
+          <Property Name="RefreshTokenExpiry" Type="datetime" />
+          <Property Name="RequestToken" Type="varchar" MaxLength="8000" />
+          <Property Name="RequestTokenSecret" Type="varchar" MaxLength="8000" />
+          <Property Name="Items" Type="varchar" MaxLength="8000" />
+          <Property Name="AccessToken" Type="varchar" MaxLength="8000" />
+          <Property Name="AccessTokenSecret" Type="varchar" MaxLength="8000" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="RefId" Type="int" />
+          <Property Name="RefIdStr" Type="varchar" MaxLength="8000" />
+          <Property Name="Meta" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <Association Name="FK_Customer_CustomerType">
+          <End Role="CustomerType" Type="Self.CustomerType" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerType">
+              <PropertyRef Name="CustomerTypeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceipt_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="DeliveryReceipt">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceipt_SalesInvoice">
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="1" />
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesInvoice">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Principal>
+            <Dependent Role="DeliveryReceipt">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceiptDetail_DeliveryReceipt">
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="1" />
+          <End Role="DeliveryReceiptDetail" Type="Self.DeliveryReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryReceipt">
+              <PropertyRef Name="DeliveryReceiptId" />
+            </Principal>
+            <Dependent Role="DeliveryReceiptDetail">
+              <PropertyRef Name="DeliveryReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceiptDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="DeliveryReceiptDetail" Type="Self.DeliveryReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DeliveryReceiptDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceipt_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="ReturnReceipt" Type="Self.ReturnReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ReturnReceipt">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceiptDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="ReturnReceiptDetail" Type="Self.ReturnReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ReturnReceiptDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceiptDetail_ReturnReceipt">
+          <End Role="ReturnReceipt" Type="Self.ReturnReceipt" Multiplicity="1" />
+          <End Role="ReturnReceiptDetail" Type="Self.ReturnReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnReceipt">
+              <PropertyRef Name="ReturnReceiptId" />
+            </Principal>
+            <Dependent Role="ReturnReceiptDetail">
+              <PropertyRef Name="ReturnReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoice_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="SalesInvoice">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoice_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="SalesInvoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoiceDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="SalesInvoiceDetail" Type="Self.SalesInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="SalesInvoiceDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoiceDetail_SalesInvoice">
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="1" />
+          <End Role="SalesInvoiceDetail" Type="Self.SalesInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesInvoice">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Principal>
+            <Dependent Role="SalesInvoiceDetail">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AquaKeshModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerType" EntityType="Self.CustomerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryReceipt" EntityType="Self.DeliveryReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryReceiptDetail" EntityType="Self.DeliveryReceiptDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefStatus" EntityType="Self.RefStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReturnReceipt" EntityType="Self.ReturnReceipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReturnReceiptDetail" EntityType="Self.ReturnReceiptDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesInvoice" EntityType="Self.SalesInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesInvoiceDetail" EntityType="Self.SalesInvoiceDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAuth" EntityType="Self.UserAuth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserOAuthProvider" EntityType="Self.UserOAuthProvider" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_CustomerType" Association="Self.FK_Customer_CustomerType">
+            <End Role="CustomerType" EntitySet="CustomerType" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceipt_Customer" Association="Self.FK_DeliveryReceipt_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceipt_SalesInvoice" Association="Self.FK_DeliveryReceipt_SalesInvoice">
+            <End Role="SalesInvoice" EntitySet="SalesInvoice" />
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceiptDetail_DeliveryReceipt" Association="Self.FK_DeliveryReceiptDetail_DeliveryReceipt">
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipt" />
+            <End Role="DeliveryReceiptDetail" EntitySet="DeliveryReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceiptDetail_ProductType" Association="Self.FK_DeliveryReceiptDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="DeliveryReceiptDetail" EntitySet="DeliveryReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProductType" Association="Self.FK_OrderDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceipt_Customer" Association="Self.FK_ReturnReceipt_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="ReturnReceipt" EntitySet="ReturnReceipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceiptDetail_ProductType" Association="Self.FK_ReturnReceiptDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="ReturnReceiptDetail" EntitySet="ReturnReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceiptDetail_ReturnReceipt" Association="Self.FK_ReturnReceiptDetail_ReturnReceipt">
+            <End Role="ReturnReceipt" EntitySet="ReturnReceipt" />
+            <End Role="ReturnReceiptDetail" EntitySet="ReturnReceiptDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoice_Customer" Association="Self.FK_SalesInvoice_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="SalesInvoice" EntitySet="SalesInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoice_Order" Association="Self.FK_SalesInvoice_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="SalesInvoice" EntitySet="SalesInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoiceDetail_ProductType" Association="Self.FK_SalesInvoiceDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="SalesInvoiceDetail" EntitySet="SalesInvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoiceDetail_SalesInvoice" Association="Self.FK_SalesInvoiceDetail_SalesInvoice">
+            <End Role="SalesInvoice" EntitySet="SalesInvoice" />
+            <End Role="SalesInvoiceDetail" EntitySet="SalesInvoiceDetail" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AquaKeshModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GPSCoordinate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomerType" Relationship="Self.FK_Customer_CustomerType" FromRole="Customer" ToRole="CustomerType" />
+          <NavigationProperty Name="DeliveryReceipts" Relationship="Self.FK_DeliveryReceipt_Customer" FromRole="Customer" ToRole="DeliveryReceipt" />
+          <NavigationProperty Name="ReturnReceipts" Relationship="Self.FK_ReturnReceipt_Customer" FromRole="Customer" ToRole="ReturnReceipt" />
+          <NavigationProperty Name="SalesInvoices" Relationship="Self.FK_SalesInvoice_Customer" FromRole="Customer" ToRole="SalesInvoice" />
+        </EntityType>
+        <EntityType Name="CustomerType">
+          <Key>
+            <PropertyRef Name="CustomerTypeId" />
+          </Key>
+          <Property Name="CustomerTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerType1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_CustomerType" FromRole="CustomerType" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="DeliveryReceipt">
+          <Key>
+            <PropertyRef Name="DeliveryReceiptId" />
+          </Key>
+          <Property Name="DeliveryReceiptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DRNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DRDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="SalesInvoiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_DeliveryReceipt_Customer" FromRole="DeliveryReceipt" ToRole="Customer" />
+          <NavigationProperty Name="SalesInvoice" Relationship="Self.FK_DeliveryReceipt_SalesInvoice" FromRole="DeliveryReceipt" ToRole="SalesInvoice" />
+          <NavigationProperty Name="DeliveryReceiptDetails" Relationship="Self.FK_DeliveryReceiptDetail_DeliveryReceipt" FromRole="DeliveryReceipt" ToRole="DeliveryReceiptDetail" />
+        </EntityType>
+        <EntityType Name="DeliveryReceiptDetail">
+          <Key>
+            <PropertyRef Name="DeliveryReceiptDetailId" />
+          </Key>
+          <Property Name="DeliveryReceiptDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeliveryReceiptId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DeliveryReceipt" Relationship="Self.FK_DeliveryReceiptDetail_DeliveryReceipt" FromRole="DeliveryReceiptDetail" ToRole="DeliveryReceipt" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_DeliveryReceiptDetail_ProductType" FromRole="DeliveryReceiptDetail" ToRole="ProductType" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_Order" FromRole="Order" ToRole="OrderDetail" />
+          <NavigationProperty Name="SalesInvoices" Relationship="Self.FK_SalesInvoice_Order" FromRole="Order" ToRole="SalesInvoice" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrderDetail_Order" FromRole="OrderDetail" ToRole="Order" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_OrderDetail_ProductType" FromRole="OrderDetail" ToRole="ProductType" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductType1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BasePrice" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="IsInvetoriable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DeliveryReceiptDetails" Relationship="Self.FK_DeliveryReceiptDetail_ProductType" FromRole="ProductType" ToRole="DeliveryReceiptDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetail_ProductType" FromRole="ProductType" ToRole="OrderDetail" />
+          <NavigationProperty Name="ReturnReceiptDetails" Relationship="Self.FK_ReturnReceiptDetail_ProductType" FromRole="ProductType" ToRole="ReturnReceiptDetail" />
+          <NavigationProperty Name="SalesInvoiceDetails" Relationship="Self.FK_SalesInvoiceDetail_ProductType" FromRole="ProductType" ToRole="SalesInvoiceDetail" />
+        </EntityType>
+        <EntityType Name="RefStatu">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReturnReceipt">
+          <Key>
+            <PropertyRef Name="ReturnReceiptId" />
+          </Key>
+          <Property Name="ReturnReceiptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReturnReceiptDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_ReturnReceipt_Customer" FromRole="ReturnReceipt" ToRole="Customer" />
+          <NavigationProperty Name="ReturnReceiptDetails" Relationship="Self.FK_ReturnReceiptDetail_ReturnReceipt" FromRole="ReturnReceipt" ToRole="ReturnReceiptDetail" />
+        </EntityType>
+        <EntityType Name="ReturnReceiptDetail">
+          <Key>
+            <PropertyRef Name="ReturnReceiptDetailId" />
+          </Key>
+          <Property Name="ReturnReceiptId" Type="Int32" Nullable="false" />
+          <Property Name="ReturnReceiptDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_ReturnReceiptDetail_ProductType" FromRole="ReturnReceiptDetail" ToRole="ProductType" />
+          <NavigationProperty Name="ReturnReceipt" Relationship="Self.FK_ReturnReceiptDetail_ReturnReceipt" FromRole="ReturnReceiptDetail" ToRole="ReturnReceipt" />
+        </EntityType>
+        <EntityType Name="SalesInvoice">
+          <Key>
+            <PropertyRef Name="SalesInvoiceId" />
+          </Key>
+          <Property Name="SalesInvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_SalesInvoice_Customer" FromRole="SalesInvoice" ToRole="Customer" />
+          <NavigationProperty Name="DeliveryReceipts" Relationship="Self.FK_DeliveryReceipt_SalesInvoice" FromRole="SalesInvoice" ToRole="DeliveryReceipt" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_SalesInvoice_Order" FromRole="SalesInvoice" ToRole="Order" />
+          <NavigationProperty Name="SalesInvoiceDetails" Relationship="Self.FK_SalesInvoiceDetail_SalesInvoice" FromRole="SalesInvoice" ToRole="SalesInvoiceDetail" />
+        </EntityType>
+        <EntityType Name="SalesInvoiceDetail">
+          <Key>
+            <PropertyRef Name="SalesInvoiceDetailId" />
+          </Key>
+          <Property Name="SalesInvoiceDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalesInvoiceId" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_SalesInvoiceDetail_ProductType" FromRole="SalesInvoiceDetail" ToRole="ProductType" />
+          <NavigationProperty Name="SalesInvoice" Relationship="Self.FK_SalesInvoiceDetail_SalesInvoice" FromRole="SalesInvoiceDetail" ToRole="SalesInvoice" />
+        </EntityType>
+        <EntityType Name="UserAuth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryEmail" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="BirthDateRaw" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="MailAddress" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Nickname" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="DigestHa1Hash" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Roles" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Permissions" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RefId" Type="Int32" />
+          <Property Name="RefIdStr" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Meta" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserOAuthProvider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserAuthId" Type="Int32" Nullable="false" />
+          <Property Name="Provider" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="BirthDateRaw" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Culture" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="MailAddress" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Nickname" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="TimeZone" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="RefreshToken" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="RefreshTokenExpiry" Type="DateTime" Precision="3" />
+          <Property Name="RequestToken" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="RequestTokenSecret" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Items" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="AccessToken" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="AccessTokenSecret" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RefId" Type="Int32" />
+          <Property Name="RefIdStr" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Meta" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Customer_CustomerType">
+          <End Role="CustomerType" Type="Self.CustomerType" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerType">
+              <PropertyRef Name="CustomerTypeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="CustomerTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceipt_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="DeliveryReceipt">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceipt_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="ReturnReceipt" Type="Self.ReturnReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ReturnReceipt">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoice_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="SalesInvoice">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceipt_SalesInvoice">
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="1" />
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesInvoice">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Principal>
+            <Dependent Role="DeliveryReceipt">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceiptDetail_DeliveryReceipt">
+          <End Role="DeliveryReceipt" Type="Self.DeliveryReceipt" Multiplicity="1" />
+          <End Role="DeliveryReceiptDetail" Type="Self.DeliveryReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeliveryReceipt">
+              <PropertyRef Name="DeliveryReceiptId" />
+            </Principal>
+            <Dependent Role="DeliveryReceiptDetail">
+              <PropertyRef Name="DeliveryReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceiptDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="DeliveryReceiptDetail" Type="Self.DeliveryReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DeliveryReceiptDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoice_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="SalesInvoice">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceiptDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="ReturnReceiptDetail" Type="Self.ReturnReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="ReturnReceiptDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoiceDetail_ProductType">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
+          <End Role="SalesInvoiceDetail" Type="Self.SalesInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="SalesInvoiceDetail">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReturnReceiptDetail_ReturnReceipt">
+          <End Role="ReturnReceipt" Type="Self.ReturnReceipt" Multiplicity="1" />
+          <End Role="ReturnReceiptDetail" Type="Self.ReturnReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReturnReceipt">
+              <PropertyRef Name="ReturnReceiptId" />
+            </Principal>
+            <Dependent Role="ReturnReceiptDetail">
+              <PropertyRef Name="ReturnReceiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesInvoiceDetail_SalesInvoice">
+          <End Role="SalesInvoice" Type="Self.SalesInvoice" Multiplicity="1" />
+          <End Role="SalesInvoiceDetail" Type="Self.SalesInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesInvoice">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Principal>
+            <Dependent Role="SalesInvoiceDetail">
+              <PropertyRef Name="SalesInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AquaKeshEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="CustomerTypes" EntityType="Self.CustomerType" />
+          <EntitySet Name="DeliveryReceipts" EntityType="Self.DeliveryReceipt" />
+          <EntitySet Name="DeliveryReceiptDetails" EntityType="Self.DeliveryReceiptDetail" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="ProductTypes" EntityType="Self.ProductType" />
+          <EntitySet Name="RefStatus" EntityType="Self.RefStatu" />
+          <EntitySet Name="ReturnReceipts" EntityType="Self.ReturnReceipt" />
+          <EntitySet Name="ReturnReceiptDetails" EntityType="Self.ReturnReceiptDetail" />
+          <EntitySet Name="SalesInvoices" EntityType="Self.SalesInvoice" />
+          <EntitySet Name="SalesInvoiceDetails" EntityType="Self.SalesInvoiceDetail" />
+          <EntitySet Name="UserAuths" EntityType="Self.UserAuth" />
+          <EntitySet Name="UserOAuthProviders" EntityType="Self.UserOAuthProvider" />
+          <AssociationSet Name="FK_Customer_CustomerType" Association="Self.FK_Customer_CustomerType">
+            <End Role="CustomerType" EntitySet="CustomerTypes" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceipt_Customer" Association="Self.FK_DeliveryReceipt_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceipt_Customer" Association="Self.FK_ReturnReceipt_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ReturnReceipt" EntitySet="ReturnReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoice_Customer" Association="Self.FK_SalesInvoice_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="SalesInvoice" EntitySet="SalesInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceipt_SalesInvoice" Association="Self.FK_DeliveryReceipt_SalesInvoice">
+            <End Role="SalesInvoice" EntitySet="SalesInvoices" />
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceiptDetail_DeliveryReceipt" Association="Self.FK_DeliveryReceiptDetail_DeliveryReceipt">
+            <End Role="DeliveryReceipt" EntitySet="DeliveryReceipts" />
+            <End Role="DeliveryReceiptDetail" EntitySet="DeliveryReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceiptDetail_ProductType" Association="Self.FK_DeliveryReceiptDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="DeliveryReceiptDetail" EntitySet="DeliveryReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_Order" Association="Self.FK_OrderDetail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoice_Order" Association="Self.FK_SalesInvoice_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="SalesInvoice" EntitySet="SalesInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetail_ProductType" Association="Self.FK_OrderDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceiptDetail_ProductType" Association="Self.FK_ReturnReceiptDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="ReturnReceiptDetail" EntitySet="ReturnReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoiceDetail_ProductType" Association="Self.FK_SalesInvoiceDetail_ProductType">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="SalesInvoiceDetail" EntitySet="SalesInvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReturnReceiptDetail_ReturnReceipt" Association="Self.FK_ReturnReceiptDetail_ReturnReceipt">
+            <End Role="ReturnReceipt" EntitySet="ReturnReceipts" />
+            <End Role="ReturnReceiptDetail" EntitySet="ReturnReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesInvoiceDetail_SalesInvoice" Association="Self.FK_SalesInvoiceDetail_SalesInvoice">
+            <End Role="SalesInvoice" EntitySet="SalesInvoices" />
+            <End Role="SalesInvoiceDetail" EntitySet="SalesInvoiceDetails" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AquaKeshModelStoreContainer" CdmEntityContainer="AquaKeshEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="AquaKeshModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerTypeId" ColumnName="CustomerTypeId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GPSCoordinate" ColumnName="GPSCoordinate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerTypes">
+            <EntityTypeMapping TypeName="AquaKeshModel.CustomerType">
+              <MappingFragment StoreEntitySet="CustomerType">
+                <ScalarProperty Name="CustomerTypeId" ColumnName="CustomerTypeId" />
+                <ScalarProperty Name="CustomerType1" ColumnName="CustomerType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryReceipts">
+            <EntityTypeMapping TypeName="AquaKeshModel.DeliveryReceipt">
+              <MappingFragment StoreEntitySet="DeliveryReceipt">
+                <ScalarProperty Name="DeliveryReceiptId" ColumnName="DeliveryReceiptId" />
+                <ScalarProperty Name="DRNumber" ColumnName="DRNumber" />
+                <ScalarProperty Name="DRDate" ColumnName="DRDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryReceiptDetails">
+            <EntityTypeMapping TypeName="AquaKeshModel.DeliveryReceiptDetail">
+              <MappingFragment StoreEntitySet="DeliveryReceiptDetail">
+                <ScalarProperty Name="DeliveryReceiptDetailId" ColumnName="DeliveryReceiptDetailId" />
+                <ScalarProperty Name="DeliveryReceiptId" ColumnName="DeliveryReceiptId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="AquaKeshModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="AquaKeshModel.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="AquaKeshModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
+                <ScalarProperty Name="IsInvetoriable" ColumnName="IsInvetoriable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefStatus">
+            <EntityTypeMapping TypeName="AquaKeshModel.RefStatu">
+              <MappingFragment StoreEntitySet="RefStatus">
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnReceipts">
+            <EntityTypeMapping TypeName="AquaKeshModel.ReturnReceipt">
+              <MappingFragment StoreEntitySet="ReturnReceipt">
+                <ScalarProperty Name="ReturnReceiptId" ColumnName="ReturnReceiptId" />
+                <ScalarProperty Name="ReturnReceiptDate" ColumnName="ReturnReceiptDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReturnReceiptDetails">
+            <EntityTypeMapping TypeName="AquaKeshModel.ReturnReceiptDetail">
+              <MappingFragment StoreEntitySet="ReturnReceiptDetail">
+                <ScalarProperty Name="ReturnReceiptId" ColumnName="ReturnReceiptId" />
+                <ScalarProperty Name="ReturnReceiptDetailId" ColumnName="ReturnReceiptDetailId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesInvoices">
+            <EntityTypeMapping TypeName="AquaKeshModel.SalesInvoice">
+              <MappingFragment StoreEntitySet="SalesInvoice">
+                <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesInvoiceDetails">
+            <EntityTypeMapping TypeName="AquaKeshModel.SalesInvoiceDetail">
+              <MappingFragment StoreEntitySet="SalesInvoiceDetail">
+                <ScalarProperty Name="SalesInvoiceDetailId" ColumnName="SalesInvoiceDetailId" />
+                <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAuths">
+            <EntityTypeMapping TypeName="AquaKeshModel.UserAuth">
+              <MappingFragment StoreEntitySet="UserAuth">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PrimaryEmail" ColumnName="PrimaryEmail" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="BirthDateRaw" ColumnName="BirthDateRaw" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="MailAddress" ColumnName="MailAddress" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="DigestHa1Hash" ColumnName="DigestHa1Hash" />
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="Permissions" ColumnName="Permissions" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="RefId" ColumnName="RefId" />
+                <ScalarProperty Name="RefIdStr" ColumnName="RefIdStr" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserOAuthProviders">
+            <EntityTypeMapping TypeName="AquaKeshModel.UserOAuthProvider">
+              <MappingFragment StoreEntitySet="UserOAuthProvider">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserAuthId" ColumnName="UserAuthId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="BirthDateRaw" ColumnName="BirthDateRaw" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="MailAddress" ColumnName="MailAddress" />
+                <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+                <ScalarProperty Name="RefreshToken" ColumnName="RefreshToken" />
+                <ScalarProperty Name="RefreshTokenExpiry" ColumnName="RefreshTokenExpiry" />
+                <ScalarProperty Name="RequestToken" ColumnName="RequestToken" />
+                <ScalarProperty Name="RequestTokenSecret" ColumnName="RequestTokenSecret" />
+                <ScalarProperty Name="Items" ColumnName="Items" />
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="AccessTokenSecret" ColumnName="AccessTokenSecret" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="RefId" ColumnName="RefId" />
+                <ScalarProperty Name="RefIdStr" ColumnName="RefIdStr" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

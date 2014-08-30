@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AquaKeshModelStoreContainer" CdmEntityContainer="AquaKeshEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="AquaKeshModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerTypeId" ColumnName="CustomerTypeId" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="GPSCoordinate" ColumnName="GPSCoordinate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerTypes">
+      <EntityTypeMapping TypeName="AquaKeshModel.CustomerType">
+        <MappingFragment StoreEntitySet="CustomerType">
+          <ScalarProperty Name="CustomerTypeId" ColumnName="CustomerTypeId" />
+          <ScalarProperty Name="CustomerType1" ColumnName="CustomerType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryReceipts">
+      <EntityTypeMapping TypeName="AquaKeshModel.DeliveryReceipt">
+        <MappingFragment StoreEntitySet="DeliveryReceipt">
+          <ScalarProperty Name="DeliveryReceiptId" ColumnName="DeliveryReceiptId" />
+          <ScalarProperty Name="DRNumber" ColumnName="DRNumber" />
+          <ScalarProperty Name="DRDate" ColumnName="DRDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryReceiptDetails">
+      <EntityTypeMapping TypeName="AquaKeshModel.DeliveryReceiptDetail">
+        <MappingFragment StoreEntitySet="DeliveryReceiptDetail">
+          <ScalarProperty Name="DeliveryReceiptDetailId" ColumnName="DeliveryReceiptDetailId" />
+          <ScalarProperty Name="DeliveryReceiptId" ColumnName="DeliveryReceiptId" />
+          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="AquaKeshModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="AquaKeshModel.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductTypes">
+      <EntityTypeMapping TypeName="AquaKeshModel.ProductType">
+        <MappingFragment StoreEntitySet="ProductType">
+          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
+          <ScalarProperty Name="IsInvetoriable" ColumnName="IsInvetoriable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RefStatus">
+      <EntityTypeMapping TypeName="AquaKeshModel.RefStatu">
+        <MappingFragment StoreEntitySet="RefStatus">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnReceipts">
+      <EntityTypeMapping TypeName="AquaKeshModel.ReturnReceipt">
+        <MappingFragment StoreEntitySet="ReturnReceipt">
+          <ScalarProperty Name="ReturnReceiptId" ColumnName="ReturnReceiptId" />
+          <ScalarProperty Name="ReturnReceiptDate" ColumnName="ReturnReceiptDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnReceiptDetails">
+      <EntityTypeMapping TypeName="AquaKeshModel.ReturnReceiptDetail">
+        <MappingFragment StoreEntitySet="ReturnReceiptDetail">
+          <ScalarProperty Name="ReturnReceiptId" ColumnName="ReturnReceiptId" />
+          <ScalarProperty Name="ReturnReceiptDetailId" ColumnName="ReturnReceiptDetailId" />
+          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesInvoices">
+      <EntityTypeMapping TypeName="AquaKeshModel.SalesInvoice">
+        <MappingFragment StoreEntitySet="SalesInvoice">
+          <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesInvoiceDetails">
+      <EntityTypeMapping TypeName="AquaKeshModel.SalesInvoiceDetail">
+        <MappingFragment StoreEntitySet="SalesInvoiceDetail">
+          <ScalarProperty Name="SalesInvoiceDetailId" ColumnName="SalesInvoiceDetailId" />
+          <ScalarProperty Name="SalesInvoiceId" ColumnName="SalesInvoiceId" />
+          <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAuths">
+      <EntityTypeMapping TypeName="AquaKeshModel.UserAuth">
+        <MappingFragment StoreEntitySet="UserAuth">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PrimaryEmail" ColumnName="PrimaryEmail" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="BirthDateRaw" ColumnName="BirthDateRaw" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Culture" ColumnName="Culture" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="MailAddress" ColumnName="MailAddress" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="Salt" ColumnName="Salt" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="DigestHa1Hash" ColumnName="DigestHa1Hash" />
+          <ScalarProperty Name="Roles" ColumnName="Roles" />
+          <ScalarProperty Name="Permissions" ColumnName="Permissions" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="RefId" ColumnName="RefId" />
+          <ScalarProperty Name="RefIdStr" ColumnName="RefIdStr" />
+          <ScalarProperty Name="Meta" ColumnName="Meta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserOAuthProviders">
+      <EntityTypeMapping TypeName="AquaKeshModel.UserOAuthProvider">
+        <MappingFragment StoreEntitySet="UserOAuthProvider">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserAuthId" ColumnName="UserAuthId" />
+          <ScalarProperty Name="Provider" ColumnName="Provider" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+          <ScalarProperty Name="BirthDateRaw" ColumnName="BirthDateRaw" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Culture" ColumnName="Culture" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="MailAddress" ColumnName="MailAddress" />
+          <ScalarProperty Name="Nickname" ColumnName="Nickname" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ScalarProperty Name="RefreshToken" ColumnName="RefreshToken" />
+          <ScalarProperty Name="RefreshTokenExpiry" ColumnName="RefreshTokenExpiry" />
+          <ScalarProperty Name="RequestToken" ColumnName="RequestToken" />
+          <ScalarProperty Name="RequestTokenSecret" ColumnName="RequestTokenSecret" />
+          <ScalarProperty Name="Items" ColumnName="Items" />
+          <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+          <ScalarProperty Name="AccessTokenSecret" ColumnName="AccessTokenSecret" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="RefId" ColumnName="RefId" />
+          <ScalarProperty Name="RefIdStr" ColumnName="RefIdStr" />
+          <ScalarProperty Name="Meta" ColumnName="Meta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

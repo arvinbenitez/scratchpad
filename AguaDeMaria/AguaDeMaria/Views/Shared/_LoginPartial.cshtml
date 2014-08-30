@@ -1,4 +1,8 @@
-﻿@if (Request.IsAuthenticated) {
+﻿@{
+    var user = Request.IsAuthenticated;
+}
+
+@if (Request.IsAuthenticated) {
     <text>
         Hello, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
@@ -9,6 +13,6 @@
 } else {
     <ul>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new {returnUrl = "/home/index"}, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

@@ -1,0 +1,10 @@
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.dll.config
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.dll
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.pdb
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.dll
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.xml
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\obj\Debug\AguaDeMaria.Database.dll
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\obj\Debug\AguaDeMaria.Database.pdb
+C:\Source\scratchpad\AguaDeMaria\AguaDeMaria.Data\obj\Debug\AguaDeMaria.Database.csprojResolveAssemblyReference.cache

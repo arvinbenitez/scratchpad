@@ -16,6 +16,8 @@ namespace AguaDeMaria
     {
         protected void Application_Start()
         {
+            new AppHost().Init();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

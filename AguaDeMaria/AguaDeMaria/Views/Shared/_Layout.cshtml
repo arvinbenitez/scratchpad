@@ -2,10 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title - Aqua Kesh Purified Water</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/FontAwesome/css")
+        @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/modernizr")
     </head>
     <body>
@@ -23,6 +25,10 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            @if (Request.IsAuthenticated)
+                            {
+                                <li>@Html.ActionLink("Customers","Index","Customer")</li>
+                            }
                         </ul>
                     </nav>
                 </div>
