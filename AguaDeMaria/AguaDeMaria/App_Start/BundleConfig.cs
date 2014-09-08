@@ -23,7 +23,9 @@ namespace AguaDeMaria
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css",
+                        "~/Content/base.css"));
+
             bundles.Add(new StyleBundle("~/Content/FontAwesome/css").Include("~/Content/fontawesome/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
@@ -39,6 +41,10 @@ namespace AguaDeMaria
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/redmond/css").Include(
+                        "~/Content/themes/redmond/jquery-ui-1.9.2.custom.css"
+                ));
         }
     }
 }

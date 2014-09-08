@@ -16,10 +16,12 @@ using ServiceStack.ServiceInterface.Auth;
 using ServiceStack.ServiceInterface.Validation;
 using ServiceStack.Text;
 using ServiceStack.WebHost.Endpoints;
+using AguaDeMaria.Model;
+using AguaDeMaria.Common.Data;
 
 namespace AguaDeMaria
 {
-    public class AppHost: AppHostBase
+    public class AppHost : AppHostBase
     {
         public AppHost()
             : base("Aqua Kesh Web services", typeof(AppHost).Assembly)
@@ -36,20 +38,15 @@ namespace AguaDeMaria
             Plugins.Add(new ValidationFeature());
             container.RegisterValidators(typeof(AppHost).Assembly);
 
-            container.Register<ICacheClient>(new MemoryCacheClient());
-
-            Plugins.Add(new AuthFeature( () => new AuthUserSession(),
-                                        new IAuthProvider[] {new CredentialsAuthProvider()}
+            Plugins.Add(new AuthFeature(() => new AuthUserSession(),
+                                        new IAuthProvider[] { new CredentialsAuthProvider() }
                         ));
+            ConfigureDependencies(container);
+            ConfigureAuthorization(container);
+        }
 
-            container.Register<IDbConnectionFactory>(
-                new OrmLiteConnectionFactory(
-                    ConfigurationManager.ConnectionStrings["SQLAuthorization"].ConnectionString, SqlServerDialect.Provider));
-
-            container.Register<IUserAuthRepository>(c =>
-                new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
-
-
+        private static void ConfigureAuthorization(Funq.Container container)
+        {
             var userAuthRepository = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>();
 #if DEBUG
             userAuthRepository.CreateMissingTables();
@@ -59,7 +56,25 @@ namespace AguaDeMaria
                 userAuthRepository.CreateUserAuth(
                     new UserAuth { Email = "admin@getsomething.com", UserName = "Administrator", DisplayName = "Admin User" }, "P@55word");
             }
+        }
 
+
+        /// <summary>
+        /// Setup Dependency Injection
+        /// </summary>
+        /// <param name="container"></param>
+        private void ConfigureDependencies(Funq.Container container)
+        {
+            container.Register<ICacheClient>(new MemoryCacheClient());
+            container.Register<IDbConnectionFactory>(
+                    new OrmLiteConnectionFactory(ConfigurationManager.ConnectionStrings["SQLAuthorization"].ConnectionString, SqlServerDialect.Provider));
+            container.Register<IUserAuthRepository>(c =>
+                new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
+            container.RegisterAutoWired<AguaDeMariaContext>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<Customer>, IRepository<Customer>>().ReusedWithin(ReuseScope.Request);
+
+            container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();
+            container.RegisterAutoWired<LookupDataManager>();
         }
 
         protected virtual EndpointHostConfig CreateEndpointHostConfig()

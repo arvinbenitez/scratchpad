@@ -1,0 +1,46 @@
+﻿@model AguaDeMaria.Model.Customer
+
+@using (Html.BeginForm("SaveCustomer", "Customer", FormMethod.Post, new { id = "customerEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td>
+            </td>
+            <td>
+                @Html.HiddenFor(x => x.CustomerId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerCode)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.CustomerCode)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerName)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.CustomerName)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerTypeId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerTypeId, ViewBag.CustTypeList as IEnumerable<SelectListItem>, new { @id = "customerType" })
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.Address)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.Address)
+            </td>
+        </tr>
+    </table>
+}

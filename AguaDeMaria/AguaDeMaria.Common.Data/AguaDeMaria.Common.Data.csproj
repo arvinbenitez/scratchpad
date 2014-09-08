@@ -49,18 +49,19 @@
     <Compile Include="GenericRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="LookupDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AguaDeMaria.Data\AguaDeMaria.Database.csproj">
-      <Project>{f7ea2821-9246-439a-abd6-a1bc60a37ea0}</Project>
-      <Name>AguaDeMaria.Database</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AguaDeMaria.Model\AguaDeMaria.Model.csproj">
+      <Project>{641ee90d-ee39-485f-ad93-a9204ee1c842}</Project>
+      <Name>AguaDeMaria.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

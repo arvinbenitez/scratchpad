@@ -1,5 +1,87 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model IEnumerable<AguaDeMaria.Model.Customer>
+@{
+    ViewBag.Title = "Customer";
 }
 
+
 <h2>Customer List</h2>
+<button id="newCustomer">Add New Customer</button>
+<table>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Code</td>
+            <td>Name</td>
+            <td>Address</td>
+            <td></td>
+        </tr>
+    </thead>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerId</td>
+            <td>@customer.CustomerCode</td>
+            <td>@customer.CustomerName</td>
+            <td>@customer.Address</td>
+            <td><button data-customerId='@customer.CustomerId'>Edit</button></td>
+        </tr>
+    }
+</table>
+
+<div id="newCustomerDialog" style="display: none">This is where the new Customer Dialog goes</div>
+<script>
+    (function () {
+        $(document).ready(function () {
+            $("#newCustomerDialog").dialog({
+                width: 700,
+                height: 400,
+                autoOpen: false
+            });
+            $("button[data-customerId").each(function () {
+                $(this).click(function () {
+                    var customerId = $(this).attr("data-customerId");
+                    console.log(customerId);
+                    return customerEdit(customerId);
+                })
+            })
+            $('#newCustomer').on('click', function () {
+                customerEdit();
+            });
+
+        });
+
+        function customerEdit(id) {
+            var url = "/Customer/CustomerEditor";
+            $.ajax({
+                url: url,
+                data: {customerId: id}
+            }).success(function (data) {
+                $("#newCustomerDialog").html(data);
+                showCustomerDialog();
+            })
+        }
+
+        function showCustomerDialog() {
+            $("#newCustomerDialog").dialog({
+                modal: true,
+                title: 'Customer',
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Customer/SaveCustomer",
+                            data: $("#customerEntryForm").serialize()
+                        }).success(function (data) {
+                            alert("Saved the customer: " + data.CustomerId);
+                        });
+                        //$("#customerEntryForm").submit()
+                        $(this).dialog("close");
+                    }
+                }]
+            }).dialog("open");
+        }
+
+    }());
+</script>

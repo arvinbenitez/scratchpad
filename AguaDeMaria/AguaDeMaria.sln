@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaDeMaria", "AguaDeMaria\AguaDeMaria.csproj", "{7FBE037F-ED71-47AF-BB39-EAE63E15CF8E}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaDeMaria.Database", "AguaDeMaria.Data\AguaDeMaria.Database.csproj", "{F7EA2821-9246-439A-ABD6-A1BC60A37EA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaDeMaria.Common.Data", "AguaDeMaria.Common.Data\AguaDeMaria.Common.Data.csproj", "{EEFA4D1D-4E3D-45A4-9476-A316CD078995}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AguaDeMaria.Model", "AguaDeMaria.Model\AguaDeMaria.Model.csproj", "{641EE90D-EE39-485F-AD93-A9204EE1C842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{EEFA4D1D-4E3D-45A4-9476-A316CD078995}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEFA4D1D-4E3D-45A4-9476-A316CD078995}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEFA4D1D-4E3D-45A4-9476-A316CD078995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{641EE90D-EE39-485F-AD93-A9204EE1C842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{641EE90D-EE39-485F-AD93-A9204EE1C842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{641EE90D-EE39-485F-AD93-A9204EE1C842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{641EE90D-EE39-485F-AD93-A9204EE1C842}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using AguaDeMaria.Database;
+using AguaDeMaria.Model;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -10,11 +10,11 @@ namespace AguaDeMaria.Common.Data
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private AquaKeshContext _context;
+        private AguaDeMariaContext _context;
 
         private DbSet<T> _dbSet;
 
-        public GenericRepository(AquaKeshContext context)
+        public GenericRepository(AguaDeMariaContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
@@ -86,10 +86,9 @@ namespace AguaDeMaria.Common.Data
             _context.SaveChanges();
         }
 
-        public AquaKeshContext Context
+        public AguaDeMariaContext Context
         {
             get { return _context; }
         }
-
     }
 }
