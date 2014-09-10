@@ -20,6 +20,6 @@ namespace AguaDeMaria.Model
         [StringLength(100)]
         public string CustomerTypeName { get; set; }
 
-        public virtual ICollection<Customer> Customers { get; set; }
+        public ICollection<Customer> Customers { get; set; }
     }
 }

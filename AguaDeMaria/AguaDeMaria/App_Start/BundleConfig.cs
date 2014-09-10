@@ -12,7 +12,9 @@ namespace AguaDeMaria
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.jqgrid.src.js",
+                        "~/Scripts/i18n/grid.locale-en.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -43,7 +45,8 @@ namespace AguaDeMaria
                         "~/Content/themes/base/jquery.ui.theme.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/redmond/css").Include(
-                        "~/Content/themes/redmond/jquery-ui-1.9.2.custom.css"
+                        "~/Content/themes/redmond/jquery-ui-1.9.2.custom.css",
+                        "~/Content/ui.jqgrid.css"
                 ));
         }
     }

@@ -1,33 +1,35 @@
-﻿@model IEnumerable<AguaDeMaria.Model.Customer>
+﻿@using Newtonsoft.Json
+@model IEnumerable<AguaDeMaria.Model.Customer>
 @{
     ViewBag.Title = "Customer";
 }
 
-
 <h2>Customer List</h2>
-<button id="newCustomer">Add New Customer</button>
-<table>
-    <thead>
-        <tr>
-            <td>Id</td>
-            <td>Code</td>
-            <td>Name</td>
-            <td>Address</td>
-            <td></td>
-        </tr>
-    </thead>
-    @foreach (var customer in Model)
-    {
-        <tr>
-            <td>@customer.CustomerId</td>
-            <td>@customer.CustomerCode</td>
-            <td>@customer.CustomerName</td>
-            <td>@customer.Address</td>
-            <td><button data-customerId='@customer.CustomerId'>Edit</button></td>
-        </tr>
-    }
-</table>
-
+<div id="loadingIndicator">Loading...</div>
+<table id="customerList"></table>
+<div id="customerListPager"></div>
+@*<button id="newCustomer">Add New Customer</button>
+    <table>
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Code</td>
+                <td>Name</td>
+                <td>Address</td>
+                <td></td>
+            </tr>
+        </thead>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerId</td>
+                <td>@customer.CustomerCode</td>
+                <td>@customer.CustomerName</td>
+                <td>@customer.Address</td>
+                <td><a data-customerId='@customer.CustomerId' class="fa fa-edit fa-lg" title="Edit" href="#" style="text-decoration:none"></a></td>
+            </tr>
+        }
+    </table>*@
 <div id="newCustomerDialog" style="display: none">This is where the new Customer Dialog goes</div>
 <script>
     (function () {
@@ -37,17 +39,18 @@
                 height: 400,
                 autoOpen: false
             });
-            $("button[data-customerId").each(function () {
-                $(this).click(function () {
-                    var customerId = $(this).attr("data-customerId");
-                    console.log(customerId);
-                    return customerEdit(customerId);
-                })
-            })
+            //$("a[data-customerId").each(function () {
+            //    $(this).click(function () {
+            //        var customerId = $(this).attr("data-customerId");
+            //        console.log(customerId);
+            //        return customerEdit(customerId);
+            //    })
+            //})
             $('#newCustomer').on('click', function () {
                 customerEdit();
             });
-
+            //show the grid
+            showCustomerGrid();
         });
 
         function customerEdit(id) {
@@ -82,6 +85,32 @@
                 }]
             }).dialog("open");
         }
+
+        function showCustomerGrid() {
+            var url = "/Customer/GetCustomerList";
+            jQuery("#customerList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Customer Id', 'Customer Name', 'Type', 'Address'],
+                colModel: [
+                        { name: 'CustomerId', key: true, index: 'CustomerId', width: 110, sorttype: 'int' },
+                        { name: 'CustomerName', index: 'CustomerName', width: 110 },
+                        { name: 'CustomerTypeName', index: 'CustomerTypeName', width: 140},
+                        { name: 'Address', index: 'Address', width: 250 }],
+                sortname: 'CustomerName',
+                viewrecords: true,
+                sortorder: "asc",
+                caption: "Customer List",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () { },
+                loadComplete: function () {
+                    $("#loadingIndicator").hide();
+                }
+            });
+        }
+
 
     }());
 </script>

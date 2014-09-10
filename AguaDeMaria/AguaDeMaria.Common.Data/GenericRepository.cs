@@ -17,6 +17,9 @@ namespace AguaDeMaria.Common.Data
         public GenericRepository(AguaDeMariaContext context)
         {
             _context = context;
+#if DEBUG
+            _context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+#endif
             _dbSet = context.Set<T>();
         }
 

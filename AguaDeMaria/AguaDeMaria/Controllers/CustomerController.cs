@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Model;
 using AguaDeMaria.Common.Data;
+using Newtonsoft.Json;
 
 namespace AguaDeMaria.Controllers
 {
@@ -25,6 +26,23 @@ namespace AguaDeMaria.Controllers
         {
             var customerList = _customerRepository.Get(x => x.CustomerId > 0);
             return View(customerList);
+        }
+
+        [HttpGet]
+        public JsonResult GetCustomerList()
+        {
+            var customerList = from c in _customerRepository.Get(x => x.CustomerId > 0)
+                               let customerType = _lookupManager.CustomerTypes.Where(x => x.CustomerTypeId == c.CustomerTypeId).FirstOrDefault()
+                               orderby c.CustomerName
+                               select new
+                               {
+                                   c.CustomerId,
+                                   c.CustomerName,
+                                   c.CustomerTypeId,
+                                   CustomerTypeName = customerType == null ? string.Empty : customerType.CustomerTypeName,
+                                   c.Address
+                               };
+            return Json(customerList, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CustomerEditor(int? customerId)

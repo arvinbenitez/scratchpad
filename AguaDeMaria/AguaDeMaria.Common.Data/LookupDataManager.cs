@@ -19,7 +19,7 @@ namespace AguaDeMaria.Common.Data
         {
             get
             {
-                return _customerTypeRepository.Get(custType => custType.CustomerTypeId > 0);
+                return _customerTypeRepository.Get(custType => custType.CustomerTypeId > 0) .ToList();
             }
         }
     }

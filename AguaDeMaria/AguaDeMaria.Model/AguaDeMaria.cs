@@ -29,6 +29,8 @@ namespace AguaDeMaria.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Configuration.LazyLoadingEnabled = true;
+
             modelBuilder.Entity<Customer>()
                 .HasMany(e => e.DeliveryReceipts)
                 .WithRequired(e => e.Customer)
@@ -44,10 +46,10 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<CustomerType>()
-                .HasMany(e => e.Customers)
-                .WithRequired(e => e.CustomerType)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<CustomerType>()
+            //    .HasMany(e => e.Customers)
+            //    .WithRequired(e => e.CustomerType)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DeliveryReceipt>()
                 .HasMany(e => e.DeliveryReceiptDetails)
