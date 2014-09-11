@@ -1,9 +1,0 @@
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.dll.config
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.dll
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\AguaDeMaria.Database.pdb
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.dll
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.SqlServer.dll
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.xml
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\bin\Debug\EntityFramework.SqlServer.xml
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\obj\Debug\AguaDeMaria.Database.dll
-C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Data\obj\Debug\AguaDeMaria.Database.pdb
