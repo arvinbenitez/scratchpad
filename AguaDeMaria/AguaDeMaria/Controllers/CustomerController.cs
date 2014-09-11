@@ -37,6 +37,7 @@ namespace AguaDeMaria.Controllers
                                select new
                                {
                                    c.CustomerId,
+                                   c.CustomerCode,
                                    c.CustomerName,
                                    c.CustomerTypeId,
                                    CustomerTypeName = customerType == null ? string.Empty : customerType.CustomerTypeName,
@@ -89,9 +90,16 @@ namespace AguaDeMaria.Controllers
                 this._customerRepository.Insert(customer);
                 this._customerRepository.Commit();
             }
-            return Json(customer);
+             var selectedCustomerType = _lookupManager.CustomerTypes.Where(x => x.CustomerTypeId == customer.CustomerTypeId).FirstOrDefault();
+            return Json(new
+            {
+                customer.CustomerId,
+                customer.CustomerCode,
+                customer.CustomerName,
+                customer.CustomerTypeId,
+                CustomerTypeName = selectedCustomerType == null? string.Empty: selectedCustomerType.CustomerTypeName ,
+                customer.Address
+            });
         }
-
-
     }
 }
