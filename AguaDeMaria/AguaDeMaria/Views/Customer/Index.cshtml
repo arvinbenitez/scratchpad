@@ -17,10 +17,10 @@
             $.ajax({
                 url: url,
                 data: { customerId: id }
-            }).success(function (data) {
+            }).success(function(data) {
                 $("#newCustomerDialog").html(data);
                 showCustomerDialog();
-            })
+            });
         }
 
         function customerDelete(id) {
@@ -40,9 +40,14 @@
                             url: "/Customer/SaveCustomer",
                             data: $("#customerEntryForm").serialize()
                         }).success(function (data) {
-                            alert("Saved the customer: " + data.CustomerId);
-                            //update the grid
-                            $("#customerList").jqGrid('setRowData', data.CustomerId, data);
+
+                            var row = $("#customerList").jqGrid('getRowData', data.CustomerId);
+                            if (typeof (row.CustomerId) == 'undefined') {
+                                $("#customerList").jqGrid('addRowData', data.CustomerId, data, "first");
+                                //$("#customerList").jqGrid().trigger("reloadGrid");
+                            } else {
+                                $("#customerList").jqGrid('setRowData', data.CustomerId, data);
+                            }
                         });
                         $(this).dialog("close");
                     }
@@ -55,16 +60,18 @@
             jQuery("#customerList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Customer Id', 'Customer Code','Customer Name', 'Type', 'Address', 'Actions'],
+                colNames: ['Customer Id', 'Customer Code','Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
                 colModel: [
-                        { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, sorttype: 'int' },
+                        { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerCode', index: 'CustomerCode', width: 110 },
                         { name: 'CustomerName', index: 'CustomerName', width: 110 },
                         { name: 'CustomerTypeName', index: 'CustomerTypeName', width: 140 },
                         { name: 'Address', index: 'Address', width: 250 },
+                        { name: 'ContactNumbers', index: 'ContactNumbers', width: 250 },
                         { name: 'editAction', index: 'editAction', width: 75, sortable: false }],
                 sortname: 'CustomerName',
                 viewrecords: true,
+                pager: '#customerListPager',
                 sortorder: "asc",
                 caption: "Customer List",
                 width: 1200,
@@ -76,8 +83,8 @@
                     var ids = grid.jqGrid('getDataIDs');
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
-                        var editAction = "<a class='fa fa-edit' href='#' onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
-                        var deleteAction = "<a class='fa fa-cut' href='#' onclick='customerGrid.customerDelete(" + rowId + ")'></a>";
+                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
+                        var deleteAction = "<a class='fa fa-cut' href='#' title='Delete' onclick='customerGrid.customerDelete(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction });
                     }
                 },
@@ -85,8 +92,20 @@
                     $("#loadingIndicator").hide();
                 }
             });
+            //show the Navigator
+            jQuery("#customerList")
+                .jqGrid('navGrid', '#customerListPager', { edit: false, add: false, del: false })
+                .navButtonAdd('#customerListPager', {
+                    caption: "",
+                    buttonicon: "ui-icon-plus",
+                    onClickButton: function () {
+                        customerEdit(null);
+                    },
+                    position: "last",
+                    title: "New Customer",
+                    cursor: "pointer"
+                });
         }
-
         return ({
             customerEdit: customerEdit,
             showCustomerDialog: showCustomerDialog,

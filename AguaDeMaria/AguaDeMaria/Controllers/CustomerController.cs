@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Model;
 using AguaDeMaria.Common.Data;
+using AguaDeMaria.Models;
 using Newtonsoft.Json;
 
 namespace AguaDeMaria.Controllers
@@ -12,12 +13,17 @@ namespace AguaDeMaria.Controllers
     public class CustomerController : Controller
     {
         IRepository<Customer> _customerRepository;
-        LookupDataManager _lookupManager;
+        private LookupDataManager _lookupManager;
 
         public CustomerController(IRepository<Customer> customerRepository, LookupDataManager lookupManager)
         {
             this._customerRepository = customerRepository;
             this._lookupManager = lookupManager;
+        }
+
+        private LookupDataManager LookupManager
+        {
+            get { return _lookupManager; }
         }
 
         //
@@ -32,16 +38,19 @@ namespace AguaDeMaria.Controllers
         public JsonResult GetCustomerList()
         {
             var customerList = from c in _customerRepository.Get(x => x.CustomerId > 0)
-                               let customerType = _lookupManager.CustomerTypes.Where(x => x.CustomerTypeId == c.CustomerTypeId).FirstOrDefault()
+                               let customerType = LookupManager.CustomerTypes.Where(x => x.CustomerTypeId == c.CustomerTypeId).FirstOrDefault()
                                orderby c.CustomerName
                                select new
+                               CustomerDto()
                                {
-                                   c.CustomerId,
-                                   c.CustomerCode,
-                                   c.CustomerName,
-                                   c.CustomerTypeId,
+                                   CustomerId = c.CustomerId,
+                                   CustomerCode = c.CustomerCode,
+                                   CustomerName = c.CustomerName,
+                                   CustomerTypeId = c.CustomerTypeId,
                                    CustomerTypeName = customerType == null ? string.Empty : customerType.CustomerTypeName,
-                                   c.Address
+                                   Address = c.Address,
+                                   ContactNumbers = c.ContactNumbers,
+                                   Notes = c.Notes
                                };
             return Json(customerList, JsonRequestBehavior.AllowGet);
         }
@@ -54,7 +63,7 @@ namespace AguaDeMaria.Controllers
                 customer = this._customerRepository.Get(x => x.CustomerId == customerId).FirstOrDefault();
             }
 
-            var customerTypesList = from custType in _lookupManager.CustomerTypes
+            var customerTypesList = from custType in LookupManager.CustomerTypes
                                     select new SelectListItem
                                     {
                                         Text = custType.CustomerTypeName,
@@ -90,15 +99,17 @@ namespace AguaDeMaria.Controllers
                 this._customerRepository.Insert(customer);
                 this._customerRepository.Commit();
             }
-             var selectedCustomerType = _lookupManager.CustomerTypes.Where(x => x.CustomerTypeId == customer.CustomerTypeId).FirstOrDefault();
-            return Json(new
+            var selectedCustomerType = LookupManager.CustomerTypes.Where(x => x.CustomerTypeId == customer.CustomerTypeId).FirstOrDefault();
+            return Json(new CustomerDto()
             {
-                customer.CustomerId,
-                customer.CustomerCode,
-                customer.CustomerName,
-                customer.CustomerTypeId,
-                CustomerTypeName = selectedCustomerType == null? string.Empty: selectedCustomerType.CustomerTypeName ,
-                customer.Address
+                CustomerId = customer.CustomerId,
+                CustomerCode = customer.CustomerCode,
+                CustomerName = customer.CustomerName,
+                CustomerTypeId = customer.CustomerTypeId,
+                CustomerTypeName = selectedCustomerType == null ? string.Empty : selectedCustomerType.CustomerTypeName,
+                Address = customer.Address,
+                ContactNumbers = customer.ContactNumbers,
+                Notes = customer.Notes
             });
         }
     }

@@ -31,12 +31,20 @@ namespace AguaDeMaria.Model
         [Display(Name = "Customer Type")]
         public int CustomerTypeId { get; set; }
 
+
         [Required]
         [StringLength(200)]
         public string Address { get; set; }
 
         [StringLength(50)]
         public string GPSCoordinate { get; set; }
+
+        [Display(Name = "Contact Numbers")]
+        [StringLength(50)]
+        public string ContactNumbers { get; set; }
+
+        [StringLength(500)]
+        public string Notes { get; set; }
 
         public virtual CustomerType CustomerType { get; set; }
 
