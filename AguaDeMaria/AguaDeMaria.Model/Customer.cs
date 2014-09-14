@@ -20,6 +20,7 @@ namespace AguaDeMaria.Model
         public int CustomerId { get; set; }
 
         [Display(Name = "Code")]
+        [Required]
         [StringLength(10)]
         public string CustomerCode { get; set; }
 
@@ -29,6 +30,7 @@ namespace AguaDeMaria.Model
         public string CustomerName { get; set; }
 
         [Display(Name = "Customer Type")]
+        [Required]
         public int CustomerTypeId { get; set; }
 
 
@@ -40,6 +42,7 @@ namespace AguaDeMaria.Model
         public string GPSCoordinate { get; set; }
 
         [Display(Name = "Contact Numbers")]
+        [Required]
         [StringLength(50)]
         public string ContactNumbers { get; set; }
 

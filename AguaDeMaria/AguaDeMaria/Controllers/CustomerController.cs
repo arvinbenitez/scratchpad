@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Models;
@@ -80,6 +81,7 @@ namespace AguaDeMaria.Controllers
             ViewBag.CustTypeList = customerTypesList;
         }
 
+        [ExcludeIdValidation(IdField = "CustomerId")]
         [HttpPost]
         public ActionResult SaveCustomer(Customer customer)
         {

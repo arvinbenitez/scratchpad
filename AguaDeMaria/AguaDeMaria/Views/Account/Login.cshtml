@@ -17,6 +17,7 @@
                     @Html.CheckBoxFor(m => m.RememberMe) Remember me
                 </label>
             </div>
+            @Html.ValidationSummary(true)
             <div>@Html.HiddenFor(x => x.Redirect)</div>
             <div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>

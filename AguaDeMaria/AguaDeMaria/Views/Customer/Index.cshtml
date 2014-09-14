@@ -17,7 +17,7 @@
             $.ajax({
                 url: url,
                 data: { customerId: id }
-            }).success(function(data) {
+            }).success(function (data) {
                 $("#newPopupDialog").html(data);
                 showCustomerDialog();
             });
@@ -32,7 +32,7 @@
             $.ajax({
                 url: url,
                 data: { CustomerId: customerId },
-            }).success(function(data) {
+            }).success(function (data) {
                 $("#newPopupDialog").html(data);
                 showOrderDialog();
             });
@@ -70,16 +70,22 @@
                         $.ajax({
                             type: "POST",
                             url: "/Customer/SaveCustomer",
-                            data: $("#customerEntryForm").serialize()
+                            data: $("#customerEntryForm").serialize(),
+                            context: $(this)
                         }).success(function (data) {
-                            var row = $("#customerList").jqGrid('getRowData', data.CustomerId);
-                            if (typeof (row.CustomerId) == 'undefined') {
-                                $("#customerList").jqGrid('addRowData', data.CustomerId, data, "first");
+                            if (typeof (data.CustomerId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
                             } else {
-                                $("#customerList").jqGrid('setRowData', data.CustomerId, data);
+                                var row = $("#customerList").jqGrid('getRowData', data.CustomerId);
+                                if (typeof (row.CustomerId) == 'undefined') {
+                                    $("#customerList").jqGrid('addRowData', data.CustomerId, data, "first");
+                                } else {
+                                    $("#customerList").jqGrid('setRowData', data.CustomerId, data);
+                                }
+                                $("#newPopupDialog").dialog("close");
                             }
                         });
-                        $(this).dialog("close");
                     }
                 }]
             }).dialog("open");
@@ -90,7 +96,7 @@
             jQuery("#customerList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Customer Id', 'Code','Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
+                colNames: ['Customer Id', 'Code', 'Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
                 colModel: [
                         { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerCode', index: 'CustomerCode', width: 50 },
@@ -117,7 +123,7 @@
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
                         var deleteAction = "<a class='fa fa-cut' href='#' title='Delete' onclick='customerGrid.customerDelete(" + rowId + ")'></a>";
                         var orderAction = "<a class='fa fa-book' href='#' title='New Order' onclick='customerGrid.newOrder(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction + orderAction});
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction + orderAction });
                     }
                 },
                 loadComplete: function () {
@@ -149,7 +155,7 @@
 
     $(document).ready(function () {
         $("#newPopupDialog").dialog({
-            width: 700,
+            width: 500,
             height: 400,
             autoOpen: false
         });
