@@ -8,7 +8,7 @@
 <div id="loadingIndicator">Loading...</div>
 <table id="customerList"></table>
 <div id="customerListPager"></div>
-<div id="newCustomerDialog" style="display: none">This is where the new Customer Dialog goes</div>
+<div id="newPopupDialog" style="display: none">This is where the new Customer Dialog goes</div>
 <script>
     var customerGrid = (function () {
 
@@ -18,7 +18,7 @@
                 url: url,
                 data: { customerId: id }
             }).success(function(data) {
-                $("#newCustomerDialog").html(data);
+                $("#newPopupDialog").html(data);
                 showCustomerDialog();
             });
         }
@@ -27,8 +27,40 @@
             alert('Are you sure you want to delete customer?');
         }
 
+        function newOrder(customerId) {
+            var url = "/Order/OrderEditor";
+            $.ajax({
+                url: url,
+                data: { CustomerId: customerId },
+            }).success(function(data) {
+                $("#newPopupDialog").html(data);
+                showOrderDialog();
+            });
+        }
+
+        function showOrderDialog() {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: 'New Order',
+                buttons: [{
+                    text: "Create",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Order/SaveOrder",
+                            data: $("#orderEntryForm").serialize()
+                        }).success(function (data) {
+                            //redirect to Orders List
+                        });
+                        $(this).dialog("close");
+                    }
+                }]
+            }).dialog("open");
+        }
+
         function showCustomerDialog() {
-            $("#newCustomerDialog").dialog({
+            $("#newPopupDialog").dialog({
                 modal: true,
                 title: 'Customer',
                 buttons: [{
@@ -40,11 +72,9 @@
                             url: "/Customer/SaveCustomer",
                             data: $("#customerEntryForm").serialize()
                         }).success(function (data) {
-
                             var row = $("#customerList").jqGrid('getRowData', data.CustomerId);
                             if (typeof (row.CustomerId) == 'undefined') {
                                 $("#customerList").jqGrid('addRowData', data.CustomerId, data, "first");
-                                //$("#customerList").jqGrid().trigger("reloadGrid");
                             } else {
                                 $("#customerList").jqGrid('setRowData', data.CustomerId, data);
                             }
@@ -60,17 +90,18 @@
             jQuery("#customerList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Customer Id', 'Customer Code','Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
+                colNames: ['Customer Id', 'Code','Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
                 colModel: [
                         { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, hidden: true, sorttype: 'int' },
-                        { name: 'CustomerCode', index: 'CustomerCode', width: 110 },
+                        { name: 'CustomerCode', index: 'CustomerCode', width: 50 },
                         { name: 'CustomerName', index: 'CustomerName', width: 110 },
-                        { name: 'CustomerTypeName', index: 'CustomerTypeName', width: 140 },
-                        { name: 'Address', index: 'Address', width: 250 },
-                        { name: 'ContactNumbers', index: 'ContactNumbers', width: 250 },
-                        { name: 'editAction', index: 'editAction', width: 75, sortable: false }],
+                        { name: 'CustomerTypeName', index: 'CustomerTypeName', width: 50 },
+                        { name: 'Address', index: 'Address', width: 150 },
+                        { name: 'ContactNumbers', index: 'ContactNumbers', width: 75 },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
                 sortname: 'CustomerName',
                 viewrecords: true,
+                ignoreCase: true,
                 pager: '#customerListPager',
                 sortorder: "asc",
                 caption: "Customer List",
@@ -85,7 +116,8 @@
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
                         var deleteAction = "<a class='fa fa-cut' href='#' title='Delete' onclick='customerGrid.customerDelete(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction });
+                        var orderAction = "<a class='fa fa-book' href='#' title='New Order' onclick='customerGrid.newOrder(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction + orderAction});
                     }
                 },
                 loadComplete: function () {
@@ -107,15 +139,16 @@
                 });
         }
         return ({
+            customerDelete: customerDelete,
             customerEdit: customerEdit,
+            newOrder: newOrder,
             showCustomerDialog: showCustomerDialog,
-            showCustomerGrid: showCustomerGrid,
-            customerDelete: customerDelete
+            showCustomerGrid: showCustomerGrid
         });
     })();
 
     $(document).ready(function () {
-        $("#newCustomerDialog").dialog({
+        $("#newPopupDialog").dialog({
             width: 700,
             height: 400,
             autoOpen: false

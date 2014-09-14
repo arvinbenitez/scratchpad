@@ -19,8 +19,8 @@ namespace AguaDeMaria.Model
         [Display(Name = "Customer Id")]
         public int CustomerId { get; set; }
 
-        [Display(Name = "Customer Code")]
-        [StringLength(50)]
+        [Display(Name = "Code")]
+        [StringLength(10)]
         public string CustomerCode { get; set; }
 
         [Display(Name = "Customer Name")]

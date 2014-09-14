@@ -10,9 +10,11 @@ namespace AguaDeMaria.Common.Data
     public class LookupDataManager
     {
         private IRepository<CustomerType> _customerTypeRepository;
-        public LookupDataManager(IRepository<CustomerType> custTypeRepository)
+        private IRepository<ProductType> _productTypeRepository;
+        public LookupDataManager(IRepository<CustomerType> custTypeRepository,IRepository<ProductType> prodTypeRepository)
         {
             _customerTypeRepository = custTypeRepository;
+            _productTypeRepository = prodTypeRepository;
         }
 
         public IEnumerable<CustomerType> CustomerTypes
@@ -21,6 +23,11 @@ namespace AguaDeMaria.Common.Data
             {
                 return _customerTypeRepository.Get(custType => custType.CustomerTypeId > 0) .ToList();
             }
+        }
+
+        public IEnumerable<ProductType> ProductTypes
+        {
+            get { return _productTypeRepository.Get(prodType => prodType.ProductTypeId > 0).ToList(); }
         }
     }
 }

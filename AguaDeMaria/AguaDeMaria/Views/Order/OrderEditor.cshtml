@@ -1,0 +1,37 @@
+﻿@model AguaDeMaria.Model.Order
+
+@using (Html.BeginForm("SaveOrder", "Order", FormMethod.Post, new { id = "orderEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.OrderId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderNumber)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.OrderNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.OrderDate)
+            </td>
+        </tr>
+    </table>
+}

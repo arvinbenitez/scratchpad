@@ -6,10 +6,12 @@ using System.Web.Mvc;
 using AguaDeMaria.Model;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Models;
+using AguaDeMaria.Models.Customer;
 using Newtonsoft.Json;
 
 namespace AguaDeMaria.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         IRepository<Customer> _customerRepository;
@@ -63,54 +65,59 @@ namespace AguaDeMaria.Controllers
                 customer = this._customerRepository.Get(x => x.CustomerId == customerId).FirstOrDefault();
             }
 
-            var customerTypesList = from custType in LookupManager.CustomerTypes
-                                    select new SelectListItem
-                                    {
-                                        Text = custType.CustomerTypeName,
-                                        Value = custType.CustomerTypeId.ToString()
-                                    };
-
-            var selectedCustomerType = customerTypesList.Where(x => x.Value == customer.CustomerTypeId.ToString()).FirstOrDefault();
-            if (selectedCustomerType != null) selectedCustomerType.Selected = true;
-
-            ViewBag.CustTypeList = customerTypesList;
-
+            SetCustomerTypes();
             return PartialView("CustomerEditor", customer);
         }
 
-        [HttpPost]
-        public JsonResult SaveCustomer(Customer customer)
+        private void SetCustomerTypes()
         {
-            var aguaDeMariaContext = new AguaDeMaria.Model.AguaDeMariaContext();
+            var customerTypesList = from custType in LookupManager.CustomerTypes
+                select new SelectListItem
+                {
+                    Text = custType.CustomerTypeName,
+                    Value = custType.CustomerTypeId.ToString()
+                };
+            ViewBag.CustTypeList = customerTypesList;
+        }
 
-            var customerTypeId = Request.Form["customerType"];
-            if (customerTypeId != null)
+        [HttpPost]
+        public ActionResult SaveCustomer(Customer customer)
+        {
+            if (ModelState.IsValid)
             {
-                customer.CustomerTypeId = Convert.ToInt16(customerTypeId);
-            }
+                var customerTypeId = Request.Form["customerType"];
+                if (customerTypeId != null)
+                {
+                    customer.CustomerTypeId = Convert.ToInt16(customerTypeId);
+                }
 
-            if (customer.CustomerId > 0)
-            {
-                this._customerRepository.Update(customer);
-                this._customerRepository.Commit();
+                if (customer.CustomerId > 0)
+                {
+                    this._customerRepository.Update(customer);
+                    this._customerRepository.Commit();
+                }
+                else
+                {
+                    this._customerRepository.Insert(customer);
+                    this._customerRepository.Commit();
+                }
+                var selectedCustomerType =
+                    LookupManager.CustomerTypes.FirstOrDefault(x => x.CustomerTypeId == customer.CustomerTypeId);
+                return Json(new CustomerDto()
+                {
+                    CustomerId = customer.CustomerId,
+                    CustomerCode = customer.CustomerCode,
+                    CustomerName = customer.CustomerName,
+                    CustomerTypeId = customer.CustomerTypeId,
+                    CustomerTypeName =
+                        selectedCustomerType == null ? string.Empty : selectedCustomerType.CustomerTypeName,
+                    Address = customer.Address,
+                    ContactNumbers = customer.ContactNumbers,
+                    Notes = customer.Notes
+                });
             }
-            else
-            {
-                this._customerRepository.Insert(customer);
-                this._customerRepository.Commit();
-            }
-            var selectedCustomerType = LookupManager.CustomerTypes.Where(x => x.CustomerTypeId == customer.CustomerTypeId).FirstOrDefault();
-            return Json(new CustomerDto()
-            {
-                CustomerId = customer.CustomerId,
-                CustomerCode = customer.CustomerCode,
-                CustomerName = customer.CustomerName,
-                CustomerTypeId = customer.CustomerTypeId,
-                CustomerTypeName = selectedCustomerType == null ? string.Empty : selectedCustomerType.CustomerTypeName,
-                Address = customer.Address,
-                ContactNumbers = customer.ContactNumbers,
-                Notes = customer.Notes
-            });
+            SetCustomerTypes();
+            return PartialView("CustomerEditor", customer);
         }
     }
 }

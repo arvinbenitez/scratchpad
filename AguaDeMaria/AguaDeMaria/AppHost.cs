@@ -71,9 +71,14 @@ namespace AguaDeMaria
             container.Register<IUserAuthRepository>(c =>
                 new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
             container.RegisterAutoWired<AguaDeMariaContext>().ReusedWithin(ReuseScope.Request);
+            //Model Repository Dependencies
             container.RegisterAutoWiredAs<GenericRepository<Customer>, IRepository<Customer>>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<Order>, IRepository<Order>>().ReusedWithin(ReuseScope.Request);
 
+            //Lookup Dependencies
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();
+            container.RegisterAutoWiredAs<GenericRepository<ProductType>, IRepository<ProductType>>();
+
             container.RegisterAutoWired<LookupDataManager>();
         }
 
