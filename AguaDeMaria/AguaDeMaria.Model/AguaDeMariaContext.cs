@@ -37,6 +37,11 @@ namespace AguaDeMaria.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Customer>()
+                .HasMany(e => e.Orders)
+                .WithRequired(e => e.Customer)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Customer>()
                 .HasMany(e => e.ReturnReceipts)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
@@ -46,10 +51,10 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<CustomerType>()
-            //    .HasMany(e => e.Customers)
-            //    .WithRequired(e => e.CustomerType)
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<CustomerType>()
+                .HasMany(e => e.Customers)
+                .WithRequired(e => e.CustomerType)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DeliveryReceipt>()
                 .HasMany(e => e.DeliveryReceiptDetails)
@@ -59,6 +64,11 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Order)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.DeliveryReceipts)
+                .WithOptional(e=> e.Order)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProductType>()

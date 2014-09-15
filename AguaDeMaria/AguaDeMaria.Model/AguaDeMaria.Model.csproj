@@ -48,9 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AguaDeMaria.cs" />
+    <Compile Include="AguaDeMariaContext.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="CustomerType.cs" />
+    <Compile Include="DataConstants.cs" />
     <Compile Include="DeliveryReceipt.cs" />
     <Compile Include="DeliveryReceiptDetail.cs" />
     <Compile Include="Order.cs" />

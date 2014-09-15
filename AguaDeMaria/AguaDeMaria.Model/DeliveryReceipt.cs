@@ -31,5 +31,7 @@ namespace AguaDeMaria.Model
         public virtual SalesInvoice SalesInvoice { get; set; }
 
         public virtual ICollection<DeliveryReceiptDetail> DeliveryReceiptDetails { get; set; }
+
+        public virtual Order Order { get; set; }
     }
 }

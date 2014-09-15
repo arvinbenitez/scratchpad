@@ -14,6 +14,7 @@ namespace AguaDeMaria.Model
             DeliveryReceipts = new HashSet<DeliveryReceipt>();
             ReturnReceipts = new HashSet<ReturnReceipt>();
             SalesInvoices = new HashSet<SalesInvoice>();
+            Orders = new HashSet<Order>();
         }
 
         [Display(Name = "Customer Id")]
@@ -52,6 +53,8 @@ namespace AguaDeMaria.Model
         public virtual CustomerType CustomerType { get; set; }
 
         public virtual ICollection<DeliveryReceipt> DeliveryReceipts { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
         public virtual ICollection<ReturnReceipt> ReturnReceipts { get; set; }
 

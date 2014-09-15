@@ -227,6 +227,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Customer\CustomerDto.cs" />
+    <Compile Include="Models\Order\OrderDto.cs" />
     <Compile Include="Models\Order\OrderParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -444,6 +445,7 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\CustomerEditor.cshtml" />
     <Content Include="Views\Order\OrderEditor.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -455,10 +457,6 @@
     <ProjectReference Include="..\AguaDeMaria.Common.Data\AguaDeMaria.Common.Data.csproj">
       <Project>{eefa4d1d-4e3d-45a4-9476-a316cd078995}</Project>
       <Name>AguaDeMaria.Common.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AguaDeMaria.Data\AguaDeMaria.Database.csproj">
-      <Project>{f7ea2821-9246-439a-abd6-a1bc60a37ea0}</Project>
-      <Name>AguaDeMaria.Database</Name>
     </ProjectReference>
     <ProjectReference Include="..\AguaDeMaria.Model\AguaDeMaria.Model.csproj">
       <Project>{641ee90d-ee39-485f-ad93-a9204ee1c842}</Project>

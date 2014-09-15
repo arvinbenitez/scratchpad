@@ -12,7 +12,7 @@ namespace AguaDeMaria.Model
         public Order()
         {
             OrderDetails = new HashSet<OrderDetail>();
-            SalesInvoices = new HashSet<SalesInvoice>();
+            DeliveryReceipts = new HashSet<DeliveryReceipt>();
         }
 
         public int OrderId { get; set; }
@@ -21,12 +21,17 @@ namespace AguaDeMaria.Model
         [StringLength(50)]
         public string OrderNumber { get; set; }
 
+        [Display(Name = "Customer")]
         public int CustomerId { get; set; }
 
+        [Display(Name = "Order Date")]
         public DateTime OrderDate { get; set; }
+
+        public virtual Customer Customer { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
-        public virtual ICollection<SalesInvoice> SalesInvoices { get; set; }
+        public virtual ICollection<DeliveryReceipt> DeliveryReceipts { get; set; }
+
     }
 }

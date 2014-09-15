@@ -3,9 +3,6 @@
 @{
     ViewBag.Title = "Customer";
 }
-
-<h2>Customer List</h2>
-<div id="loadingIndicator">Loading...</div>
 <table id="customerList"></table>
 <div id="customerListPager"></div>
 <div id="newPopupDialog" style="display: none">This is where the new Customer Dialog goes</div>
@@ -21,10 +18,6 @@
                 $("#newPopupDialog").html(data);
                 showCustomerDialog();
             });
-        }
-
-        function customerDelete(id) {
-            alert('Are you sure you want to delete customer?');
         }
 
         function newOrder(customerId) {
@@ -49,11 +42,18 @@
                         $.ajax({
                             type: "POST",
                             url: "/Order/SaveOrder",
-                            data: $("#orderEntryForm").serialize()
+                            data: $("#orderEntryForm").serialize(),
+                            context: $(this)
                         }).success(function (data) {
-                            //redirect to Orders List
+                            if (typeof (data.OrderId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                $(this).dialog("close");
+                                //this must have been successful
+                                window.location.href = "/Order/Index";
+                            }
                         });
-                        $(this).dialog("close");
                     }
                 }]
             }).dialog("open");
@@ -83,7 +83,7 @@
                                 } else {
                                     $("#customerList").jqGrid('setRowData', data.CustomerId, data);
                                 }
-                                $("#newPopupDialog").dialog("close");
+                                $(this).dialog("close");
                             }
                         });
                     }
@@ -121,9 +121,8 @@
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
-                        var deleteAction = "<a class='fa fa-cut' href='#' title='Delete' onclick='customerGrid.customerDelete(" + rowId + ")'></a>";
                         var orderAction = "<a class='fa fa-book' href='#' title='New Order' onclick='customerGrid.newOrder(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + deleteAction + orderAction });
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
                     }
                 },
                 loadComplete: function () {
@@ -145,7 +144,6 @@
                 });
         }
         return ({
-            customerDelete: customerDelete,
             customerEdit: customerEdit,
             newOrder: newOrder,
             showCustomerDialog: showCustomerDialog,
