@@ -24,6 +24,8 @@ namespace AguaDeMaria.Model
         public virtual DbSet<ReturnReceiptDetail> ReturnReceiptDetails { get; set; }
         public virtual DbSet<SalesInvoice> SalesInvoices { get; set; }
         public virtual DbSet<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
+
+        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         //public virtual DbSet<UserAuth> UserAuths { get; set; }
         //public virtual DbSet<UserOAuthProvider> UserOAuthProviders { get; set; }
 

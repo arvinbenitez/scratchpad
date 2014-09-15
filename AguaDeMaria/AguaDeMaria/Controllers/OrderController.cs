@@ -13,15 +13,18 @@ namespace AguaDeMaria.Controllers
     [Authorize]
     public class OrderController : Controller
     {
-        public OrderController(IRepository<Order> orderRepository, IRepository<Customer> customerRepository)
+        public OrderController(IRepository<Order> orderRepository, IRepository<Customer> customerRepository, LookupDataManager manager)
         {
             OrderRepository = orderRepository;
             CustromeRepository = customerRepository;
+            LookupDataManager = manager;
         }
 
         private IRepository<Order> OrderRepository { get; set; }
 
         private IRepository<Customer> CustromeRepository { get; set; }
+
+        private LookupDataManager LookupDataManager { get; set; }
 
         //
         // GET: /Order/
@@ -59,7 +62,7 @@ namespace AguaDeMaria.Controllers
             if (parameter.IsEdit())
             {
                 order =
-                    OrderRepository.Get(x => x.OrderId == parameter.OrderId, includedProperties: "OrderDetails")
+                    OrderRepository.Get(x => x.OrderId == parameter.OrderId, includedProperties: "OrderDetails,OrderStatus")
                         .FirstOrDefault();
             }
             else
@@ -68,10 +71,12 @@ namespace AguaDeMaria.Controllers
 
             }
             ViewBag.CustomerList = CustomerListItems();
+            ViewBag.OrderStatusList = OrderStatusListItems();
             OrderDto orderDto = OrderDto.TranslateFrom(order);
 
             return PartialView(orderDto);
         }
+
 
         private static Order CreateNewOrder(OrderParameter parameter)
         {
@@ -79,6 +84,7 @@ namespace AguaDeMaria.Controllers
             {
                 CustomerId = parameter.CustomerId,
                 OrderDate = DateTime.Now,
+                OrderStatusId = DataConstants.OrderStatus.Pending,
                 OrderDetails = new List<OrderDetail>
                                     {
                                         new OrderDetail(){ProductTypeId = DataConstants.ProductTypes.Slim},
@@ -108,6 +114,7 @@ namespace AguaDeMaria.Controllers
                 return Json(orderDto);
             }
             ViewBag.CustomerList = CustomerListItems();
+            ViewBag.OrderStatusList = OrderStatusListItems();
             return PartialView("OrderEditor", orderDto);
         }
 
@@ -122,6 +129,18 @@ namespace AguaDeMaria.Controllers
                         Value = cust.CustomerId.ToString(CultureInfo.InvariantCulture)
                     });
             return customerList;
+        }
+
+
+        private IEnumerable<SelectListItem> OrderStatusListItems()
+        {
+            var orderStatus = from c in LookupDataManager.OrderStatuses
+                              select new SelectListItem()
+                              {
+                                  Value = c.OrderStatusId.ToString(),
+                                  Text = c.StatusName
+                              };
+            return orderStatus.ToList();
         }
     }
 }

@@ -78,6 +78,8 @@ namespace AguaDeMaria
             //Lookup Dependencies
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();
             container.RegisterAutoWiredAs<GenericRepository<ProductType>, IRepository<ProductType>>();
+            container.RegisterAutoWiredAs<GenericRepository<OrderStatus>, IRepository<OrderStatus>>();
+
 
             container.RegisterAutoWired<LookupDataManager>();
         }

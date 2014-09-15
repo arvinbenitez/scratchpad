@@ -21,7 +21,6 @@ namespace AguaDeMaria.Models.Order
         [Required]
         public DateTime OrderDate { get; set; }
 
-
         [Display(Name = "Customer")]
         [Required]
         public int CustomerId { get; set; }
@@ -36,7 +35,10 @@ namespace AguaDeMaria.Models.Order
         [Required]
         public int SlimQty { get; set; }
 
-        public string OrderStatus { get; set; }
+        public string OrderStatusName { get; set; }
+
+        [Display(Name = "Order Status")]
+        public int OrderStatusId { get; set; }
 
         public int SlimOrderDetailId { get; set; }
         public int RoundOrderDetailId { get; set; }
@@ -51,7 +53,9 @@ namespace AguaDeMaria.Models.Order
                 CustomerName = order.Customer != null ? order.Customer.CustomerName : string.Empty,
                 OrderDate = order.OrderDate,
                 OrderId = order.OrderId,
-                OrderNumber = order.OrderNumber
+                OrderNumber = order.OrderNumber,
+                OrderStatusId = order.OrderStatusId,
+                OrderStatusName = order.OrderStatus != null ? order.OrderStatus.StatusName : string.Empty
             };
             var slim = order.OrderDetails.FirstOrDefault(x => x.ProductTypeId == DataConstants.ProductTypes.Slim);
             if (slim != null)
@@ -77,6 +81,7 @@ namespace AguaDeMaria.Models.Order
                 OrderNumber = orderDto.OrderNumber,
                 OrderDate = orderDto.OrderDate,
                 CustomerId = orderDto.CustomerId,
+                OrderStatusId = orderDto.OrderStatusId
             };
             order.OrderDetails.Add(new OrderDetail
             {

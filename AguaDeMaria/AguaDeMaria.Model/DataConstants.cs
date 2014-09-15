@@ -14,5 +14,13 @@ namespace AguaDeMaria.Model
             public const int Slim = 1;
             public const int Round = 2;
         }
+
+        public static class OrderStatus
+        {
+            public const int Pending = 1;
+            public const int Delivered = 2;
+            public const int Cancelled = 3;
+            public const int PartiallyDelivered = 4;
+        }
     }
 }

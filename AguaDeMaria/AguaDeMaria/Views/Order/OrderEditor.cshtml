@@ -57,5 +57,13 @@
                 @Html.ValidationMessageFor(x => x.RoundQty)
             </td>
         </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderStatusId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.OrderStatusId, ViewBag.OrderStatusList as IEnumerable<SelectListItem>, new { @id = "orderstatus" })
+            </td>
+        </tr>
     </table>
 }

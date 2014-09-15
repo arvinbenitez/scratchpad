@@ -27,7 +27,12 @@ namespace AguaDeMaria.Model
         [Display(Name = "Order Date")]
         public DateTime OrderDate { get; set; }
 
+        [Display(Name="Order Status")]
+        public int OrderStatusId { get; set; }
+
         public virtual Customer Customer { get; set; }
+
+        public virtual OrderStatus OrderStatus { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
