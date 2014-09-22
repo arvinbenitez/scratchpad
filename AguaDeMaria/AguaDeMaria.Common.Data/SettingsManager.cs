@@ -27,6 +27,7 @@ namespace AguaDeMaria.Common.Data
             var setting = GetSetting();
             var newNumber = setting.OrderNumberCounter++;
             this.SettingRepository.Update(setting);
+            this.SettingRepository.Commit();
             return newNumber.ToString("0000000000");
         }
 
@@ -53,6 +54,7 @@ namespace AguaDeMaria.Common.Data
             var setting = GetSetting();
             var newNumber = setting.DeliveryReceiptNumberCounter++;
             this.SettingRepository.Update(setting);
+            this.SettingRepository.Commit();
             return newNumber.ToString("0000000000");
         }
     }

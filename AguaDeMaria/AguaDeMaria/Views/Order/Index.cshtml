@@ -42,7 +42,8 @@
                     }
                 },
                 loadComplete: function () {
-                    $("#loadingIndicator").hide();
+                    //update the rowcolors
+                    updateOrderGrid();
                 }
             });
             //show the Navigator
@@ -58,6 +59,13 @@
                     title: "New Order",
                     cursor: "pointer"
                 });
+        }
+
+        function updateOrderGrid() {
+            $("tr.jqgrow:has(td[title='Pending'])").addClass("orderPendingColor");
+            $("tr.jqgrow:has(td[title='Cancelled'])").addClass("orderCancelledColor");
+            $("tr.jqgrow:has(td[title='Delivered'])").addClass("orderDeliveredColor");
+            $("tr.jqgrow:has(td[title='Partially Delivered'])").addClass("orderPartialPendingColor");
         }
 
         function orderEdit(orderId) {
@@ -105,7 +113,9 @@
                                     $("#orderList").jqGrid('addRowData', data.OrderId, data, "first");
                                 } else {
                                     $("#orderList").jqGrid('setRowData', data.OrderId, data);
+                                    $("#orderList").jqGrid().trigger("reloadGrid");
                                 }
+                                updateOrderGrid();
                                 //this must have been successful
                                 $(this).dialog("close");
                             }

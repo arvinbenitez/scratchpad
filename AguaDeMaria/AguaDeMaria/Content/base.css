@@ -2,4 +2,17 @@
   font-size: small;
   font-weight: bold;
 }
+.orderPendingColor {
+  color: red !important;
+}
+.orderDeliveredColor {
+  color: darkgreen !important;
+}
+.orderCancelledColor {
+  color: GrayText !important;
+  font-style: italic !important;
+}
+.orderPartialPendingColor {
+  color: purple !important;
+}
 /*# sourceMappingURL=base.css.map */
