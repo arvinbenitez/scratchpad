@@ -7,17 +7,22 @@ using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Order;
+using Microsoft.Ajax.Utilities;
 
 namespace AguaDeMaria.Controllers
 {
     [Authorize]
     public class OrderController : Controller
     {
-        public OrderController(IRepository<Order> orderRepository, IRepository<Customer> customerRepository, LookupDataManager manager)
+        public OrderController(IRepository<Order> orderRepository, 
+                            IRepository<Customer> customerRepository, 
+                            LookupDataManager manager,
+                            SettingsManager settingsManager)
         {
             OrderRepository = orderRepository;
             CustromeRepository = customerRepository;
             LookupDataManager = manager;
+            SettingsManager = settingsManager;
         }
 
         private IRepository<Order> OrderRepository { get; set; }
@@ -25,6 +30,8 @@ namespace AguaDeMaria.Controllers
         private IRepository<Customer> CustromeRepository { get; set; }
 
         private LookupDataManager LookupDataManager { get; set; }
+
+        private SettingsManager SettingsManager { get; set; }
 
         //
         // GET: /Order/
@@ -78,11 +85,11 @@ namespace AguaDeMaria.Controllers
         }
 
 
-        private static Order CreateNewOrder(OrderParameter parameter)
+        private Order CreateNewOrder(OrderParameter parameter)
         {
             Order order = new Order
             {
-                CustomerId = parameter.CustomerId,
+                CustomerId = parameter.CustomerId.HasValue ? parameter.CustomerId.Value : 0,
                 OrderDate = DateTime.Now,
                 OrderStatusId = DataConstants.OrderStatus.Pending,
                 OrderDetails = new List<OrderDetail>
@@ -91,6 +98,7 @@ namespace AguaDeMaria.Controllers
                                         new OrderDetail(){ProductTypeId = DataConstants.ProductTypes.Round}
                                     }
             };
+            order.OrderNumber = this.SettingsManager.GetNextOrderNumber();
             return order;
         }
 
@@ -100,16 +108,27 @@ namespace AguaDeMaria.Controllers
         {
             if (ModelState.IsValid)
             {
-                Order order = OrderDto.TranslateFrom(orderDto);
-                if (order.OrderId > 0)
+                Order order = null;
+                if (orderDto.OrderId > 0)
                 {
+                    order = this.OrderRepository.Get(x => x.OrderId == orderDto.OrderId).FirstOrDefault();
+                    OrderDto.CopyValues(orderDto, order);
                     this.OrderRepository.Update(order);
                 }
                 else
                 {
+                    order = OrderDto.TranslateFrom(orderDto);
                     this.OrderRepository.Insert(order);
                 }
                 this.OrderRepository.Commit();
+
+                //TODO: Avoid looking this up again
+                orderDto.CustomerName =
+                    this.CustromeRepository.Get(x => x.CustomerId == orderDto.CustomerId).First().CustomerName;
+                orderDto.OrderStatusName =
+                    this.LookupDataManager.OrderStatuses.First(x => x.OrderStatusId == orderDto.OrderStatusId)
+                        .StatusName;
+
                 orderDto.OrderId = order.OrderId;
                 return Json(orderDto);
             }

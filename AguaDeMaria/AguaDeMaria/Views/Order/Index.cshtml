@@ -37,7 +37,7 @@
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='ordersGrid.orderEdit(" + rowId + ")'></a>";
-                        var orderAction = "<a class='fa fa-book' href='#' title='New Order' onclick='ordersGrid.newOrder(" + rowId + ")'></a>";
+                        var orderAction = "<a class='fa fa-book' href='#' title='Create Delivery Receipt' onclick='ordersGrid.newDelivery(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
                     }
                 },
@@ -52,7 +52,7 @@
                     caption: "",
                     buttonicon: "ui-icon-plus",
                     onClickButton: function () {
-                        customerEdit(null);
+                        newOrder(null);
                     },
                     position: "last",
                     title: "New Order",
@@ -60,8 +60,65 @@
                 });
         }
 
+        function orderEdit(orderId) {
+            var url = "/Order/OrderEditor";
+            $.ajax({
+                url: url,
+                data: { OrderId: orderId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showOrderDialog("Edit Order");
+            });
+        }
+
+        function newOrder() {
+            var url = "/Order/OrderEditor";
+            $.ajax({
+                url: url,
+                data: { },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showOrderDialog("New Order");
+            });
+        }
+
+        function showOrderDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Order/SaveOrder",
+                            data: $("#orderEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.OrderId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                var row = $("#orderList").jqGrid('getRowData', data.OrderId);
+                                if (typeof (row.OrderId) == 'undefined') {
+                                    $("#orderList").jqGrid('addRowData', data.OrderId, data, "first");
+                                } else {
+                                    $("#orderList").jqGrid('setRowData', data.OrderId, data);
+                                }
+                                //this must have been successful
+                                $(this).dialog("close");
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
         return ({
-            showOrdersGrid: showOrdersGrid
+            showOrdersGrid: showOrdersGrid,
+            orderEdit: orderEdit,
+            newOrder: newOrder
             });
     }();
 

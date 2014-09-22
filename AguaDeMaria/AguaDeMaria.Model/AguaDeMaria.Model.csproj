@@ -64,6 +64,7 @@
     <Compile Include="ReturnReceiptDetail.cs" />
     <Compile Include="SalesInvoice.cs" />
     <Compile Include="SalesInvoiceDetail.cs" />
+    <Compile Include="Setting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

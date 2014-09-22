@@ -29,6 +29,8 @@ namespace AguaDeMaria.Model
         //public virtual DbSet<UserAuth> UserAuths { get; set; }
         //public virtual DbSet<UserOAuthProvider> UserOAuthProviders { get; set; }
 
+        public virtual DbSet<Setting> Settings { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Configuration.LazyLoadingEnabled = true;

@@ -100,6 +100,31 @@ namespace AguaDeMaria.Models.Order
             return order;
         }
 
+        public static void CopyValues(OrderDto orderDto, Model.Order targetOrder)
+        {
+            targetOrder.CustomerId = orderDto.CustomerId;
+            targetOrder.OrderStatusId = orderDto.OrderStatusId;
+            targetOrder.OrderDate = orderDto.OrderDate;
+
+            var slimOrderDetail =
+                targetOrder.OrderDetails.FirstOrDefault(x => x.ProductTypeId == DataConstants.ProductTypes.Slim);
+            if (slimOrderDetail == null)
+            {
+                slimOrderDetail = new OrderDetail() {ProductTypeId = DataConstants.ProductTypes.Slim};
+                targetOrder.OrderDetails.Add(slimOrderDetail);
+            }
+            slimOrderDetail.Qty = orderDto.SlimQty;
+
+            var roundOrderDetail =
+                targetOrder.OrderDetails.FirstOrDefault(x => x.ProductTypeId == DataConstants.ProductTypes.Round);
+            if (roundOrderDetail == null)
+            {
+                roundOrderDetail = new OrderDetail() { ProductTypeId = DataConstants.ProductTypes.Round };
+                targetOrder.OrderDetails.Add(slimOrderDetail);
+            }
+            roundOrderDetail.Qty = orderDto.RoundQty;
+        }
+
         #endregion
     }
 }

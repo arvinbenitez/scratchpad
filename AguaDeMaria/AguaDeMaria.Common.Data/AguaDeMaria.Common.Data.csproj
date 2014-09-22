@@ -51,6 +51,7 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="LookupDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -79,9 +79,11 @@ namespace AguaDeMaria
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();
             container.RegisterAutoWiredAs<GenericRepository<ProductType>, IRepository<ProductType>>();
             container.RegisterAutoWiredAs<GenericRepository<OrderStatus>, IRepository<OrderStatus>>();
+            container.RegisterAutoWiredAs<GenericRepository<Setting>, IRepository<Setting>>();
 
 
             container.RegisterAutoWired<LookupDataManager>();
+            container.RegisterAutoWired<SettingsManager>();
         }
 
         protected virtual EndpointHostConfig CreateEndpointHostConfig()
