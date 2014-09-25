@@ -1,0 +1,92 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="WorkFlowSample.Transcode"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:local="clr-namespace:WorkFlowSample"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Formats" Type="InArgument(s:String[])" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>WorkFlowSample.Transcode_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Deployment</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.Runtime</AssemblyReference>
+      <AssemblyReference>System.WorkflowServices</AssemblyReference>
+      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Workflow.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>WorkFlowSample</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_3">
+    <ParallelForEach.Values>
+      <InArgument x:TypeArguments="scg:IEnumerable(x:String)">
+        <mca:CSharpValue x:TypeArguments="scg:IEnumerable(x:String)">Formats</mca:CSharpValue>
+      </InArgument>
+    </ParallelForEach.Values>
+    <ActivityAction x:TypeArguments="x:String">
+      <ActivityAction.Argument>
+        <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+      </ActivityAction.Argument>
+      <While sap2010:WorkflowViewState.IdRef="While_1">
+        <While.Variables>
+          <Variable x:TypeArguments="x:Boolean" Name="IsTranscoded" />
+        </While.Variables>
+        <While.Condition>
+          <mca:CSharpValue x:TypeArguments="x:Boolean">IsTranscoded == false</mca:CSharpValue>
+        </While.Condition>
+        <local:BeginTranscodeV3 sap2010:WorkflowViewState.IdRef="BeginTranscodeV3_1">
+          <local:BeginTranscodeV3.Format>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">item</mca:CSharpValue>
+            </InArgument>
+          </local:BeginTranscodeV3.Format>
+          <local:BeginTranscodeV3.Result>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpReference x:TypeArguments="x:Boolean">IsTranscoded</mca:CSharpReference>
+            </OutArgument>
+          </local:BeginTranscodeV3.Result>
+        </local:BeginTranscodeV3>
+      </While>
+    </ActivityAction>
+    <sads:DebugSymbol.Symbol>d0FDOlxzb3VyY2Vcc2NyYXRjaHBhZFxXb3JrRmxvd1NhbXBsZVxXb3JrRmxvd1NhbXBsZVxUcmFuc2NvZGUueGFtbAczA1MVAgEBNgk2XwIBED0HUA8CAQJECU8iAgEHQgtCXwIBA0cPR1ECAQxMD0xiAgEI</sads:DebugSymbol.Symbol>
+  </ParallelForEach>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="BeginTranscodeV3_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="464,220" />
+      <sap2010:ViewStateData Id="ParallelForEach`1_3" sap:VirtualizedContainerService.HintSize="494,370" />
+      <sap2010:ViewStateData Id="WorkFlowSample.Transcode_1" sap:VirtualizedContainerService.HintSize="534,450" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
