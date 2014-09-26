@@ -11,7 +11,7 @@
             jQuery("#orderList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Order Id','Customer', 'Order Number', 'Order Date', 'Slim', 'Round', 'Status','Actions'],
+                colNames: ['Order Id', 'Customer', 'Order Number', 'Order Date', 'Slim', 'Round', 'Status', 'Actions'],
                 colModel: [
                         { name: 'OrderId', key: true, index: 'OrderId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerName', index: 'CustomerName', width: 100 },
@@ -83,10 +83,21 @@
             var url = "/Order/OrderEditor";
             $.ajax({
                 url: url,
-                data: { },
+                data: {},
             }).success(function (data) {
                 $("#newPopupDialog").html(data);
                 showOrderDialog("New Order");
+            });
+        }
+
+        function newDelivery(orderId) {
+            var url = "/Delivery/DeliveryEditor";
+            $.ajax({
+                url: url,
+                data: { orderId: orderId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showOrderDialog("Delivery Receipt");
             });
         }
 
@@ -128,8 +139,9 @@
         return ({
             showOrdersGrid: showOrdersGrid,
             orderEdit: orderEdit,
+            newDelivery: newDelivery,
             newOrder: newOrder
-            });
+        });
     }();
 
     $(document).ready(function () {

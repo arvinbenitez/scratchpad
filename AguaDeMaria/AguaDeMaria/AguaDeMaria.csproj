@@ -219,6 +219,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Filters\ExcludeIdValidation.cs" />
@@ -227,6 +228,8 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Customer\CustomerDto.cs" />
+    <Compile Include="Models\Delivery\DeliveryDto.cs" />
+    <Compile Include="Models\Delivery\DeliveryParameter.cs" />
     <Compile Include="Models\Order\OrderDto.cs" />
     <Compile Include="Models\Order\OrderParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -447,6 +450,7 @@
     <Content Include="Views\Customer\CustomerEditor.cshtml" />
     <Content Include="Views\Order\OrderEditor.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Delivery\DeliveryEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
