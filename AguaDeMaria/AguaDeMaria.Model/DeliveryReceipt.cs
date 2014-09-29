@@ -26,6 +26,8 @@ namespace AguaDeMaria.Model
 
         public int SalesInvoiceId { get; set; }
 
+        public int? OrderId { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         public virtual SalesInvoice SalesInvoice { get; set; }

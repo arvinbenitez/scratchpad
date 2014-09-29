@@ -1,1 +1,78 @@
-﻿<h1>This is a placeholder for Delivery</h1>
+﻿@model AguaDeMaria.Models.Delivery.DeliveryDto
+
+@using (Html.BeginForm("SaveDelivery", "Delivery", FormMethod.Post, new { id = "drEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.DeliveryReceiptId)
+                @Html.HiddenFor(x => x.SlimDeliveryReceiptDetailId)
+                @Html.HiddenFor(x => x.RoundDeliveryReceiptDetailId)
+                @Html.HiddenFor(x => x.OrderId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.OrderNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(x=> x.OrderNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+                @Html.ValidationMessageFor(x => x.CustomerId)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DRNumber)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DRNumber)
+                @Html.ValidationMessageFor(x => x.DRNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DRDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DRDate)
+                @Html.ValidationMessageFor(x => x.DRDate)
+            </td>
+        </tr>
+        <!-- Show the Product Entries -->
+        <tr>
+            <td colspan="2">
+                <div class="popupDiv">
+                    <table>
+                            <tr>
+                                <td>Product</td>
+                                <td>Quantity</td>
+                                <td>Unit Price</td>
+                                <td>Amount</td>
+                            </tr>
+                        <tr>
+                            <td>@Html.LabelFor(x => x.SlimQty)</td>
+                            <td>@Html.TextBoxFor(x => x.SlimQty)</td>
+                            <td>@Html.TextBoxFor(x => x.SlimUnitPrice)</td>
+                            <td>@Html.TextBoxFor(x => x.SlimAmount)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(x => x.RoundQty)</td>
+                            <td>@Html.TextBoxFor(x => x.RoundQty)</td>
+                            <td>@Html.TextBoxFor(x => x.RoundUnitPrice)</td>
+                            <td>@Html.TextBoxFor(x => x.RoundAmount)</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+}

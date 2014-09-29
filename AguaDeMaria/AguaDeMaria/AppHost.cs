@@ -76,6 +76,7 @@ namespace AguaDeMaria
             //Model Repository Dependencies
             container.RegisterAutoWiredAs<GenericRepository<Customer>, IRepository<Customer>>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<Order>, IRepository<Order>>().ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<DeliveryReceipt>, IRepository<DeliveryReceipt>>().ReusedWithin(ReuseScope.Request);
 
             //Lookup Dependencies
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();

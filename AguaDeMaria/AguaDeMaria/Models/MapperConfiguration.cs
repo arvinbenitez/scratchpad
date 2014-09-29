@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using AguaDeMaria.Model;
+using AguaDeMaria.Models.Delivery;
 using AguaDeMaria.Models.Order;
 using AutoMapper;
 
@@ -15,6 +16,7 @@ namespace AguaDeMaria.Models
         public static void Configure()
         {
             ConfigureOrder();
+            ConfigureDeliveryReceipt();
         }
 
         private static void ConfigureOrder()
@@ -82,6 +84,29 @@ namespace AguaDeMaria.Models
                         a.Qty = b.SlimQty;
                     })
                 );
+        }
+
+        private static void ConfigureDeliveryReceipt()
+        {
+            //Map to Order to DeliveryReceipt
+            Mapper.CreateMap<Model.Order, DeliveryDto>()
+                .ForMember(x => x.SlimQty,
+                    o =>
+                        o.MapFrom(
+                            s =>
+                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                    .Qty))
+                .ForMember(x => x.RoundQty,
+                    o =>
+                        o.MapFrom(
+                            s =>
+                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                    .Qty))
+                .ForMember(x => x.CustomerName,
+                    o =>
+                        o.MapFrom(
+                            s =>
+                                s.Customer.CustomerName));
         }
 
         private static void MapChildToCollection<TCollection, TChild, TSource>(TCollection collectionObject,
