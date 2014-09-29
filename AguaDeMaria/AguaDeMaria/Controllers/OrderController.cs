@@ -7,6 +7,7 @@ using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Order;
+using AutoMapper;
 using Microsoft.Ajax.Utilities;
 
 namespace AguaDeMaria.Controllers
@@ -58,7 +59,7 @@ namespace AguaDeMaria.Controllers
                 orderBy: x => x.OrderBy(y => y.OrderDate),
                 includedProperties: "Customer");
             var ordersList = from o in orders
-                             select OrderDto.TranslateFrom(o);
+                             select Mapper.Map<OrderDto>(o);
             return Json(ordersList, JsonRequestBehavior.AllowGet);
 
         }
@@ -79,7 +80,7 @@ namespace AguaDeMaria.Controllers
             }
             ViewBag.CustomerList = CustomerListItems();
             ViewBag.OrderStatusList = OrderStatusListItems();
-            OrderDto orderDto = OrderDto.TranslateFrom(order);
+            OrderDto orderDto = Mapper.Map<OrderDto>(order);
 
             return PartialView(orderDto);
         }
@@ -112,12 +113,12 @@ namespace AguaDeMaria.Controllers
                 if (orderDto.OrderId > 0)
                 {
                     order = this.OrderRepository.Get(x => x.OrderId == orderDto.OrderId).FirstOrDefault();
-                    OrderDto.CopyValues(orderDto, order);
+                    Mapper.Map(orderDto, order);
                     this.OrderRepository.Update(order);
                 }
                 else
                 {
-                    order = OrderDto.TranslateFrom(orderDto);
+                    order = Mapper.Map<Model.Order>(orderDto);
                     this.OrderRepository.Insert(order);
                 }
                 this.OrderRepository.Commit();

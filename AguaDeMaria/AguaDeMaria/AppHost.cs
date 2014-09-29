@@ -43,6 +43,8 @@ namespace AguaDeMaria
                         ));
             ConfigureDependencies(container);
             ConfigureAuthorization(container);
+
+            Models.MapperConfiguration.Configure();
         }
 
         private static void ConfigureAuthorization(Funq.Container container)
