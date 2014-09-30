@@ -11,7 +11,6 @@ namespace AguaDeMaria.Model
     {
         public SalesInvoice()
         {
-            DeliveryReceipts = new HashSet<DeliveryReceipt>();
             SalesInvoiceDetails = new HashSet<SalesInvoiceDetail>();
         }
 
@@ -32,7 +31,6 @@ namespace AguaDeMaria.Model
 
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<DeliveryReceipt> DeliveryReceipts { get; set; }
 
         public virtual Order Order { get; set; }
 

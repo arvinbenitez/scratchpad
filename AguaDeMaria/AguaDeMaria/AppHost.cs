@@ -72,7 +72,11 @@ namespace AguaDeMaria
                     new OrmLiteConnectionFactory(ConfigurationManager.ConnectionStrings["SQLAuthorization"].ConnectionString, SqlServerDialect.Provider));
             container.Register<IUserAuthRepository>(c =>
                 new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
+
             container.RegisterAutoWired<AguaDeMariaContext>().ReusedWithin(ReuseScope.Request);
+            //Unit of Work
+            container.RegisterAutoWiredAs<UnitOfWork, IUnitOfWork>().ReusedWithin(ReuseScope.Request);
+
             //Model Repository Dependencies
             container.RegisterAutoWiredAs<GenericRepository<Customer>, IRepository<Customer>>().ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<Order>, IRepository<Order>>().ReusedWithin(ReuseScope.Request);

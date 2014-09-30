@@ -24,13 +24,10 @@ namespace AguaDeMaria.Model
 
         public int CustomerId { get; set; }
 
-        public int SalesInvoiceId { get; set; }
-
         public int? OrderId { get; set; }
 
         public virtual Customer Customer { get; set; }
 
-        public virtual SalesInvoice SalesInvoice { get; set; }
 
         public virtual ICollection<DeliveryReceiptDetail> DeliveryReceiptDetails { get; set; }
 

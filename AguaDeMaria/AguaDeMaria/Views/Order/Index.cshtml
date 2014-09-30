@@ -97,8 +97,36 @@
                 data: { orderId: orderId },
             }).success(function (data) {
                 $("#newPopupDialog").html(data);
-                showOrderDialog("Delivery Receipt");
+                showDrDialog("Delivery Receipt");
             });
+        }
+
+        function showDrDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Create",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Delivery/SaveDeliveryReceipt",
+                            data: $("#drEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.OrderId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                $(this).dialog("close");
+                                //this must have been successful
+                                window.location.href = "/Delivery/Index";
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
         }
 
         function showOrderDialog(title) {

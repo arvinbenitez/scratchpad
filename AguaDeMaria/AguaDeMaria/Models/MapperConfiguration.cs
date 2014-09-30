@@ -58,13 +58,6 @@ namespace AguaDeMaria.Models
                                 s.OrderStatus.StatusName));
 
 
-            Action<OrderDetail, OrderDto> mapOrderDetail = (x, y) =>
-            {
-                x.OrderDetailId = y.RoundOrderDetailId;
-                x.ProductTypeId = DataConstants.ProductTypes.Round;
-                x.Qty = y.RoundQty;
-            };
-
             Mapper.CreateMap<OrderDto, Model.Order>()
                 .AfterMap((x, y) => MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(y.OrderDetails, x,
                     z => z.ProductTypeId == DataConstants.ProductTypes.Round,
@@ -107,6 +100,32 @@ namespace AguaDeMaria.Models
                         o.MapFrom(
                             s =>
                                 s.Customer.CustomerName));
+
+            //Map DeliveryDto to DeliveryReceipt
+            Mapper.CreateMap<DeliveryDto, Model.DeliveryReceipt>()
+                .AfterMap((x, y) => MapChildToCollection<ICollection<DeliveryReceiptDetail>, DeliveryReceiptDetail, DeliveryDto>
+                            (y.DeliveryReceiptDetails, x, z => z.ProductTypeId == DataConstants.ProductTypes.Slim,
+                            (a, b) =>
+                            {
+                                a.DeliveryReceiptDetailId = b.SlimDeliveryReceiptDetailId;
+                                a.ProductTypeId = DataConstants.ProductTypes.Slim;
+                                a.Quantity = b.SlimQty;
+                                a.UnitPrice = b.SlimUnitPrice;
+                                a.Amount = b.SlimAmount;
+
+                            })
+                )
+                .AfterMap((x, y) => MapChildToCollection<ICollection<DeliveryReceiptDetail>, DeliveryReceiptDetail, DeliveryDto>
+                            (y.DeliveryReceiptDetails, x, z => z.ProductTypeId == DataConstants.ProductTypes.Round,
+                            (a, b) =>
+                            {
+                                a.DeliveryReceiptDetailId = b.RoundDeliveryReceiptDetailId;
+                                a.ProductTypeId = DataConstants.ProductTypes.Round;
+                                a.Quantity = b.RoundQty;
+                                a.UnitPrice = b.RoundUnitPrice;
+                                a.Amount = b.RoundAmount;
+                            })
+                );
         }
 
         private static void MapChildToCollection<TCollection, TChild, TSource>(TCollection collectionObject,
@@ -115,10 +134,9 @@ namespace AguaDeMaria.Models
                                                            Action<TChild, TSource> mappingPredicate)
             where TCollection : ICollection<TChild>
             where TChild : class , new()
-
         {
             var child = collectionObject.FirstOrDefault(existenceCheckPredicate);
-            if (child != null)
+            if (child == null)
             {
                 child = new TChild();
                 collectionObject.Add(child);

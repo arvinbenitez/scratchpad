@@ -108,10 +108,7 @@ namespace AguaDeMaria.Model
                 .Property(e => e.Quantity)
                 .HasPrecision(9, 2);
 
-            modelBuilder.Entity<SalesInvoice>()
-                .HasMany(e => e.DeliveryReceipts)
-                .WithRequired(e => e.SalesInvoice)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<SalesInvoice>();
 
             modelBuilder.Entity<SalesInvoice>()
                 .HasMany(e => e.SalesInvoiceDetails)

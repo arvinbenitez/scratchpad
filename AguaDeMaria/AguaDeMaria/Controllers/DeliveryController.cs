@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
+using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Delivery;
 using AutoMapper;
@@ -23,11 +24,14 @@ namespace AguaDeMaria.Controllers
 
         private IRepository<DeliveryReceipt> DeliveryRepository { get; set; }
 
+        private IUnitOfWork UnitOfWork { get; set; }
+
         public DeliveryController(IRepository<Order> orderRepository,
                             IRepository<Customer> customerRepository,
                             LookupDataManager manager,
                             SettingsManager settingsManager,
-                            IRepository<DeliveryReceipt> deliveryRepository
+                            IRepository<DeliveryReceipt> deliveryRepository,
+                            IUnitOfWork unitOfWork
             )
         {
             OrderRepository = orderRepository;
@@ -35,6 +39,7 @@ namespace AguaDeMaria.Controllers
             LookupDataManager = manager;
             SettingsManager = settingsManager;
             DeliveryRepository = deliveryRepository;
+            UnitOfWork = unitOfWork;
         }
         public ActionResult DeliveryEditor(DeliveryParameter parameter)
         {
@@ -49,6 +54,45 @@ namespace AguaDeMaria.Controllers
             }
             ViewBag.CustomerList = CustomerListItems();
             return PartialView(deliveryDto);
+        }
+
+        [ExcludeIdValidation(IdField = "DeliveryReceiptId")]
+        [HttpPost]
+        public ActionResult SaveDeliveryReceipt(DeliveryDto deliveryDto)
+        {
+            if (ModelState.IsValid)
+            {
+                DeliveryReceipt deliveryReceipt;
+                if (deliveryDto.DeliveryReceiptId > 0)
+                {
+                    deliveryReceipt =
+                        DeliveryRepository.Get(x => x.DeliveryReceiptId == deliveryDto.DeliveryReceiptId)
+                            .FirstOrDefault();
+                    if (deliveryReceipt != null)
+                    {
+                        DeliveryRepository.Update(deliveryReceipt);
+                    }
+                }
+                else
+                {
+                    deliveryReceipt = Mapper.Map<DeliveryReceipt>(deliveryDto);
+                    DeliveryRepository.Insert(deliveryReceipt);
+                }
+                if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
+                {
+                    var order = OrderRepository.Get(x => x.OrderId == deliveryDto.OrderId).FirstOrDefault();
+                    if (order != null)
+                    {
+                        order.OrderStatusId = DataConstants.OrderStatus.Delivered;
+                        OrderRepository.Update(order);
+                    }
+                }
+                UnitOfWork.Commit();
+
+                return Json(deliveryDto);
+            }
+            ViewBag.CustomerList = CustomerListItems();
+            return PartialView("DeliveryEditor", deliveryDto);
         }
 
         private IEnumerable<SelectListItem> CustomerListItems()
