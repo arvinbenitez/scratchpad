@@ -27,7 +27,15 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Workflow.Runtime</AssemblyReference>
+      <AssemblyReference>System.WorkflowServices</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
@@ -36,14 +44,6 @@
       <AssemblyReference>System.Drawing</AssemblyReference>
       <AssemblyReference>System.Windows.Forms</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
-      <AssemblyReference>System.Activities</AssemblyReference>
-      <AssemblyReference>System.Workflow.Runtime</AssemblyReference>
-      <AssemblyReference>System.WorkflowServices</AssemblyReference>
-      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
-      <AssemblyReference>System.Workflow.Activities</AssemblyReference>
-      <AssemblyReference>System.ServiceModel</AssemblyReference>
-      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
-      <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>WorkFlowSample</AssemblyReference>
     </sco:Collection>
@@ -58,35 +58,52 @@
       <ActivityAction.Argument>
         <DelegateInArgument x:TypeArguments="x:String" Name="item" />
       </ActivityAction.Argument>
-      <While sap2010:WorkflowViewState.IdRef="While_1">
-        <While.Variables>
-          <Variable x:TypeArguments="x:Boolean" Name="IsTranscoded" />
-        </While.Variables>
-        <While.Condition>
-          <mca:CSharpValue x:TypeArguments="x:Boolean">IsTranscoded == false</mca:CSharpValue>
-        </While.Condition>
-        <local:BeginTranscodeV3 sap2010:WorkflowViewState.IdRef="BeginTranscodeV3_1">
-          <local:BeginTranscodeV3.Format>
+      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <While sap2010:WorkflowViewState.IdRef="While_1">
+          <While.Variables>
+            <Variable x:TypeArguments="x:Boolean" Name="IsTranscoded" />
+          </While.Variables>
+          <While.Condition>
+            <mca:CSharpValue x:TypeArguments="x:Boolean">IsTranscoded == false</mca:CSharpValue>
+          </While.Condition>
+          <local:BeginTranscodeV3 sap2010:WorkflowViewState.IdRef="BeginTranscodeV3_1">
+            <local:BeginTranscodeV3.Format>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">item</mca:CSharpValue>
+              </InArgument>
+            </local:BeginTranscodeV3.Format>
+            <local:BeginTranscodeV3.Result>
+              <OutArgument x:TypeArguments="x:Boolean">
+                <mca:CSharpReference x:TypeArguments="x:Boolean">IsTranscoded</mca:CSharpReference>
+              </OutArgument>
+            </local:BeginTranscodeV3.Result>
+          </local:BeginTranscodeV3>
+        </While>
+        <local:SendFiles sap2010:WorkflowViewState.IdRef="SendFiles_1">
+          <local:SendFiles.Format>
             <InArgument x:TypeArguments="x:String">
               <mca:CSharpValue x:TypeArguments="x:String">item</mca:CSharpValue>
             </InArgument>
-          </local:BeginTranscodeV3.Format>
-          <local:BeginTranscodeV3.Result>
-            <OutArgument x:TypeArguments="x:Boolean">
-              <mca:CSharpReference x:TypeArguments="x:Boolean">IsTranscoded</mca:CSharpReference>
-            </OutArgument>
-          </local:BeginTranscodeV3.Result>
-        </local:BeginTranscodeV3>
-      </While>
+          </local:SendFiles.Format>
+        </local:SendFiles>
+      </Sequence>
     </ActivityAction>
-    <sads:DebugSymbol.Symbol>d0FDOlxzb3VyY2Vcc2NyYXRjaHBhZFxXb3JrRmxvd1NhbXBsZVxXb3JrRmxvd1NhbXBsZVxUcmFuc2NvZGUueGFtbAczA1MVAgEBNgk2XwIBED0HUA8CAQJECU8iAgEHQgtCXwIBA0cPR1ECAQxMD0xiAgEI</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0FDOlxzb3VyY2Vcc2NyYXRjaHBhZFxXb3JrRmxvd1NhbXBsZVxXb3JrRmxvd1NhbXBsZVxUcmFuc2NvZGUueGFtbAozA1wVAgEBNgk2XwIBFT0HWRICAQI+CVERAgEHUglYGwIBA0ULUCQCAQxDDUNhAgEIVQ9VUQIBBEgRSFMCARFNEU1kAgEN</sads:DebugSymbol.Symbol>
   </ParallelForEach>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="BeginTranscodeV3_1" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="464,220" />
-      <sap2010:ViewStateData Id="ParallelForEach`1_3" sap:VirtualizedContainerService.HintSize="494,370" />
-      <sap2010:ViewStateData Id="WorkFlowSample.Transcode_1" sap:VirtualizedContainerService.HintSize="534,450" />
+      <sap2010:ViewStateData Id="SendFiles_1" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,406">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ParallelForEach`1_3" sap:VirtualizedContainerService.HintSize="516,556" />
+      <sap2010:ViewStateData Id="WorkFlowSample.Transcode_1" sap:VirtualizedContainerService.HintSize="556,636" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
