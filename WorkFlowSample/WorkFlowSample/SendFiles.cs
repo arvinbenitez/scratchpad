@@ -24,7 +24,8 @@ namespace WorkFlowSample
             Debug.WriteLine("{0:MM-dd-yyyy hh:mm:ss.fff} - Executing SendFiles " + format, DateTime.Now);
             System.Threading.Thread.Sleep(5000);
             Debug.WriteLine("{0:MM-dd-yyyy hh:mm:ss.fff} - Done SendFiles" + format, DateTime.Now);
-            context.CreateBookmark(format, OnResume);
+            //context.CreateBookmark(format, OnResume);
+            context.SetValue(Result, true);
         }
 
         private void OnResume(NativeActivityContext context, Bookmark bookmark, object value)
