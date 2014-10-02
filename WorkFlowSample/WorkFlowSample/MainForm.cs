@@ -43,11 +43,16 @@ namespace WorkFlowSample
         }
 
 
-        private WorkflowApplication CreateWorkflowApplication(string xaml, SqlWorkflowInstanceStore store, IDictionary<string,object> input = null)
+        private WorkflowApplication CreateWorkflowApplication(string xaml, SqlWorkflowInstanceStore store, IDictionary<string, object> input = null)
         {
+            ActivityXamlServicesSettings settings = new ActivityXamlServicesSettings
+            {
+                CompileExpressions = true
+            };
+
             Activity transcodeWorkflow;
             if (!string.IsNullOrEmpty(xaml))
-                transcodeWorkflow= CreateActivityFrom(xaml);
+                transcodeWorkflow = CreateActivityFrom(xaml);
             else
             {
                 transcodeWorkflow = new Transcode();
@@ -59,12 +64,29 @@ namespace WorkFlowSample
             application.Completed = WorkflowCompleted;
             application.PersistableIdle = OnPersistableIdle;
             application.Unloaded = OnWorkflowUnloaded;
+            application.Aborted = OnWorkflowAborted;
+            application.OnUnhandledException = OnWorkflowException;
             return application;
+        }
+
+        private UnhandledExceptionAction OnWorkflowException(WorkflowApplicationUnhandledExceptionEventArgs arg)
+        {
+            WriteLine("Exception: {0}", arg.UnhandledException.Message);
+            return UnhandledExceptionAction.Abort;
+        }
+
+        private void OnWorkflowAborted(WorkflowApplicationAbortedEventArgs obj)
+        {
+            WriteLine("Aborted");
         }
 
         private static Activity CreateActivityFrom(string xaml)
         {
             var sr = new StringReader(xaml);
+            var settings = new ActivityXamlServicesSettings
+            {
+                CompileExpressions = true
+            };
 
             //Change LocalAssembly to where the Activities reside
             var xamlSettings = new XamlXmlReaderSettings { LocalAssembly = Assembly.GetExecutingAssembly() };
@@ -72,7 +94,8 @@ namespace WorkFlowSample
             var xamlReader = ActivityXamlServices
                 .CreateReader(new XamlXmlReader(sr, xamlSettings));
 
-            var result = XamlServices.Load(xamlReader);
+            var result = ActivityXamlServices.Load(xamlReader, settings);
+            //var result = XamlServices.Load(xamlReader);
 
             var activity = result as Activity;
 
