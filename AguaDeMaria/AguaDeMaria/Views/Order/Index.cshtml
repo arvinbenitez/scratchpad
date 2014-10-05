@@ -1,11 +1,12 @@
 ﻿@{
     ViewBag.Title = "Orders";
 }
+@Html.Partial("_DateFilter")
 <table id="orderList"></table>
 <div id="orderListPager"></div>
 <div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
 <script>
-    var ordersGrid = function () {
+    var ordersGrid = function (dateFilter) {
         function showOrdersGrid(startDate, endDate) {
             var url = "/Order/GetOrderList?startDate=" + startDate + "&endDate=" + endDate;
             jQuery("#orderList").jqGrid({
@@ -164,25 +165,42 @@
             }).dialog("open");
         }
 
+        $(document).ready(function () {
+
+            $("#newPopupDialog").dialog({
+                width: 500,
+                height: 450,
+                autoOpen: false
+            });
+
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+
+            //show the grid
+            dateFilter.setClickDelegate(showOrderGrid);
+            ordersGrid.showOrdersGrid(startDate, endDate);
+
+        });
+
+        function showOrderGrid() {
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+            var url = "/Order/GetOrderList?startDate=" + startDate + "&endDate=" + endDate;
+
+            jQuery("#orderList").jqGrid().setGridParam({
+                datatype: 'json',
+                page: 1,
+                url: url
+            }).trigger("reloadGrid");
+        }
+
         return ({
             showOrdersGrid: showOrdersGrid,
             orderEdit: orderEdit,
             newDelivery: newDelivery,
             newOrder: newOrder
         });
-    }();
+    }(DateFilter);
 
-    $(document).ready(function () {
 
-        $("#newPopupDialog").dialog({
-            width: 500,
-            height: 450,
-            autoOpen: false
-        });
-
-        var startDate = new Date();
-        var endDate = startDate.add('days', 1);
-        //show the grid
-        ordersGrid.showOrdersGrid(startDate, endDate);
-    });
 </script>

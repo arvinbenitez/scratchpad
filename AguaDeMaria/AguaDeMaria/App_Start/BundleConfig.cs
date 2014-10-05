@@ -28,6 +28,9 @@ namespace AguaDeMaria
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css",
                         "~/Content/base.css"));
 
+            bundles.Add(new StyleBundle("~/Content/AguaDeMariaCss").Include("~/Content/aguademaria.css",
+            "~/Content/base.css"));
+
             bundles.Add(new StyleBundle("~/Content/FontAwesome/css").Include("~/Content/fontawesome/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

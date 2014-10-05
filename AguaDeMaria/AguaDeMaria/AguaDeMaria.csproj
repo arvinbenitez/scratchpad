@@ -243,6 +243,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AguaDeMaria.css" />
     <Content Include="Content\base.css">
       <DependentUpon>base.less</DependentUpon>
     </Content>
@@ -349,7 +350,7 @@
     <Content Include="Content\ui.jqgrid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Images\Water.png" />
+    <Content Include="Images\SmallWater.png" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -461,6 +462,7 @@
     <Content Include="Views\Delivery\DeliveryEditor.cshtml" />
     <Content Include="Views\Delivery\Index.cshtml" />
     <Content Include="Views\Shared\_DateFilter.cshtml" />
+    <Content Include="Views\Shared\_MainLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>Agua De Maria Water Business Solutions</title>
+    @Styles.Render("~/Content/AguaDeMariaCss")
+    @Styles.Render("~/Content/FontAwesome/css")
+    @Styles.Render("~/Content/themes/redmond/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header class="admHeader">
+        <div class="admTitle">Aqua Kesh Water Station</div>
+        <div class="admSubTitle">Water Refilling Business Solution</div>
+        <div class="admLogo"></div>
+        @if (Request.IsAuthenticated)
+        {
+            <nav>
+                <ul class="admTopNavigation">
+                    <li class="verticalLine">@Html.ActionLink("Customer","Index","Customer")</li>
+                    <li class="verticalLine">@Html.ActionLink("Orders", "Index", "Order")</li>
+                    <li class="verticalLine">@Html.ActionLink("Deliveries", "Index", "Delivery")</li>
+                    <li >Inventory</li>
+
+                </ul>
+            </nav>
+        }
+        <section class="admLogin">
+            @Html.Partial("_LoginPartial")
+        </section>
+    </header>
+    @RenderSection("featured", required: false)
+    <section class="admBody">
+        <div id="main-container">
+            @RenderBody()
+        </div>
+    </section>
+    <footer>
+        <div class="content-wrapper">
+            <div class="statusBar">
+                &copy; @DateTime.Now.Year - Agua De Maria Water Business Solutions
+            </div>
+        </div>
+    </footer>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
