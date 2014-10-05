@@ -6,8 +6,8 @@
 <div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
 <script>
     var ordersGrid = function () {
-        function showOrdersGrid() {
-            var url = "/Order/GetOrderList";
+        function showOrdersGrid(startDate, endDate) {
+            var url = "/Order/GetOrderList?startDate=" + startDate + "&endDate=" + endDate;
             jQuery("#orderList").jqGrid({
                 url: url,
                 datatype: "json",
@@ -173,13 +173,16 @@
     }();
 
     $(document).ready(function () {
+
         $("#newPopupDialog").dialog({
             width: 500,
-            height: 400,
+            height: 450,
             autoOpen: false
         });
 
+        var startDate = new Date();
+        var endDate = startDate.add('days', 1);
         //show the grid
-        ordersGrid.showOrdersGrid();
+        ordersGrid.showOrdersGrid(startDate, endDate);
     });
 </script>

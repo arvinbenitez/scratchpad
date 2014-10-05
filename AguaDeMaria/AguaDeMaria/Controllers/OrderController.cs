@@ -36,26 +36,18 @@ namespace AguaDeMaria.Controllers
 
         //
         // GET: /Order/
-        public ActionResult Index(DateTime? orderDate)
+        public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             return View();
         }
 
-        public ActionResult GetOrderList(DateTime? orderDate)
+        public ActionResult GetOrderList(DateTime? startDate, DateTime? endDate)
         {
-            DateTime startDate, endDate;
-            if (!orderDate.HasValue)
-            {
-                startDate = DateTime.Today;
-            }
-            else
-            {
-                startDate = orderDate.Value.Date;
-            }
-            endDate = startDate.AddDays(1);
+            DateTime orderStartDate = startDate.HasValue? startDate.Value.Date: DateTime.Today;
+            DateTime orderEndDate = endDate.HasValue ? endDate.Value.Date.AddDays(1) : orderStartDate.AddDays(1);
             //Get the orders for Today
             var orders = OrderRepository.Get(
-                x => x.OrderDate >= startDate && x.OrderDate <= endDate,
+                x => x.OrderDate >= orderStartDate && x.OrderDate <= orderEndDate,
                 orderBy: x => x.OrderBy(y => y.OrderDate),
                 includedProperties: "Customer");
             var ordersList = from o in orders
@@ -107,7 +99,7 @@ namespace AguaDeMaria.Controllers
         [HttpPost]
         public ActionResult SaveOrder(OrderDto orderDto)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && orderDto.IsValid)
             {
                 Order order = null;
                 if (orderDto.OrderId > 0)

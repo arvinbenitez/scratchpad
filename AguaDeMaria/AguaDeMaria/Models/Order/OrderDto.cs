@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AguaDeMaria.Model;
@@ -42,6 +43,21 @@ namespace AguaDeMaria.Models.Order
 
         public int SlimOrderDetailId { get; set; }
         public int RoundOrderDetailId { get; set; }
+
+        public IEnumerable<string> ValidationErrors
+        {
+            get
+            {
+                if (SlimQty <= 0 && RoundQty <= 0)
+                    yield return "You must enter a Quantity";
+            }
+        }
+
+        public bool IsValid
+        {
+            get { return !ValidationErrors.Any(); }
+        }
+
 
     }
 }

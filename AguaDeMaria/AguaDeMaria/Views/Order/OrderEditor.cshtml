@@ -65,5 +65,16 @@
                 @Html.DropDownListFor(x => x.OrderStatusId, ViewBag.OrderStatusList as IEnumerable<SelectListItem>, new { @id = "orderstatus" })
             </td>
         </tr>
+        @if (!Model.IsValid)
+        {
+            <tr>
+                <td colspan="2">
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage, new {@class="validationError"})
+                    }
+                </td>
+            </tr>
+        }
     </table>
 }

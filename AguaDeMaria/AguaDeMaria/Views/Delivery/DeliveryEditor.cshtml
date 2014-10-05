@@ -10,6 +10,7 @@
                 @Html.HiddenFor(x => x.SlimDeliveryReceiptDetailId)
                 @Html.HiddenFor(x => x.RoundDeliveryReceiptDetailId)
                 @Html.HiddenFor(x => x.OrderId)
+                @Html.HiddenFor(x => x.OrderNumber)
             </td>
         </tr>
         <tr>
@@ -52,27 +53,78 @@
             <td colspan="2">
                 <div class="popupDiv">
                     <table>
-                            <tr>
-                                <td>Product</td>
-                                <td>Quantity</td>
-                                <td>Unit Price</td>
-                                <td>Amount</td>
-                            </tr>
+                        <tr class="drHeader">
+                            <td>Product</td>
+                            <td>Quantity</td>
+                            <td>Unit Price</td>
+                            <td>Amount</td>
+                        </tr>
                         <tr>
                             <td>@Html.LabelFor(x => x.SlimQty)</td>
-                            <td>@Html.TextBoxFor(x => x.SlimQty)</td>
-                            <td>@Html.TextBoxFor(x => x.SlimUnitPrice)</td>
-                            <td>@Html.TextBoxFor(x => x.SlimAmount)</td>
+                            <td>@Html.TextBoxFor(x => x.SlimQty, new { @class = "shortEditBox", dataqty = true })</td>
+                            <td>@Html.TextBoxFor(x => x.SlimUnitPrice, new { @class = "shortEditBox", dataunitprice = true })</td>
+                            <td>@Html.TextBoxFor(x => x.SlimAmount, new { @class = "shortEditBox", dataamount = true})</td>
                         </tr>
                         <tr>
                             <td>@Html.LabelFor(x => x.RoundQty)</td>
-                            <td>@Html.TextBoxFor(x => x.RoundQty)</td>
-                            <td>@Html.TextBoxFor(x => x.RoundUnitPrice)</td>
-                            <td>@Html.TextBoxFor(x => x.RoundAmount)</td>
+                            <td>@Html.TextBoxFor(x => x.RoundQty, new { @class = "shortEditBox", dataqty = true })</td>
+                            <td>@Html.TextBoxFor(x => x.RoundUnitPrice, new { @class = "shortEditBox", dataUnitPrice = true })</td>
+                            <td>@Html.TextBoxFor(x => x.RoundAmount, new { @class = "shortEditBox", dataamount = true })</td>
                         </tr>
                     </table>
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage,new{@class="validationError"})
+                    }
                 </div>
             </td>
         </tr>
     </table>
 }
+<script>
+    var deliveryEditorFunctions = function () {
+
+        function attachListenersImpl() {
+            $("#SlimQty").on("change", function () {
+                var $qtyInput = $(this);
+                var $unitPriceInput = $qtyInput.closest("tr").find("input[dataunitprice]");
+                var $unitAmount = $qtyInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#SlimUnitPrice").on("change", function () {
+                var $unitPriceInput = $(this);
+                var $qtyInput = $unitPriceInput.closest("tr").find("input[dataqty]");
+                var $unitAmount = $unitPriceInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#RoundQty").on("change", function () {
+                var $qtyInput = $(this);
+                var $unitPriceInput = $qtyInput.closest("tr").find("input[dataunitprice]");
+                var $unitAmount = $qtyInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#RoundUnitPrice").on("change", function () {
+                var $unitPriceInput = $(this);
+                var $qtyInput = $unitPriceInput.closest("tr").find("input[dataqty]");
+                var $unitAmount = $unitPriceInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+        }
+
+        function computeAmount($qtyInput, $unitPriceInput, $unitAmount) {
+            var qty = parseInt($qtyInput.val());
+            var unitPrice = parseFloat($unitPriceInput.val());
+            var amount = qty * unitPrice;
+            $unitAmount.val(amount.toFixed(2));
+        }
+
+
+        return ({
+            attachListeners: attachListenersImpl
+        });
+    }();
+    deliveryEditorFunctions.attachListeners();
+</script>

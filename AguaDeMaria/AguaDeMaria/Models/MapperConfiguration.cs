@@ -23,40 +23,17 @@ namespace AguaDeMaria.Models
         {
             Mapper.CreateMap<Model.Order, OrderDto>()
                 .ForMember(x => x.SlimQty,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
-                                    .Qty))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Qty))
                 .ForMember(x => x.SlimOrderDetailId,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
-                                    .OrderDetailId))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).OrderDetailId))
                 .ForMember(x => x.RoundQty,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
-                                    .Qty))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Qty))
                 .ForMember(x => x.RoundOrderDetailId,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
-                                    .OrderDetailId))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).OrderDetailId))
                 .ForMember(x => x.CustomerName,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.Customer.CustomerName))
+                    o => o.MapFrom(s => s.Customer.CustomerName))
                 .ForMember(x => x.OrderStatusName,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderStatus.StatusName));
-
+                    o => o.MapFrom(s => s.OrderStatus.StatusName));
 
             Mapper.CreateMap<OrderDto, Model.Order>()
                 .AfterMap((x, y) => MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(y.OrderDetails, x,
@@ -84,22 +61,33 @@ namespace AguaDeMaria.Models
             //Map to Order to DeliveryReceipt
             Mapper.CreateMap<Model.Order, DeliveryDto>()
                 .ForMember(x => x.SlimQty,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
-                                    .Qty))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Qty))
                 .ForMember(x => x.RoundQty,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
-                                    .Qty))
+                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Qty))
                 .ForMember(x => x.CustomerName,
-                    o =>
-                        o.MapFrom(
-                            s =>
-                                s.Customer.CustomerName));
+                    o => o.MapFrom(s => s.Customer.CustomerName));
+
+            Mapper.CreateMap<Model.DeliveryReceipt, DeliveryDto>()
+                .ForMember(x => x.SlimQty,
+                    o => o.MapFrom(s =>s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
+                .ForMember(x => x.SlimDeliveryReceiptDetailId,
+                    o => o.MapFrom(s =>s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).DeliveryReceiptDetailId))
+                .ForMember(x => x.SlimAmount,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Amount))
+                .ForMember(x => x.SlimUnitPrice,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).UnitPrice))
+                .ForMember(x => x.RoundQty,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Quantity))
+                .ForMember(x => x.RoundDeliveryReceiptDetailId,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).DeliveryReceiptDetailId))
+                .ForMember(x => x.RoundAmount,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Amount))
+                .ForMember(x => x.RoundUnitPrice,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).UnitPrice))
+                .ForMember(x => x.CustomerName,
+                    o => o.MapFrom(s => s.Customer.CustomerName))
+                .ForMember(x => x.OrderNumber,
+                    o => o.MapFrom(s => s.Order.OrderNumber));
 
             //Map DeliveryDto to DeliveryReceipt
             Mapper.CreateMap<DeliveryDto, Model.DeliveryReceipt>()

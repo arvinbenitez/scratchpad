@@ -13,8 +13,10 @@ namespace AguaDeMaria.Models.Delivery
 
         [Required]
         [StringLength(20)]
+        [Display(Name = "Delivery Number")]
         public string DRNumber { get; set; }
 
+        [Display(Name = "Delivery Date")]
         public DateTime DRDate { get; set; }
 
         [Display(Name = "Customer")]
@@ -23,7 +25,7 @@ namespace AguaDeMaria.Models.Delivery
         [Display(Name = "Order Number")]
         public string OrderNumber { get; set; }
 
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
 
         public string CustomerName { get; set; }
 
@@ -43,6 +45,24 @@ namespace AguaDeMaria.Models.Delivery
 
         public decimal RoundUnitPrice { get; set; }
         public decimal RoundAmount { get; set; }
+
+        public IEnumerable<string> ValidationErrors
+        {
+            get
+            {
+                if (SlimQty <= 0 && RoundQty <= 0)
+                    yield return "You must enter a Quantity";
+                if (SlimQty > 0 && SlimUnitPrice == 0 & SlimAmount == 0)
+                    yield return "You must specify an Amount or UnitPrice for Slim";
+                if (RoundQty > 0 && RoundUnitPrice == 0 & RoundAmount == 0)
+                    yield return "You must specify an Amount or UnitPrice for Round";
+            }
+        }
+
+        public bool IsValid
+        {
+            get { return !ValidationErrors.Any(); }
+        }
 
     }
 }
