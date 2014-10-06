@@ -93,10 +93,51 @@ li.verticalLine {
     font-size: 0.9em;
     font-style: italic;
     padding-left: 10px;
-    height: 30px;
+    padding-top: 1px;
+    height: 25px;
     position: fixed;
-    bottom: 0%;
+    bottom: 0;
     width: 100%;
     background-color: #a1d7fa;
     opacity: 1;
+}
+
+
+/* errors */
+.error {
+    color: #e80c4d;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    display: block;
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #e80c4d;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #e80c4d;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.validation-summary-errors ul li {
+    list-style-type: square;
+}
+
+.validation-summary-valid {
+    display: none;
 }

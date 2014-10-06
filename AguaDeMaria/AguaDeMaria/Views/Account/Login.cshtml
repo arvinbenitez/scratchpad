@@ -3,26 +3,44 @@
     @using (Html.BeginForm("Login", "Account", FormMethod.Post))
     {
         <h3>Please login:</h3>
-        <div style="border: 2px">
-            <div>
-                @Html.LabelFor(x => x.UserName)
-                @Html.TextBoxFor(x => x.UserName)
-            </div>
-            <div>
-                @Html.LabelFor(x => x.Password)
-                @Html.PasswordFor(x => x.Password)
-            </div>
-            <div>
-                <label class="checkbox">
-                    @Html.CheckBoxFor(m => m.RememberMe) Remember me
-                </label>
-            </div>
-            @Html.ValidationSummary(true)
-            <div>@Html.HiddenFor(x => x.Redirect)</div>
-            <div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-            </div>
-        </div>
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x.UserName)
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x.UserName)
+                    @Html.ValidationMessageFor(x => x.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x.Password)
+                </td>
+                <td>
+                    @Html.PasswordFor(x => x.Password)
+                    @Html.ValidationMessageFor(x => x.Password)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe) Remember me
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.Redirect)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Log in</button>
+                </td>
+            </tr>
+        </table>
     }
 </div>
 <script type="text/javascript">
