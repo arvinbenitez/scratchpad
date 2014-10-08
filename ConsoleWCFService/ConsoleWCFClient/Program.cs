@@ -16,10 +16,10 @@ namespace ConsoleWCFClient
                 var proxy = new HelloWorldServiceClient();
                 Console.WriteLine(proxy.SayHello(null));
             }
-            catch (FaultException fe)
+            catch (Exception ex)
             {
                 Console.WriteLine("Caught a fault exception");
-                Console.WriteLine(fe);
+                Console.WriteLine(ex);
             }
             Console.ReadLine();
         }
