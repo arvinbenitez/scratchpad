@@ -57,5 +57,15 @@ namespace AguaDeMaria.Common.Data
             this.SettingRepository.Commit();
             return newNumber.ToString("0000000000");
         }
+
+        public string GetNextPickupSlipNumber()
+        {
+            var setting = GetSetting();
+            var newNumber = setting.PickupSlipNumberCounter++;
+            this.SettingRepository.Update(setting);
+            this.SettingRepository.Commit();
+            return newNumber.ToString("0000000000");
+
+        }
     }
 }

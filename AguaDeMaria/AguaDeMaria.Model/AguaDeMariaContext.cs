@@ -31,6 +31,9 @@ namespace AguaDeMaria.Model
 
         public virtual DbSet<Setting> Settings { get; set; }
 
+        public virtual DbSet<PickupSlip> PickupSlips { get; set; }
+        public virtual DbSet<PickupSlipDetail> PickupSlipDetails { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Configuration.LazyLoadingEnabled = true;
@@ -52,6 +55,11 @@ namespace AguaDeMaria.Model
 
             modelBuilder.Entity<Customer>()
                 .HasMany(e => e.SalesInvoices)
+                .WithRequired(e => e.Customer)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(e => e.PickupSlips)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
@@ -99,6 +107,11 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.ProductType)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<ProductType>()
+                .HasMany(e => e.PickupSlipDetails)
+                .WithRequired(e => e.ProductType)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ReturnReceipt>()
                 .HasMany(e => e.ReturnReceiptDetails)
                 .WithRequired(e => e.ReturnReceipt)
@@ -122,6 +135,11 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<SalesInvoiceDetail>()
                 .Property(e => e.Price)
                 .HasPrecision(9, 2);
+
+            modelBuilder.Entity<PickupSlip>()
+                .HasMany(e => e.PickupSlipDetails)
+                .WithRequired(e => e.PickupSlip)
+                .WillCascadeOnDelete(false);
         }
     }
 }

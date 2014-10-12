@@ -122,6 +122,7 @@ namespace AguaDeMaria.Controllers
                 {
                     deliveryReceipt = Mapper.Map<DeliveryReceipt>(deliveryDto);
                     DeliveryRepository.Insert(deliveryReceipt);
+                    deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
                 }
                 if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
                 {

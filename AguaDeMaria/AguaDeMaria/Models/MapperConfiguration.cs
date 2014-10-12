@@ -7,6 +7,7 @@ using System.Web;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Delivery;
 using AguaDeMaria.Models.Order;
+using AguaDeMaria.Models.Pickup;
 using AutoMapper;
 
 namespace AguaDeMaria.Models
@@ -17,6 +18,7 @@ namespace AguaDeMaria.Models
         {
             ConfigureOrder();
             ConfigureDeliveryReceipt();
+            ConfigurePickupSlip();
         }
 
         private static void ConfigureOrder()
@@ -116,6 +118,44 @@ namespace AguaDeMaria.Models
                 );
         }
 
+        public static void ConfigurePickupSlip()
+        {
+            Mapper.CreateMap<Model.PickupSlip, PickupSlipDto>()
+                    .ForMember(x => x.SlimQty,
+                        o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
+                    .ForMember(x => x.SlimPickupSlipDetailId,
+                        o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).PickupSlipDetailId))
+                    .ForMember(x => x.RoundQty,
+                        o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Quantity))
+                    .ForMember(x => x.RoundPickupSlipDetailId,
+                        o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).PickupSlipDetailId))
+                    .ForMember(x => x.CustomerName,
+                        o => o.MapFrom(s => s.Customer.CustomerName));
+
+            Mapper.CreateMap<PickupSlipDto, Model.PickupSlip>()
+                .AfterMap((x, y) => MapChildToCollection<ICollection<PickupSlipDetail>, PickupSlipDetail, PickupSlipDto>(y.PickupSlipDetails, x,
+                    z => z.ProductTypeId == DataConstants.ProductTypes.Round,
+                    (a, b) =>
+                    {
+                        a.PickupSlipDetailId = b.RoundPickupSlipDetailId;
+                        a.ProductTypeId = DataConstants.ProductTypes.Round;
+                        a.Quantity = b.RoundQty;
+                    })
+                )
+                .AfterMap((x, y) => MapChildToCollection<ICollection<PickupSlipDetail>, PickupSlipDetail, PickupSlipDto>(y.PickupSlipDetails, x,
+                    z => z.ProductTypeId == DataConstants.ProductTypes.Slim,
+                    (a, b) =>
+                    {
+                        a.PickupSlipDetailId = b.SlimPickupSlipDetailId;
+                        a.ProductTypeId = DataConstants.ProductTypes.Slim;
+                        a.Quantity = b.SlimQty;
+                    })
+                );
+
+        }
+
+
+        #region Common Functions
         private static void MapChildToCollection<TCollection, TChild, TSource>(TCollection collectionObject,
                                                            TSource sourceObject,
                                                            Func<TChild, bool> existenceCheckPredicate,
@@ -131,5 +171,6 @@ namespace AguaDeMaria.Models
             }
             mappingPredicate.Invoke(child, sourceObject);
         }
+        #endregion
     }
 }

@@ -67,6 +67,8 @@ ul.admTopNavigation {
             background: none;
             color: navy;
             text-decoration: none;
+            font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+            padding-left: 3px;
         }
 
             ul.admTopNavigation li a:hover {

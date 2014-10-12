@@ -1,0 +1,81 @@
+﻿@model  AguaDeMaria.Models.Pickup.PickupSlipDto
+
+@using (Html.BeginForm("SavePickupSlip", "Pickup", FormMethod.Post, new { id = "pickupSlipEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.PickupSlipId)
+                @Html.HiddenFor(x => x.RoundPickupSlipDetailId)
+                @Html.HiddenFor(x => x.SlimPickupSlipDetailId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+                @Html.ValidationMessageFor(x => x.CustomerId)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.PickupSlipNumber)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.PickupSlipNumber)
+                @Html.ValidationMessageFor(x => x.PickupSlipNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.PickupDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.PickupDate)
+                @Html.ValidationMessageFor(x => x.PickupDate)
+            </td>
+        </tr>
+        <!-- Show the Product Entries -->
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.SlimQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.SlimQty)
+                @Html.ValidationMessageFor(x => x.SlimQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.RoundQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.RoundQty)
+                @Html.ValidationMessageFor(x => x.RoundQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Notes)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.Notes)
+                @Html.ValidationMessageFor(x => x.Notes)
+            </td>
+        </tr>
+        @if (!Model.IsValid)
+        {
+            <tr>
+                <td colspan="2">
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage, new { @class = "validationError" })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

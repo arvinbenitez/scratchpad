@@ -6,7 +6,6 @@
 <table id="deliveryList"></table>
 <div id="deliveryListPager"></div>
 <div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
-
 <script>
     var deliveryReceiptGrid = function (dateFilter) {
         function showDeliveriesGridImpl(startDate, endDate) {
@@ -40,7 +39,8 @@
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='deliveryReceiptGrid.deliveryEdit(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction });
+                        var pickupAction = "<a class='fa fa-bicycle' href='#' title='Create Pickup Slip'  onclick='deliveryReceiptGrid.pickupEdit(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction });
                     }
                 },
                 loadComplete: function () {

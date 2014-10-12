@@ -59,5 +59,7 @@ namespace AguaDeMaria.Model
         public virtual ICollection<ReturnReceipt> ReturnReceipts { get; set; }
 
         public virtual ICollection<SalesInvoice> SalesInvoices { get; set; }
+
+        public virtual ICollection<PickupSlip> PickupSlips { get; set; }
     }
 }

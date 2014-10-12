@@ -38,7 +38,7 @@
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='ordersGrid.orderEdit(" + rowId + ")'></a>";
-                        var orderAction = "<a class='fa fa-book' href='#' title='Create Delivery Receipt' onclick='ordersGrid.newDelivery(" + rowId + ")'></a>";
+                        var orderAction = "<a class='fa fa-car' href='#' title='Create Delivery Receipt' onclick='ordersGrid.newDelivery(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
                     }
                 },

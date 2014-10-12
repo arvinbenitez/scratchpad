@@ -17,5 +17,7 @@ namespace AguaDeMaria.Model
 
         public int DeliveryReceiptNumberCounter { get; set; }
 
+        public int PickupSlipNumberCounter { get; set; }
+
     }
 }

@@ -86,4 +86,8 @@ div#newPopupDialog form table td select {
 div#newPopupDialog form table td input {
   width: 100%;
 }
+/* grid icons spacing */
+.jqgrow td a {
+  padding-left: 10px;
+}
 /*# sourceMappingURL=base.css.map */
