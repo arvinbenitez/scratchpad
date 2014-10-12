@@ -16,14 +16,18 @@ namespace AguaDeMaria.Controllers
 
         public PickupController(IRepository<PickupSlip> orderRepository,
                                 IRepository<Customer> customerRepository,
+                                IRepository<DeliveryReceipt> deliveryRepository,
                                 LookupDataManager manager,
                                 SettingsManager settingsManager)
         {
             PickupSlipRepository = orderRepository;
+            DeliveryRepository = deliveryRepository;
             CustromeRepository = customerRepository;
             LookupDataManager = manager;
             SettingsManager = settingsManager;
         }
+
+        public IRepository<DeliveryReceipt> DeliveryRepository { get; set; }
 
         private IRepository<PickupSlip> PickupSlipRepository { get; set; }
 
@@ -55,9 +59,17 @@ namespace AguaDeMaria.Controllers
             if (pickupParams.IsNewPickup())
             {
                 PickupSlip pickupSlip = new PickupSlip();
-                pickupSlip.PickupDate = DateTime.Now;
-                pickupSlip.PickupSlipNumber = SettingsManager.GetNextPickupSlipNumber();
-                pickupSlipDto = Mapper.Map<PickupSlipDto>(pickupSlip);
+                if (pickupParams.DeliveryReceiptId.HasValue && pickupParams.DeliveryReceiptId > 0)
+                {
+                    var deliveryReceipt = DeliveryRepository.Get(x => x.DeliveryReceiptId == pickupParams.DeliveryReceiptId).First();
+                    pickupSlipDto = Mapper.Map<PickupSlipDto>(deliveryReceipt);
+                }
+                else
+                {
+                    pickupSlipDto = Mapper.Map<PickupSlipDto>(pickupSlip);
+                }
+                pickupSlipDto.PickupDate = DateTime.Now;
+                pickupSlipDto.PickupSlipNumber = SettingsManager.GetNextPickupSlipNumber();
             }
             else
             {
@@ -114,8 +126,6 @@ namespace AguaDeMaria.Controllers
                     });
             return customerList;
         }
-
-
 
     }
 }

@@ -120,6 +120,15 @@ namespace AguaDeMaria.Models
 
         public static void ConfigurePickupSlip()
         {
+            //Map to Order to DeliveryReceipt
+            Mapper.CreateMap<Model.DeliveryReceipt, PickupSlipDto>()
+                .ForMember(x => x.SlimQty,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
+                .ForMember(x => x.RoundQty,
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Quantity))
+                .ForMember(x => x.CustomerName,
+                    o => o.MapFrom(s => s.Customer.CustomerName));
+
             Mapper.CreateMap<Model.PickupSlip, PickupSlipDto>()
                     .ForMember(x => x.SlimQty,
                         o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
