@@ -34,6 +34,9 @@ namespace AguaDeMaria.Model
         public virtual DbSet<PickupSlip> PickupSlips { get; set; }
         public virtual DbSet<PickupSlipDetail> PickupSlipDetails { get; set; }
 
+        public virtual DbSet<Inventory> Inventories { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Configuration.LazyLoadingEnabled = true;
@@ -140,6 +143,12 @@ namespace AguaDeMaria.Model
                 .HasMany(e => e.PickupSlipDetails)
                 .WithRequired(e => e.PickupSlip)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Inventory>()
+                .Property(e => e.TransactionType)
+                .IsUnicode(false);
+
+
         }
     }
 }
