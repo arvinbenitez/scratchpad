@@ -90,4 +90,8 @@ div#newPopupDialog form table td input {
 .jqgrow td a {
   padding-left: 10px;
 }
+.inventoryDetailSummary {
+  font-size: 0.8em;
+  padding-bottom: 10px;
+}
 /*# sourceMappingURL=base.css.map */

@@ -35,6 +35,7 @@ namespace AguaDeMaria.Model
         public virtual DbSet<PickupSlipDetail> PickupSlipDetails { get; set; }
 
         public virtual DbSet<Inventory> Inventories { get; set; }
+        public virtual DbSet<InventorySummary> InventorySummaries { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

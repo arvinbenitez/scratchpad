@@ -470,6 +470,7 @@
     <Content Include="Views\Pickup\Index.cshtml" />
     <Content Include="Views\Pickup\PickupSlipEditor.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
+    <Content Include="Views\Inventory\InventoryDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

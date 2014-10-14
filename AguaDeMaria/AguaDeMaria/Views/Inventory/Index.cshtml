@@ -1,5 +1,88 @@
 ﻿@{
     ViewBag.Title = "Inventory";
 }
+<table id="inventoryList"></table>
+<div id="inventoryListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
 
-<h2>This is a placeholder</h2>
+<script>
+    var inventoryGrid = function () {
+        function showInventoriesGridImpl() {
+            var url = "/Inventory/GetInventorySummary"
+            jQuery("#inventoryList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Customer Id', 'Customer', 'Last Delivery', 'Last Pickup', 'Slim', 'Round', 'Actions'],
+                colModel: [
+                        { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'CustomerName', index: 'CustomerName', width: 100 },
+                        { name: 'LatestDeliveryDate', index: 'LatestDeliveryDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
+                        { name: 'LatestPickupDate', index: 'LatestPickupDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
+                        { name: 'Slim', index: 'Slim', width: 75, align: "right" },
+                        { name: 'Round', index: 'Round', width: 75, align: "right" },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'Slim',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#inventoryListPager',
+                sortorder: "desc",
+                caption: "Inventory Summary",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#inventoryList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var editAction = "<a class='fa fa-calculator' href='#' title='Show Inventory Details'  onclick='inventoryGrid.inventoryDetail(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction });
+                    }
+                },
+                loadComplete: function () {
+                    //update the rowcolors
+                }
+            });
+        }
+
+        function inventoryDetailImpl(customerId)
+        {
+            var url = "/Inventory/InventoryDetail";
+            $.ajax({
+                url: url,
+                data: { CustomerId: customerId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showDialog("Inventory Details");
+            });
+
+        }
+
+        function showDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+            }).dialog("open");
+        }
+
+        $(document).ready(function () {
+            $("#newPopupDialog").dialog({
+                width: 500,
+                height: 450,
+                autoOpen: false
+            });
+
+            //show the grid
+            inventoryGrid.showInventoriesGrid();
+        });
+
+        return ({
+            showInventoriesGrid: showInventoriesGridImpl,
+            inventoryDetail: inventoryDetailImpl
+        });
+    }();
+
+
+
+</script>

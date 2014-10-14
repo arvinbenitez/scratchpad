@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.Ajax.Utilities;
 namespace AguaDeMaria.Controllers
 {
+    [Authorize]
     public class PickupController : Controller
     {
 
