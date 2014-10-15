@@ -84,6 +84,7 @@
 <script>
     var deliveryEditorFunctions = function () {
 
+
         function attachListenersImpl() {
             $("#SlimQty").on("change", function () {
                 var $qtyInput = $(this);
@@ -99,6 +100,14 @@
                 computeAmount($qtyInput, $unitPriceInput, $unitAmount);
             });
 
+            $("#SlimAmount").on("change", function () {
+                var $unitAmount = $(this);
+                var $unitPriceInput = $unitAmount.closest("tr").find("input[dataunitprice]");
+                var $qtyInput = $unitAmount.closest("tr").find("input[dataqty]");
+                computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+
             $("#RoundQty").on("change", function () {
                 var $qtyInput = $(this);
                 var $unitPriceInput = $qtyInput.closest("tr").find("input[dataunitprice]");
@@ -112,15 +121,41 @@
                 var $unitAmount = $unitPriceInput.closest("tr").find("input[dataamount]");
                 computeAmount($qtyInput, $unitPriceInput, $unitAmount);
             });
+
+            $("#RoundAmount").on("change", function () {
+                var $unitAmount = $(this);
+                var $unitPriceInput = $unitAmount.closest("tr").find("input[dataunitprice]");
+                var $qtyInput = $unitAmount.closest("tr").find("input[dataqty]");
+                computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount);
+            });
         }
 
+        var isChanging = false; //variable so the event won't bubble
         function computeAmount($qtyInput, $unitPriceInput, $unitAmount) {
-            var qty = parseInt($qtyInput.val());
-            var unitPrice = parseFloat($unitPriceInput.val());
-            var amount = qty * unitPrice;
-            $unitAmount.val(amount.toFixed(2));
+            if (!isChanging) {
+                isChanging = true;
+                var qty = parseInt($qtyInput.val());
+                var unitPrice = parseFloat($unitPriceInput.val());
+                var amount = qty * unitPrice;
+                $unitPriceInput.val(unitPrice.toFixed(2))
+                $unitAmount.val(amount.toFixed(2));
+                isChanging = false;
+            }
         }
 
+        function computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount) {
+            if (!isChanging) {
+                isChanging = true;
+                var qty = parseInt($qtyInput.val());
+                var amount = parseFloat($unitAmount.val());
+                if (qty != 0) {
+                    var unitPrice = amount / qty;
+                    $unitPriceInput.val(unitPrice.toFixed(2));
+                }
+                $unitAmount.val(amount.toFixed(2));
+                isChanging = false;
+            }
+        }
 
         return ({
             attachListeners: attachListenersImpl

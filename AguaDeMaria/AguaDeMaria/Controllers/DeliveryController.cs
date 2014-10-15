@@ -94,10 +94,10 @@ namespace AguaDeMaria.Controllers
         {
             deliveryDto.SlimUnitPrice =
                 LookupDataManager.ProductTypes.First(x => x.ProductTypeId == DataConstants.ProductTypes.Slim).BasePrice;
-            deliveryDto.SlimAmount = 0.00m;
+            deliveryDto.SlimAmount = deliveryDto.SlimUnitPrice * deliveryDto.SlimQty;
             deliveryDto.RoundUnitPrice =
                 LookupDataManager.ProductTypes.First(x => x.ProductTypeId == DataConstants.ProductTypes.Round).BasePrice;
-            deliveryDto.RoundAmount = 0.00m;
+            deliveryDto.RoundAmount = deliveryDto.RoundUnitPrice * deliveryDto.RoundQty;
         }
 
         [ExcludeIdValidation(IdField = "DeliveryReceiptId")]
@@ -122,7 +122,6 @@ namespace AguaDeMaria.Controllers
                 {
                     deliveryReceipt = Mapper.Map<DeliveryReceipt>(deliveryDto);
                     DeliveryRepository.Insert(deliveryReceipt);
-                    deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
                 }
                 if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
                 {
@@ -134,6 +133,7 @@ namespace AguaDeMaria.Controllers
                     }
                 }
                 UnitOfWork.Commit();
+                deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
 
                 //let's get the customer name from the lookup
                 deliveryDto.CustomerName =
