@@ -227,10 +227,12 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
+    <Compile Include="Controllers\Helpers\BinaryContentResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PickupController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Filters\ExcludeIdValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -471,6 +473,7 @@
     <Content Include="Views\Pickup\PickupSlipEditor.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Inventory\InventoryDetail.cshtml" />
+    <Content Include="Views\Report\DeliveryReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -486,6 +489,10 @@
     <ProjectReference Include="..\AguaDeMaria.Model\AguaDeMaria.Model.csproj">
       <Project>{641ee90d-ee39-485f-ad93-a9204ee1c842}</Project>
       <Name>AguaDeMaria.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AguaDeMaria.Report\AguaDeMaria.Report.csproj">
+      <Project>{4fac837f-e472-403f-8ec4-6bbe2c7b8e4b}</Project>
+      <Name>AguaDeMaria.Report</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

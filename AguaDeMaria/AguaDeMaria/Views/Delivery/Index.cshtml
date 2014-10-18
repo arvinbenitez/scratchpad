@@ -40,7 +40,8 @@
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='deliveryReceiptGrid.deliveryEdit(" + rowId + ")'></a>";
                         var pickupAction = "<a class='fa fa-bicycle' href='#' title='Create Pickup Slip'  onclick='deliveryReceiptGrid.pickupCreate(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction });
+                        var printAction = "<a class='fa fa-print' href='#' title='Print Delivery Receipt'  onclick='deliveryReceiptGrid.printDeliveryReceipt(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction + printAction });
                     }
                 },
                 loadComplete: function () {
@@ -116,8 +117,17 @@
             $("#newPopupDialog").dialog({
                 modal: true,
                 title: title,
-                buttons: [{
-                    text: "Save",
+                buttons: [
+                    {
+                        text: "Print",
+                        click: function () {
+                            //save it first - then print
+                            //get the deliveryId
+                            var deliveryId = $("#DeliveryReceiptId").val();
+                            printDeliveryReceiptImpl(deliveryId);
+                        }
+                    },
+                    {text: "Save",
                     click: function () {
                         //submit the form
                         $.ajax({
@@ -146,6 +156,11 @@
                     }
                 }]
             }).dialog("open");
+        }
+
+        function printDeliveryReceiptImpl(deliveryId) {
+            var url = "/Report/DeliveryReceipt?deliveryReceiptId=" + deliveryId;
+            window.open(url, "deliveryReceipt", "width=500, height=500, location=no, titlebar=no");
         }
 
         function deliveryEditImpl(deliveryId) {
@@ -192,7 +207,8 @@
         return ({
             showDeliveriesGrid: showDeliveriesGridImpl,
             deliveryEdit: deliveryEditImpl,
-            pickupCreate: pickupCreateImpl
+            pickupCreate: pickupCreateImpl,
+            printDeliveryReceipt: printDeliveryReceiptImpl
         });
     }(DateFilter);
 
