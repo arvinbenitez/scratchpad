@@ -29,7 +29,7 @@ namespace AguaDeMaria.Controllers
         {
             var deliveryReceipt = DeliveryRepository.Get(x => x.DeliveryReceiptId == deliveryReceiptId).FirstOrDefault();
             byte[] buffer;
-            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryReceipt, Server.MapPath(@"~\Images\Water.png")))
+            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryReceipt, Server.MapPath(@"~\Images\DeliveryReceipt.png")))
             {
                 buffer = report.GenerateContent();
             }

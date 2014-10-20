@@ -56,10 +56,29 @@ namespace AguaDeMaria.Report
 
         protected void PrintImage(string filePath, int x, int y)
         {
+            PrintImage(filePath, x, y, 0, 0);
+        }
+
+        protected void PrintImage(string filePath, int x, int y, int scaleWidth, int scaleHeight)
+        {
             Image image = Image.GetInstance(filePath);
             image.SetAbsolutePosition(x, y);
+            if (scaleWidth > 0 && scaleHeight > 0)
+            {
+                image.ScaleToFit(scaleWidth, scaleHeight);
+            }
             document.Add(image);
         }
+
+        protected void PrintLine(int startX, int startY, int endX, int endY)
+        {
+            textContent.SetLineWidth(0.5f);
+            textContent.MoveTo(startX, startY);
+            textContent.LineTo(endX, endY);
+            textContent.Stroke();
+        }
+
+
         #endregion
 
         /// <summary>
@@ -67,6 +86,7 @@ namespace AguaDeMaria.Report
         /// </summary>
         protected abstract void SetupTextContent();
         protected abstract void SetupImageContent();
+        protected abstract void SetupLineContent();
 
         public byte[] GenerateContent()
         {
@@ -101,12 +121,13 @@ namespace AguaDeMaria.Report
             textContent.BeginText();
             SetupTextContent();
             textContent.EndText();
+            SetupLineContent();
         }
 
         private void PrintXAxis(int y)
         {
             SetFont(7);
-            int x = 600;
+            int x = 1200;
             while (x >= 0)
             {
                 if (x % 20 == 0)
