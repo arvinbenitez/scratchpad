@@ -12,6 +12,8 @@ using AutoMapper;
 using AguaDeMaria.Controllers.Helpers;
 using AguaDeMaria.Report;
 using System.IO;
+using AguaDeMaria.Models;
+using AguaDeMaria.Model.Dto;
 
 namespace AguaDeMaria.Controllers
 {
@@ -19,17 +21,22 @@ namespace AguaDeMaria.Controllers
     public class ReportController : Controller
     {
         private IRepository<DeliveryReceipt> DeliveryRepository { get; set; }
+        private IRepository<InventorySummary> InventoryRepository { get; set; }
 
-        public ReportController(IRepository<DeliveryReceipt> deliveryRepository)
+        public ReportController(IRepository<DeliveryReceipt> deliveryRepository,
+                                IRepository<InventorySummary> inventoryRepository)
         {
             DeliveryRepository = deliveryRepository;
+            InventoryRepository = inventoryRepository;
         }
 
         public ActionResult DeliveryReceipt(int deliveryReceiptId)
         {
             var deliveryReceipt = DeliveryRepository.Get(x => x.DeliveryReceiptId == deliveryReceiptId).FirstOrDefault();
+            var inventorySummary = InventoryRepository.Get(x => x.CustomerId == deliveryReceipt.CustomerId).FirstOrDefault();
+            var deliveryDto = Mapper.Map<DeliveryDto>(deliveryReceipt);
             byte[] buffer;
-            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryReceipt, Server.MapPath(@"~\Images\DeliveryReceipt.png")))
+            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryDto, inventorySummary, Server.MapPath(@"~\Images\DeliveryReceipt.png")))
             {
                 buffer = report.GenerateContent();
             }

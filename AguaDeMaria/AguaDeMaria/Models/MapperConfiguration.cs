@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 using AguaDeMaria.Model;
+using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Delivery;
 using AguaDeMaria.Models.Order;
 using AguaDeMaria.Models.Pickup;
@@ -71,9 +72,9 @@ namespace AguaDeMaria.Models
 
             Mapper.CreateMap<Model.DeliveryReceipt, DeliveryDto>()
                 .ForMember(x => x.SlimQty,
-                    o => o.MapFrom(s =>s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
                 .ForMember(x => x.SlimDeliveryReceiptDetailId,
-                    o => o.MapFrom(s =>s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).DeliveryReceiptDetailId))
+                    o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).DeliveryReceiptDetailId))
                 .ForMember(x => x.SlimAmount,
                     o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Amount))
                 .ForMember(x => x.SlimUnitPrice,
@@ -89,7 +90,9 @@ namespace AguaDeMaria.Models
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName))
                 .ForMember(x => x.OrderNumber,
-                    o => o.MapFrom(s => s.Order.OrderNumber));
+                    o => o.MapFrom(s => s.Order.OrderNumber))
+                .ForMember(x => x.CustomerAddress,
+                    o => o.MapFrom(s => s.Customer.Address));
 
             //Map DeliveryDto to DeliveryReceipt
             Mapper.CreateMap<DeliveryDto, Model.DeliveryReceipt>()

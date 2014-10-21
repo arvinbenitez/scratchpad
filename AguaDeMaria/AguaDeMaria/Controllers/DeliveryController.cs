@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
+using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Delivery;
 using AutoMapper;
 

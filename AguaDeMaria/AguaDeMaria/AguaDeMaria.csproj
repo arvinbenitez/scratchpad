@@ -239,7 +239,6 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Customer\CustomerDto.cs" />
-    <Compile Include="Models\Delivery\DeliveryDto.cs" />
     <Compile Include="Models\Delivery\DeliveryParameter.cs" />
     <Compile Include="Models\MapperConfiguration.cs" />
     <Compile Include="Models\Order\OrderDto.cs" />

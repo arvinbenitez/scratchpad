@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using AguaDeMaria.Model;
 
-namespace AguaDeMaria.Models.Delivery
+namespace AguaDeMaria.Model.Dto
 {
     public class DeliveryDto
     {
@@ -64,5 +64,6 @@ namespace AguaDeMaria.Models.Delivery
             get { return !ValidationErrors.Any(); }
         }
 
+        public string CustomerAddress { get; set; }
     }
 }
