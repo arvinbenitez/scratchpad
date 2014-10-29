@@ -250,6 +250,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Accounts\Scripts\app.js" />
+    <Content Include="Areas\Accounts\Scripts\controllers\UserEditController.js" />
+    <Content Include="Areas\Accounts\Scripts\controllers\UsersController.js" />
+    <Content Include="Areas\Accounts\Scripts\services\UserService.js" />
+    <Content Include="Areas\Accounts\Scripts\views\useredit.html" />
+    <Content Include="Areas\Accounts\Scripts\views\users.html" />
     <Content Include="Content\AguaDeMaria.css" />
     <Content Include="Content\base.css">
       <DependentUpon>base.less</DependentUpon>
@@ -369,6 +375,8 @@
     </Content>
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\angular.min.js.map" />

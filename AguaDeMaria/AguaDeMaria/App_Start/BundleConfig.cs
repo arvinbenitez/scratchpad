@@ -25,6 +25,13 @@ namespace AguaDeMaria
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/angular.js",
+                        "~/Scripts/angular-ui-router.js",
+                        "~/Areas/Accounts/Scripts/app.js",
+                        "~/Areas/Accounts/Scripts/controllers/*.js",
+                        "~/Areas/Accounts/Scripts/services/*.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css",
                         "~/Content/base.css"));
 

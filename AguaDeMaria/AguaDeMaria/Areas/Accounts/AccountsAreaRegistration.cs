@@ -15,9 +15,10 @@ namespace AguaDeMaria.Areas.Accounts
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Accounts_default",
-                "Accounts/{controller}/{action}/{id}",
-                new { controller = "Account", action = "Index", id = UrlParameter.Optional }
+                name: "Accounts_default",
+                url: "Accounts/{controller}/{action}/{id}",
+                defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "AguaDeMaria.Areas.Accounts.Controllers" }
             );
         }
     }
