@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+
 
 namespace EntityFrameworkTeamTestr
 {
@@ -23,7 +28,7 @@ namespace EntityFrameworkTeamTestr
             var team = new Team()
             {
                 Name = "Team Arvin",
-                Users = new User[] 
+                Users = new List<User> 
                 { 
                     user,
                     anotherUser
@@ -36,8 +41,32 @@ namespace EntityFrameworkTeamTestr
             var savedTeam = context.Set<Team>().Where(x => x.Id == team.Id).FirstOrDefault();
 
             Console.WriteLine("Retreived save team. Id={0}, Name={1}", savedTeam.Id, savedTeam.Name);
+            Console.WriteLine("Now clearing the users");
+
+            context.RemoveRelationship(savedTeam, user, x => x.Users);
+
+            context.SaveChanges();
+            Console.WriteLine("Done. Now check the users table.");
+
             Console.ReadLine();
 
         }
+
     }
+
+    public static class MyExtensions
+    {
+        public static void RemoveRelationship<TParent, TChild>(this DbContext context, TParent parent, TChild child,
+                    Expression<Func<TParent, object>> childCollectionFromParent) 
+                    where TParent: class
+                    where TChild: class
+        {
+            var objectContext = ((IObjectContextAdapter)context).ObjectContext;
+            context.Set<TParent>().Attach(parent);
+            context.Set<TChild>().Attach(child);
+            objectContext.ObjectStateManager.ChangeRelationshipState(parent, child, childCollectionFromParent, EntityState.Deleted);
+        }
+
+    }
+
 }

@@ -5,13 +5,14 @@ namespace EntityFrameworkTeamTestr
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("User")]
     public partial class User
     {
         public User()
         {
-            Teams = new HashSet<Team>();
+            Teams = new HashSet<Team>().ToList();
         }
 
         public int Id { get; set; }
@@ -21,6 +22,6 @@ namespace EntityFrameworkTeamTestr
         public string FamilyName { get; set; }
 
 
-        public virtual ICollection<Team> Teams { get; set; }
+        public  IList<Team> Teams { get; set; }
     }
 }
