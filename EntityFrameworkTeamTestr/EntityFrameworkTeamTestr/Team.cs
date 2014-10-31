@@ -7,7 +7,7 @@ namespace EntityFrameworkTeamTestr
     using System.Linq;
 
     [Table("Team")]
-    public partial class Team
+    public partial class Team : IEntity
     {
         public Team()
         {

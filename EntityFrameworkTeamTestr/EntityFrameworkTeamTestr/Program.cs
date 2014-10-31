@@ -18,12 +18,15 @@ namespace EntityFrameworkTeamTestr
             Console.WriteLine("Saving changes");
             var context = new TeamContext();
             var user = context.Set<User>().Where(x => x.Id == 1).FirstOrDefault();
+            var userX = context.Set<User>().Where(x => x.Id == 2).FirstOrDefault();
 
             var anotherUser = new User
             {
                 Id = 2
             };
-            context.Entry(anotherUser).State = System.Data.Entity.EntityState.Unchanged;
+            //context.Entry(anotherUser).State = System.Data.Entity.EntityState.Unchanged;
+            anotherUser = context.AttachOrGetLocal(anotherUser);
+            //context.Set<User>().Attach(anotherUser);
 
             var team = new Team()
             {
@@ -65,6 +68,18 @@ namespace EntityFrameworkTeamTestr
             context.Set<TParent>().Attach(parent);
             context.Set<TChild>().Attach(child);
             objectContext.ObjectStateManager.ChangeRelationshipState(parent, child, childCollectionFromParent, EntityState.Deleted);
+        }
+
+        public static T AttachOrGetLocal<T>(this DbContext context, T entity)
+            where T : class, IEntity 
+        {
+            var local = context.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+            if (local == null)
+            {
+                context.Set<T>().Attach(entity);
+                local = entity;
+            }
+            return local;
         }
 
     }
