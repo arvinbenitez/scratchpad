@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Pickup Slips";
+}
+
+@Html.Partial("_DateFilter")
+<table id="pickupSlipList"></table>
+<div id="pickupSlipListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Pickup Slip Dialog goes</div>
+<script>
+    var pickupsGrid = function (dateFilter) {
+        function showPickupsGrid(startDate, endDate) {
+            var url = "/Pickup/GetPickupSlipList?startDate=" + startDate + "&endDate=" + endDate;
+            jQuery("#pickupSlipList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['PickupSlip Id', 'Customer', 'Pickup Slip Number', 'Pickup Date', 'Slim', 'Round', 'Actions'],
+                colModel: [
+                        { name: 'PickupSlipId', key: true, index: 'PickupSlipId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'CustomerName', index: 'CustomerName', width: 100 },
+                        { name: 'PickupSlipNumber', index: 'PickupSlipNumber', width: 50 },
+                        { name: 'PickupDate', index: 'PickupDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
+                        { name: 'SlimQty', index: 'SlimQty', width: 75, align: "right" },
+                        { name: 'RoundQty', index: 'RoundQty', width: 75, align: "right" },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'PickupSlipId',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#pickupSlipListPager',
+                sortorder: "asc",
+                caption: "Pickup Slip List",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#pickupSlipList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='pickupsGrid.pickupEdit(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction });
+                    }
+                },
+                loadComplete: function () {
+                }
+            });
+            //show the Navigator
+            jQuery("#pickupSlipList")
+                .jqGrid('navGrid', '#pickupSlipListPager', { edit: false, add: false, del: false })
+                .navButtonAdd('#pickupSlipListPager', {
+                    caption: "",
+                    buttonicon: "ui-icon-plus",
+                    onClickButton: function () {
+                        newPickup(null);
+                    },
+                    position: "last",
+                    title: "New Pickup",
+                    cursor: "pointer"
+                });
+        }
+                
+        function pickupEdit(pickupSlipId) {
+            var url = "/Pickup/PickupSlipEditor";
+            $.ajax({
+                url: url,
+                data: { pickupSlipId: pickupSlipId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showPickupDialog("Edit Pickup Slip");
+            });
+        }
+
+        function newPickup() {
+            var url = "/Pickup/PickupSlipEditor";
+            $.ajax({
+                url: url,
+                data: {},
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showPickupDialog("New Pickup Slip");
+            });
+        }
+
+        function showPickupDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Pickup/SavePickupSlip",
+                            data: $("#pickupSlipEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.PickupSlipId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                var row = $("#pickupSlipList").jqGrid('getRowData', data.PickupSlipId);
+                                if (typeof (row.PickupSlipId) == 'undefined') {
+                                    $("#pickupSlipList").jqGrid('addRowData', data.PickupSlipId, data, "first");
+                                } else {
+                                    $("#pickupSlipList").jqGrid('setRowData', data.PickupSlipId, data);
+                                    $("#pickupSlipList").jqGrid().trigger("reloadGrid");
+                                }
+                                //this must have been successful
+                                $(this).dialog("close");
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
+        function reloadPickupGrid() {
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+            var url = "/Pickup/GetPickupSlipList?startDate=" + startDate + "&endDate=" + endDate;
+
+            jQuery("#pickupSlipList").jqGrid().setGridParam({
+                datatype: 'json',
+                page: 1,
+                url: url
+            }).trigger("reloadGrid");
+        }
+
+        $(document).ready(function () {
+
+            $("#newPopupDialog").dialog({
+                width: 500,
+                height: 450,
+                autoOpen: false
+            });
+
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+
+            //show the grid
+            dateFilter.setClickDelegate(reloadPickupGrid);
+            pickupsGrid.showPickupsGrid(startDate, endDate);
+
+        });
+
+        return ({
+            showPickupsGrid: showPickupsGrid,
+            pickupEdit: pickupEdit
+        });
+    }(DateFilter);
+
+
+</script>

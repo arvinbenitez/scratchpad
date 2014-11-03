@@ -1,0 +1,44 @@
+﻿@model  AguaDeMaria.Model.InventorySummary
+
+<table class="inventoryDetailSummary">
+    <tr><td colspan="2">Transaction Details for <b>@Model.CustomerName</b></td></tr>
+    <tr><td>Slim = @Model.Slim</td><td>Round = @Model.Round</td></tr>
+</table>
+
+<table id="inventoryDetailList"></table>
+<div id="inventoryDetailListPager"></div>
+<script>
+    var inventoryDetailGrid = function () {
+        function showDetailGridImpl(customerId) {
+            var url = "/Inventory/GetInventoryDetail?CustomerId=" + customerId;
+            jQuery("#inventoryDetailList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Transaction Id', 'Transaction Type', 'Ref Date', 'Slim', 'Round'],
+                colModel: [
+                        { name: 'TransactionId', key: true, index: 'TransactionId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'TransactionType', index: 'TransactionType', width: 100 },
+                        { name: 'RefDate', index: 'RefDate', width: 80, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
+                        { name: 'Slim', index: 'Slim', width: 55, align: "right" },
+                        { name: 'Round', index: 'Round', width: 55, align: "right" }],
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#inventoryDetailListPager',
+                caption: "Inventory Detail",
+                width: 470,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () {
+                },
+                loadComplete: function () {
+                    //update the rowcolors
+                }
+            });
+            //show the Navigator
+            jQuery("#inventoryDetailList")
+                .jqGrid('navGrid', '#inventoryDetailListPager', { edit: false, add: false, del: false })
+        }
+        //execute it
+        showDetailGridImpl(@Model.CustomerId);
+    }();
+</script>

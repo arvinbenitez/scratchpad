@@ -1,0 +1,41 @@
+﻿<table>
+    <tr>
+        <td>Start Date :</td>
+        <td><input type="text" id="startDate"></td>
+        <td>End Date :</td>
+        <td><input type="text" id="endDate"></td>
+        <td>
+            <input type="button" value="Apply Filter" id="dateFilterRefreshButton" />
+        </td>
+    </tr>
+</table>
+<script>
+    var DateFilter = function () {
+
+        $(document).ready(function () {
+            $("#startDate").datepicker();
+            $("#startDate").datepicker('setDate', new Date());
+            $("#endDate").datepicker();
+            $("#endDate").datepicker('setDate', '+1d');
+        });
+
+
+        function getStartDateImpl() {
+            return $("#startDate").val();
+        }
+
+        function getEndDateImpl() {
+            return $("#endDate").val();
+        }
+
+        function setClickDelegateImpl(clickDelegate) {
+            $("#dateFilterRefreshButton").click(clickDelegate);
+        }
+
+        return ({
+            getStartDate: getStartDateImpl,
+            getEndDate: getEndDateImpl,
+            setClickDelegate: setClickDelegateImpl
+        });
+    }();
+</script>

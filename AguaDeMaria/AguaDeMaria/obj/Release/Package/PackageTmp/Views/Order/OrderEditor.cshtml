@@ -1,0 +1,80 @@
+﻿@model  AguaDeMaria.Models.Order.OrderDto
+
+@using (Html.BeginForm("SaveOrder", "Order", FormMethod.Post, new { id = "orderEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.OrderId)
+                @Html.HiddenFor(x => x.RoundOrderDetailId)
+                @Html.HiddenFor(x => x.SlimOrderDetailId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+                @Html.ValidationMessageFor(x=>x.CustomerId)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderNumber)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.OrderNumber)
+                @Html.ValidationMessageFor(x => x.OrderNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.OrderDate)
+                @Html.ValidationMessageFor(x => x.OrderDate)
+            </td>
+        </tr>
+        <!-- Show the Product Entries -->
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.SlimQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.SlimQty)
+                @Html.ValidationMessageFor(x => x.SlimQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.RoundQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.RoundQty)
+                @Html.ValidationMessageFor(x => x.RoundQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.OrderStatusId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.OrderStatusId, ViewBag.OrderStatusList as IEnumerable<SelectListItem>, new { @id = "orderstatus" })
+            </td>
+        </tr>
+        @if (!Model.IsValid)
+        {
+            <tr>
+                <td colspan="2">
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage, new {@class="validationError"})
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

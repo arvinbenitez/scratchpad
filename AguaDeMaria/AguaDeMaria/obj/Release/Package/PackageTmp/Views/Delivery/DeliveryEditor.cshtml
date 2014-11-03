@@ -1,0 +1,165 @@
+﻿@model AguaDeMaria.Model.Dto.DeliveryDto
+
+@using (Html.BeginForm("SaveDelivery", "Delivery", FormMethod.Post, new { id = "drEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.DeliveryReceiptId)
+                @Html.HiddenFor(x => x.SlimDeliveryReceiptDetailId)
+                @Html.HiddenFor(x => x.RoundDeliveryReceiptDetailId)
+                @Html.HiddenFor(x => x.OrderId)
+                @Html.HiddenFor(x => x.OrderNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.OrderNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(x=> x.OrderNumber)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.CustomerId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+                @Html.ValidationMessageFor(x => x.CustomerId)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DRNumber)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DRNumber)
+                @Html.ValidationMessageFor(x => x.DRNumber)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.DRDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.DRDate)
+                @Html.ValidationMessageFor(x => x.DRDate)
+            </td>
+        </tr>
+        <!-- Show the Product Entries -->
+        <tr>
+            <td colspan="2">
+                <div class="popupDiv">
+                    <table>
+                        <tr class="drHeader">
+                            <td>Product</td>
+                            <td>Quantity</td>
+                            <td>Unit Price</td>
+                            <td>Amount</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(x => x.SlimQty)</td>
+                            <td>@Html.TextBoxFor(x => x.SlimQty, new { @class = "shortEditBox", dataqty = true })</td>
+                            <td>@Html.TextBoxFor(x => x.SlimUnitPrice, new { @class = "shortEditBox", dataunitprice = true })</td>
+                            <td>@Html.TextBoxFor(x => x.SlimAmount, new { @class = "shortEditBox", dataamount = true})</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(x => x.RoundQty)</td>
+                            <td>@Html.TextBoxFor(x => x.RoundQty, new { @class = "shortEditBox", dataqty = true })</td>
+                            <td>@Html.TextBoxFor(x => x.RoundUnitPrice, new { @class = "shortEditBox", dataUnitPrice = true })</td>
+                            <td>@Html.TextBoxFor(x => x.RoundAmount, new { @class = "shortEditBox", dataamount = true })</td>
+                        </tr>
+                    </table>
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage,new{@class="validationError"})
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+}
+<script>
+    var deliveryEditorFunctions = function () {
+
+
+        function attachListenersImpl() {
+            $("#SlimQty").on("change", function () {
+                var $qtyInput = $(this);
+                var $unitPriceInput = $qtyInput.closest("tr").find("input[dataunitprice]");
+                var $unitAmount = $qtyInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#SlimUnitPrice").on("change", function () {
+                var $unitPriceInput = $(this);
+                var $qtyInput = $unitPriceInput.closest("tr").find("input[dataqty]");
+                var $unitAmount = $unitPriceInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#SlimAmount").on("change", function () {
+                var $unitAmount = $(this);
+                var $unitPriceInput = $unitAmount.closest("tr").find("input[dataunitprice]");
+                var $qtyInput = $unitAmount.closest("tr").find("input[dataqty]");
+                computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+
+            $("#RoundQty").on("change", function () {
+                var $qtyInput = $(this);
+                var $unitPriceInput = $qtyInput.closest("tr").find("input[dataunitprice]");
+                var $unitAmount = $qtyInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#RoundUnitPrice").on("change", function () {
+                var $unitPriceInput = $(this);
+                var $qtyInput = $unitPriceInput.closest("tr").find("input[dataqty]");
+                var $unitAmount = $unitPriceInput.closest("tr").find("input[dataamount]");
+                computeAmount($qtyInput, $unitPriceInput, $unitAmount);
+            });
+
+            $("#RoundAmount").on("change", function () {
+                var $unitAmount = $(this);
+                var $unitPriceInput = $unitAmount.closest("tr").find("input[dataunitprice]");
+                var $qtyInput = $unitAmount.closest("tr").find("input[dataqty]");
+                computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount);
+            });
+        }
+
+        var isChanging = false; //variable so the event won't bubble
+        function computeAmount($qtyInput, $unitPriceInput, $unitAmount) {
+            if (!isChanging) {
+                isChanging = true;
+                var qty = parseInt($qtyInput.val());
+                var unitPrice = parseFloat($unitPriceInput.val());
+                var amount = qty * unitPrice;
+                $unitPriceInput.val(unitPrice.toFixed(2))
+                $unitAmount.val(amount.toFixed(2));
+                isChanging = false;
+            }
+        }
+
+        function computeUnitPrice($qtyInput, $unitPriceInput, $unitAmount) {
+            if (!isChanging) {
+                isChanging = true;
+                var qty = parseInt($qtyInput.val());
+                var amount = parseFloat($unitAmount.val());
+                if (qty != 0) {
+                    var unitPrice = amount / qty;
+                    $unitPriceInput.val(unitPrice.toFixed(2));
+                }
+                $unitAmount.val(amount.toFixed(2));
+                isChanging = false;
+            }
+        }
+
+        return ({
+            attachListeners: attachListenersImpl
+        });
+    }();
+    deliveryEditorFunctions.attachListeners();
+</script>

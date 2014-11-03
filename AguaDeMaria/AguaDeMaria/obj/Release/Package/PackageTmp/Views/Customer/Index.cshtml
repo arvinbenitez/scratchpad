@@ -1,0 +1,166 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<AguaDeMaria.Model.Customer>
+@{
+    ViewBag.Title = "Customer";
+}
+<table id="customerList"></table>
+<div id="customerListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Customer Dialog goes</div>
+<script>
+    var customerGrid = (function () {
+
+        function customerEdit(id) {
+            var url = "/Customer/CustomerEditor";
+            $.ajax({
+                url: url,
+                data: { customerId: id }
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showCustomerDialog();
+            });
+        }
+
+        function newOrder(customerId) {
+            var url = "/Order/OrderEditor";
+            $.ajax({
+                url: url,
+                data: { CustomerId: customerId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showOrderDialog();
+            });
+        }
+
+        function showOrderDialog() {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: 'New Order',
+                buttons: [{
+                    text: "Create",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Order/SaveOrder",
+                            data: $("#orderEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.OrderId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                $(this).dialog("close");
+                                //this must have been successful
+                                window.location.href = "/Order/Index";
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
+        function showCustomerDialog() {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: 'Customer',
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Customer/SaveCustomer",
+                            data: $("#customerEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.CustomerId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                var row = $("#customerList").jqGrid('getRowData', data.CustomerId);
+                                if (typeof (row.CustomerId) == 'undefined') {
+                                    $("#customerList").jqGrid('addRowData', data.CustomerId, data, "first");
+                                } else {
+                                    $("#customerList").jqGrid('setRowData', data.CustomerId, data);
+                                }
+                                $(this).dialog("close");
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
+        function showCustomerGrid() {
+            var url = "/Customer/GetCustomerList";
+            jQuery("#customerList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Customer Id', 'Code', 'Customer Name', 'Type', 'Address', 'Contacts', 'Actions'],
+                colModel: [
+                        { name: 'CustomerId', key: true, index: 'CustomerId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'CustomerCode', index: 'CustomerCode', width: 50 },
+                        { name: 'CustomerName', index: 'CustomerName', width: 110 },
+                        { name: 'CustomerTypeName', index: 'CustomerTypeName', width: 50 },
+                        { name: 'Address', index: 'Address', width: 150 },
+                        { name: 'ContactNumbers', index: 'ContactNumbers', width: 75 },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'CustomerName',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#customerListPager',
+                sortorder: "asc",
+                caption: "Customer List",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#customerList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='customerGrid.customerEdit(" + rowId + ")'></a>";
+                        var orderAction = "<a class='fa fa-book' href='#' title='New Order' onclick='customerGrid.newOrder(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
+                    }
+                },
+                loadComplete: function () {
+                    $("#loadingIndicator").hide();
+                }
+            });
+            //show the Navigator
+            jQuery("#customerList")
+                .jqGrid('navGrid', '#customerListPager', { edit: false, add: false, del: false })
+                .navButtonAdd('#customerListPager', {
+                    caption: "",
+                    buttonicon: "ui-icon-plus",
+                    onClickButton: function () {
+                        customerEdit(null);
+                    },
+                    position: "last",
+                    title: "New Customer",
+                    cursor: "pointer"
+                });
+        }
+        return ({
+            customerEdit: customerEdit,
+            newOrder: newOrder,
+            showCustomerDialog: showCustomerDialog,
+            showCustomerGrid: showCustomerGrid
+        });
+    })();
+
+    $(document).ready(function () {
+        $("#newPopupDialog").dialog({
+            width: 500,
+            height: 400,
+            autoOpen: false
+        });
+        $('#newCustomer').on('click', function () {
+            customerGrid.customerEdit();
+        });
+        //show the grid
+        customerGrid.showCustomerGrid();
+    });
+</script>

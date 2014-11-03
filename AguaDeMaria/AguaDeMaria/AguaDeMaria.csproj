@@ -384,6 +384,7 @@
     <Content Include="Areas\Accounts\Views\Web.config" />
     <Content Include="Areas\Accounts\Views\Account\Index.cshtml" />
     <Content Include="Areas\Accounts\Views\_ViewStart.cshtml" />
+    <None Include="Properties\PublishProfiles\manual.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />

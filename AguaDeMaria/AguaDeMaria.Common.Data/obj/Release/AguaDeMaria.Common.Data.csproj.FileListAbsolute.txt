@@ -1,0 +1,12 @@
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\AguaDeMaria.Common.Data.dll.config
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\AguaDeMaria.Common.Data.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\AguaDeMaria.Common.Data.pdb
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\AguaDeMaria.Model.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\EntityFramework.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\EntityFramework.SqlServer.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\AguaDeMaria.Model.pdb
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\EntityFramework.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\bin\Release\EntityFramework.SqlServer.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\obj\Release\AguaDeMaria.Common.Data.csprojResolveAssemblyReference.cache
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\obj\Release\AguaDeMaria.Common.Data.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Common.Data\obj\Release\AguaDeMaria.Common.Data.pdb

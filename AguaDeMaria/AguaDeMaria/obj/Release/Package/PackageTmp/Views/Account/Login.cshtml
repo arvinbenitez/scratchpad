@@ -1,0 +1,51 @@
+﻿@model AguaDeMaria.Models.LoginModel
+<div class="content-wrapper">
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <h3>Please login:</h3>
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x.UserName)
+                </td>
+                <td>
+                    @Html.TextBoxFor(x => x.UserName)
+                    @Html.ValidationMessageFor(x => x.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(x => x.Password)
+                </td>
+                <td>
+                    @Html.PasswordFor(x => x.Password)
+                    @Html.ValidationMessageFor(x => x.Password)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe) Remember me
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.Redirect)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Log in</button>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<script type="text/javascript">
+    $().ready(function () {
+        $("#UserName").focus();
+    });
+
+</script>

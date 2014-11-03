@@ -1,0 +1,9 @@
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\AguaDeMaria.Model.dll.config
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\AguaDeMaria.Model.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\AguaDeMaria.Model.pdb
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\EntityFramework.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\EntityFramework.SqlServer.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\EntityFramework.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\bin\Release\EntityFramework.SqlServer.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\obj\Release\AguaDeMaria.Model.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Model\obj\Release\AguaDeMaria.Model.pdb

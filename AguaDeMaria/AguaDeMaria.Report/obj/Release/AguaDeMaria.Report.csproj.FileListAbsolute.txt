@@ -1,0 +1,11 @@
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\AguaDeMaria.Report.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\AguaDeMaria.Report.pdb
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\AguaDeMaria.Model.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\itextsharp.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\EntityFramework.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\AguaDeMaria.Model.pdb
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\itextsharp.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\bin\Release\EntityFramework.xml
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\obj\Release\AguaDeMaria.Report.csprojResolveAssemblyReference.cache
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\obj\Release\AguaDeMaria.Report.dll
+C:\source\scratchpad\AguaDeMaria\AguaDeMaria.Report\obj\Release\AguaDeMaria.Report.pdb
