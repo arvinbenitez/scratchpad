@@ -496,6 +496,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Accounts\Models\" />
     <Folder Include="Areas\Accounts\Views\Shared\" />
+    <Folder Include="ServiceModel\" />
+    <Folder Include="ServiceType\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
