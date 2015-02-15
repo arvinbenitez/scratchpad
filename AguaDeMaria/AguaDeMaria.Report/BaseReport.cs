@@ -14,7 +14,7 @@ namespace AguaDeMaria.Report
 
         public BaseReport(BaseFont font, Rectangle pageSize)
         {
-            this.baseFont = font;
+            baseFont = font;
             this.pageSize = pageSize;
             document = new Document(pageSize);
         }
