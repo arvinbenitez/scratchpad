@@ -12,16 +12,15 @@
               templateUrl: "areas/accounts/scripts/views/users.html",
               controller: "UsersController"
           })
-         .state('users.new', {
-             url: "/new",
+         .state('users_new', {
+             url: "users/new",
              templateUrl: "areas/accounts/scripts/views/useredit.html",
              controller: "UsersController"
          })
-        .state('users.edit', {
-            url: "/edit/:userId",
+        .state('users_edit', {
+            url: "users/edit/:userId",
             templateUrl: "areas/accounts/scripts/views/useredit.html",
             controller: "UsersController"
         });
     });
-    //alert('The angular module was setup')
 })();

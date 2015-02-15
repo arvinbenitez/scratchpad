@@ -21,6 +21,12 @@ namespace WebClientTest
                     new KeyValuePair<string,string>("Password","admin"),
                     new KeyValuePair<string,string>("Redirect","/Home")
                 };
+
+                var multiPart = new MultipartFormDataContent("somebodyoncetoldmethisisaboundary");
+
+                var firstContent = new HttpContent();
+                firstContent.Headers.ContentEncoding.Add("Shift_JIS");
+
                 var formContent = new FormUrlEncodedContent(details);
                 var response = client.PostAsync(@"/login/login", formContent).Result;
                 var asdjk = response.Content.ReadAsStringAsync().Result;

@@ -9,6 +9,7 @@ using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Delivery;
 using AguaDeMaria.Models.Order;
 using AguaDeMaria.Models.Pickup;
+using AguaDeMaria.Models.Invoice;
 using AutoMapper;
 
 namespace AguaDeMaria.Models
@@ -20,6 +21,7 @@ namespace AguaDeMaria.Models
             ConfigureOrder();
             ConfigureDeliveryReceipt();
             ConfigurePickupSlip();
+            ConfigureSalesInvoice();
         }
 
         private static void ConfigureOrder()
@@ -57,6 +59,13 @@ namespace AguaDeMaria.Models
                         a.Qty = b.SlimQty;
                     })
                 );
+        }
+
+        public static void ConfigureSalesInvoice()
+        {
+            Mapper.CreateMap<SalesInvoice, SalesInvoiceDto>()
+                .ForMember(x => x.CustomerName, o => o.MapFrom(s => s.Customer.CustomerName))
+                .ForMember(x => x.OrderNumber, o => o.MapFrom(s => s.Order.OrderNumber));
         }
 
         private static void ConfigureDeliveryReceipt()

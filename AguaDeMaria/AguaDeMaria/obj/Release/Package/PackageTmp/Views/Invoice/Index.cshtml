@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Sales Invoice List";
+}
+
+@Html.Partial("_DateFilter")
+<table id="salesInvoiceList"></table>
+<div id="salesInvoiceListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
+<script>
+    var salesInvoiceGrid = function (dateFilter) {
+        function showSalesInvoicesGridImpl(startDate, endDate) {
+            var url = "/Invoice/GetInvoicesList?startDate=" + startDate + "&endDate=" + endDate;
+            jQuery("#salesInvoiceList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Invoice Id', 'Customer', 'Invoice Number', 'Invoice Date', 'Order Number', 'Paid'],
+                colModel: [
+                        { name: 'SalesInvoiceId', key: true, index: 'SalesInvoiceId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'CustomerName', index: 'CustomerName', width: 100 },
+                        { name: 'InvoiceNumber', index: 'InvoiceNumber', width: 50 },
+                        { name: 'InvoiceDate', index: 'InvoiceDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
+                        { name: 'OrderNumber', index: 'OrderNumber', width: 50 },
+                        { name: 'IsPaid', index: 'IsPaid', width: 50 },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'OrderId',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#salesInvoiceListPager',
+                sortorder: "asc",
+                caption: "Sales Invoice List",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#salesInvoiceList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='salesInvoiceGrid.edit(" + rowId + ")'></a>";
+                        var printAction = "<a class='fa fa-print' href='#' title='Print Sales Invoice'  onclick='salesInvoiceGrid.print(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction + printAction });
+                    }
+                },
+                loadComplete: function () {
+                    //update the rowcolors
+                }
+            });
+            //show the Navigator
+            jQuery("#salesInvoiceList")
+                .jqGrid('navGrid', '#salesInvoiceListPager', { edit: false, add: false, del: false })
+                .navButtonAdd('#salesInvoiceListPager', {
+                    caption: "",
+                    buttonicon: "ui-icon-plus",
+                    onClickButton: function () {
+                        newDelivery(null);
+                    },
+                    position: "last",
+                    title: "New Delivery",
+                    cursor: "pointer"
+                });
+        }
+
+        return ({
+            showSalesInvoice: showSalesInvoicesGridImpl
+        });
+    }(DateFilter);
+</script>

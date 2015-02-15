@@ -6,8 +6,7 @@
             <tr><td>Name</td></tr>
         </thead>
         <tr ng-repeat="user in userList">
-            <td><a ui-sref="users.edit({userId: user.id})">Edit</a> {{user.name}}</td>
+            <td><a ui-sref="users_edit({userId: user.id})">Edit</a> {{user.name}}</td>
         </tr>
     </table>
 </div>
-<div ui-view ng-show="showList == false"></div>
