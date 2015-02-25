@@ -10,7 +10,7 @@ namespace AguaDeMaria.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "Purified Drinking Water";
 
             return View();
         }
@@ -18,7 +18,7 @@ namespace AguaDeMaria.Controllers
         [Authorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "Aqua Kesh ";
 
             return View();
         }
@@ -26,7 +26,7 @@ namespace AguaDeMaria.Controllers
         [Authorize]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Marialyn Benitez";
 
             return View();
         }
