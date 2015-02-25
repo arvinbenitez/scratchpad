@@ -58,6 +58,12 @@ namespace AguaDeMaria.Models.Order
             get { return !ValidationErrors.Any(); }
         }
 
+        public int SlimQtyDelivered { get; set; }
+        public int RoundQtyDelivered { get; set; }
+
+        public int SlimQtyBalance { get { return SlimQty - SlimQtyDelivered; } }
+        public int RoundQtyBalance { get { return RoundQty - RoundQtyDelivered; } }
+
 
     }
 }

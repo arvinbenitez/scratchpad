@@ -12,14 +12,18 @@
             jQuery("#orderList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Order Id', 'Customer', 'Order Number', 'Order Date', 'Slim', 'Round', 'Status', 'Actions'],
+                colNames: ['Order Id', 'Customer', 'Order Number', 'Order Date', 'Slim', 'Round', 'Slim', 'Round', 'Slim', 'Round', 'Status', 'Actions'],
                 colModel: [
                         { name: 'OrderId', key: true, index: 'OrderId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerName', index: 'CustomerName', width: 100 },
-                        { name: 'OrderNumber', index: 'OrderNumber', width: 50 },
-                        { name: 'OrderDate', index: 'OrderDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
-                        { name: 'SlimQty', index: 'SlimQty', width: 75, align: "right" },
-                        { name: 'RoundQty', index: 'RoundQty', width: 75, align: "right" },
+                        { name: 'OrderNumber', index: 'OrderNumber', width: 40 },
+                        { name: 'OrderDate', index: 'OrderDate', width: 40, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
+                        { name: 'SlimQty', index: 'SlimQty', width: 30, align: "right" },
+                        { name: 'RoundQty', index: 'RoundQty', width: 30, align: "right" },
+                        { name: 'SlimQtyDelivered', index: 'SlimQtyDelivered', width: 30, align: "right" },
+                        { name: 'RoundQtyDelivered', index: 'RoundQtyDelivered', width: 30, align: "right" },
+                        { name: 'SlimQtyBalance', index: 'SlimQtyBalance', width: 30, align: "right" },
+                        { name: 'RoundQtyBalance', index: 'RoundQtyBalance', width: 30, align: "right" },
                         { name: 'OrderStatusName', index: 'OrderStatusName', width: 50 },
                         { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
                 sortname: 'OrderId',
@@ -60,6 +64,16 @@
                     title: "New Order",
                     cursor: "pointer"
                 });
+            //show multiple headers
+            jQuery("#orderList").jqGrid('setGroupHeaders', {
+                useColSpanStyle: false,
+                groupHeaders: [
+                  { startColumnName: 'SlimQty', numberOfColumns: 2, titleText: 'Order Quantity' },
+                  { startColumnName: 'SlimQtyDelivered', numberOfColumns: 2, titleText: 'Delivered Quantity' },
+                  { startColumnName: 'SlimQtyBalance', numberOfColumns: 2, titleText: 'Pending Quantity' }
+                ]
+            });
+
         }
 
         function updateOrderGrid() {

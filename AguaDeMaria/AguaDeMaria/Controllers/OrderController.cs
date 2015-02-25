@@ -49,7 +49,7 @@ namespace AguaDeMaria.Controllers
             var orders = OrderRepository.Get(
                 x => x.OrderDate >= orderStartDate && x.OrderDate <= orderEndDate,
                 orderBy: x => x.OrderBy(y => y.OrderDate),
-                includedProperties: "Customer");
+                includedProperties: "Customer,DeliveryReceipts,DeliveryReceipts.DeliveryReceiptDetails");
             var ordersList = from o in orders
                              select Mapper.Map<OrderDto>(o);
             return Json(ordersList, JsonRequestBehavior.AllowGet);

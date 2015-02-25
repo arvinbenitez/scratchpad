@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.EntitySql;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
 using AguaDeMaria.Model;
 using AguaDeMaria.Model.Dto;
-using AguaDeMaria.Models.Delivery;
 using AguaDeMaria.Models.Order;
 using AguaDeMaria.Models.Pickup;
 using AguaDeMaria.Models.Invoice;
@@ -38,7 +34,12 @@ namespace AguaDeMaria.Models
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName))
                 .ForMember(x => x.OrderStatusName,
-                    o => o.MapFrom(s => s.OrderStatus.StatusName));
+                    o => o.MapFrom(s => s.OrderStatus.StatusName))
+                .ForMember(x=> x.SlimQtyDelivered,
+                    o=> o.MapFrom(s=> GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Slim)))
+                .ForMember(x=> x.RoundQtyDelivered,
+                    o=> o.MapFrom(s=> GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Round)));
+
 
             Mapper.CreateMap<OrderDto, Model.Order>()
                 .AfterMap((x, y) => MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(y.OrderDetails, x,
@@ -59,6 +60,19 @@ namespace AguaDeMaria.Models
                         a.Qty = b.SlimQty;
                     })
                 );
+        }
+
+        private static int GetDeliveryReceiptTotal(Model.Order order, int productTypeId)
+        {
+            if (order.DeliveryReceipts == null)
+            {
+                return 0;
+            }
+            return
+                order.DeliveryReceipts.SelectMany(
+                    deliveryReceipt =>
+                        deliveryReceipt.DeliveryReceiptDetails.Where(x => x.ProductTypeId == productTypeId))
+                    .Sum(deliveryReceiptDetail => deliveryReceiptDetail.Quantity);
         }
 
         public static void ConfigureSalesInvoice()

@@ -1,11 +1,8 @@
+using System.Data.Entity;
+
 namespace AguaDeMaria.Model
 {
-    using System;
-    using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-
-    public partial class AguaDeMariaContext : DbContext
+    public class AguaDeMariaContext : DbContext
     {
         public AguaDeMariaContext()
             : base("name=AguaDeMariaContext")
@@ -84,7 +81,7 @@ namespace AguaDeMaria.Model
 
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.DeliveryReceipts)
-                .WithOptional(e=> e.Order)
+                .WithOptional(e => e.Order)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProductType>()
@@ -148,8 +145,6 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<Inventory>()
                 .Property(e => e.TransactionType)
                 .IsUnicode(false);
-
-
         }
     }
 }
