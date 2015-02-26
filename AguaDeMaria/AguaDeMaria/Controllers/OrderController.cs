@@ -8,7 +8,6 @@ using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Order;
 using AutoMapper;
-using Microsoft.Ajax.Utilities;
 
 namespace AguaDeMaria.Controllers
 {
@@ -119,7 +118,7 @@ namespace AguaDeMaria.Controllers
                 orderDto.CustomerName =
                     this.CustromeRepository.Get(x => x.CustomerId == orderDto.CustomerId).First().CustomerName;
                 orderDto.OrderStatusName =
-                    this.LookupDataManager.OrderStatuses.First(x => x.OrderStatusId == orderDto.OrderStatusId)
+                    this.LookupDataManager.OrderStatuses.First(x => x.OrderStatusId == order.OrderStatusId)
                         .StatusName;
 
                 orderDto.OrderId = order.OrderId;
@@ -149,7 +148,7 @@ namespace AguaDeMaria.Controllers
             var orderStatus = from c in LookupDataManager.OrderStatuses
                               select new SelectListItem()
                               {
-                                  Value = c.OrderStatusId.ToString(),
+                                  Value = c.OrderStatusId.ToString(CultureInfo.InvariantCulture),
                                   Text = c.StatusName
                               };
             return orderStatus.ToList();

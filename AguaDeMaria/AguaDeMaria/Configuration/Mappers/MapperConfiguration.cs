@@ -8,7 +8,7 @@ namespace AguaDeMaria.Configuration.Mappers
     {
         public static void Configure()
         {
-            OrderMapperConfiguration.ConfigureOrder();
+            OrderMapperConfiguration.Configure();
             DeliveryReceiptMapperConfiguration.ConfigureDeliveryReceipt();
             PickupSlipMapperConfiguration.ConfigurePickupSlip();
             SalesInvoiceMapperConfiguration.ConfigureSalesInvoice();

@@ -541,6 +541,10 @@
       <Project>{4fac837f-e472-403f-8ec4-6bbe2c7b8e4b}</Project>
       <Name>AguaDeMaria.Report</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AguaDeMaria.Service\AguaDeMaria.Service.csproj">
+      <Project>{79b40f71-3583-4a3f-9951-ec8ab9089811}</Project>
+      <Name>AguaDeMaria.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

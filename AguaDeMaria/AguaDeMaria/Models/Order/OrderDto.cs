@@ -61,9 +61,30 @@ namespace AguaDeMaria.Models.Order
         public int SlimQtyDelivered { get; set; }
         public int RoundQtyDelivered { get; set; }
 
-        public int SlimQtyBalance { get { return SlimQty - SlimQtyDelivered; } }
-        public int RoundQtyBalance { get { return RoundQty - RoundQtyDelivered; } }
+        public int SlimQtyBalance
+        {
+            get { return SlimQtyDelivered > SlimQty ? 0 : SlimQty - SlimQtyDelivered; }
+        }
 
+        public int RoundQtyBalance
+        {
+            get { return RoundQtyDelivered > RoundQty ? 0 : RoundQty - RoundQtyDelivered; }
+        }
 
+        public int CalculatedStatusId
+        {
+            get { return CalculateOrderStatus(this); }
+        }
+
+        private static int CalculateOrderStatus(OrderDto orderDto)
+        {
+            if (orderDto.OrderStatusId == DataConstants.OrderStatus.Cancelled)
+                return DataConstants.OrderStatus.Cancelled;
+            if (orderDto.RoundQtyBalance <= 0 && orderDto.SlimQtyBalance <= 0)
+                return DataConstants.OrderStatus.Delivered;
+            if (orderDto.RoundQty == orderDto.RoundQtyBalance && orderDto.SlimQty == orderDto.SlimQtyBalance)
+                return DataConstants.OrderStatus.Pending;
+            return DataConstants.OrderStatus.PartiallyDelivered;
+        }
     }
 }

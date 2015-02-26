@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Delivery;
+using AguaDeMaria.Models.Order;
 using AutoMapper;
 
 namespace AguaDeMaria.Controllers
@@ -70,8 +70,12 @@ namespace AguaDeMaria.Controllers
                 if (parameter.IsNewDeliveryFromOrder)
                 {
                     //this must be a new delivery
-                    Order order = OrderRepository.Get(x => x.OrderId == parameter.OrderId).FirstOrDefault();
-                    deliveryDto = Mapper.Map<DeliveryDto>(order);
+                    Order order =
+                        OrderRepository.Get(x => x.OrderId == parameter.OrderId,
+                            includedProperties: "DeliveryReceipts,DeliveryReceipts.DeliveryReceiptDetails")
+                            .FirstOrDefault();
+                    var orderDto = Mapper.Map<OrderDto>(order);
+                    deliveryDto = Mapper.Map<DeliveryDto>(orderDto);
                 }
                 else
                 {
@@ -126,12 +130,7 @@ namespace AguaDeMaria.Controllers
                 }
                 if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
                 {
-                    var order = OrderRepository.Get(x => x.OrderId == deliveryDto.OrderId).FirstOrDefault();
-                    if (order != null)
-                    {
-                        order.OrderStatusId = DataConstants.OrderStatus.Delivered;
-                        OrderRepository.Update(order);
-                    }
+                    UpdateOrderStatus(deliveryDto);
                 }
                 UnitOfWork.Commit();
                 deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
@@ -144,6 +143,20 @@ namespace AguaDeMaria.Controllers
             }
             ViewBag.CustomerList = CustomerListItems();
             return PartialView("DeliveryEditor", deliveryDto);
+        }
+
+        private void UpdateOrderStatus(DeliveryDto deliveryDto)
+        {
+            var order =
+                OrderRepository.Get(x => x.OrderId == deliveryDto.OrderId,
+                    includedProperties: "DeliveryReceipts,DeliveryReceipts.DeliveryReceiptDetails")
+                    .FirstOrDefault();
+            if (order != null)
+            {
+                var orderDto = Mapper.Map<OrderDto>(order);
+                order.OrderStatusId = orderDto.CalculatedStatusId;
+                OrderRepository.Update(order);
+            }
         }
 
         private IEnumerable<SelectListItem> CustomerListItems()

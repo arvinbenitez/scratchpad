@@ -9,6 +9,8 @@
                 @Html.HiddenFor(x => x.OrderId)
                 @Html.HiddenFor(x => x.RoundOrderDetailId)
                 @Html.HiddenFor(x => x.SlimOrderDetailId)
+                @Html.HiddenFor(x => x.SlimQtyDelivered)
+                @Html.HiddenFor(x => x.RoundQtyDelivered)
             </td>
         </tr>
         <tr>
@@ -62,7 +64,7 @@
                 @Html.LabelFor(x => x.OrderStatusId)
             </td>
             <td>
-                @Html.DropDownListFor(x => x.OrderStatusId, ViewBag.OrderStatusList as IEnumerable<SelectListItem>, new { @id = "orderstatus" })
+                @Html.DropDownListFor(x => x.OrderStatusId, ViewBag.OrderStatusList as IEnumerable<SelectListItem>, new { @id = "orderstatus",disabled="disabled" })
             </td>
         </tr>
         @if (!Model.IsValid)

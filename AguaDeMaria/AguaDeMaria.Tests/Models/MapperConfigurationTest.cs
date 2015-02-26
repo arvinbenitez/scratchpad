@@ -18,7 +18,7 @@ namespace AguaDeMaria.Tests.Models
         [TestMethod]
         public void WhenOrderIsMappedToDto_Should_GetTotalDeliries()
         {
-            var order = new Order
+            var order = new Model.Order
             {
                 OrderDetails = new[]
                 {
@@ -86,7 +86,7 @@ namespace AguaDeMaria.Tests.Models
         [TestMethod]
         public void WhenOrderIsMappedToDto_And_ThereAreNoDeliveries_Should_ReturnZero()
         {
-            var order = new Order
+            var order = new Model.Order
             {
                 OrderDetails = new[]
                 {

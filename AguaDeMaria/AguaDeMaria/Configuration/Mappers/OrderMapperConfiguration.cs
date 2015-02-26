@@ -8,49 +8,78 @@ namespace AguaDeMaria.Configuration.Mappers
 {
     public class OrderMapperConfiguration
     {
-        public static void ConfigureOrder()
+        public static void Configure()
         {
-            Mapper.CreateMap<Model.Order, OrderDto>()
+            MapOrderToDto();
+            MapOrderDtoToOrder();
+        }
+
+        private static void MapOrderToDto()
+        {
+            Mapper.CreateMap<Order, OrderDto>()
                 .ForMember(x => x.SlimQty,
-                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Qty))
+                    o =>
+                        o.MapFrom(
+                            s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Qty))
                 .ForMember(x => x.SlimOrderDetailId,
-                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).OrderDetailId))
+                    o =>
+                        o.MapFrom(
+                            s =>
+                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                    .OrderDetailId))
                 .ForMember(x => x.RoundQty,
-                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Qty))
+                    o =>
+                        o.MapFrom(
+                            s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).Qty))
                 .ForMember(x => x.RoundOrderDetailId,
-                    o => o.MapFrom(s => s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round).OrderDetailId))
+                    o =>
+                        o.MapFrom(
+                            s =>
+                                s.OrderDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                    .OrderDetailId))
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName))
                 .ForMember(x => x.OrderStatusName,
                     o => o.MapFrom(s => s.OrderStatus.StatusName))
-                .ForMember(x=> x.SlimQtyDelivered,
-                    o=> o.MapFrom(s=> GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Slim)))
-                .ForMember(x=> x.RoundQtyDelivered,
-                    o=> o.MapFrom(s=> GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Round)));
+                .ForMember(x => x.SlimQtyDelivered,
+                    o => o.MapFrom(s => GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Slim)))
+                .ForMember(x => x.RoundQtyDelivered,
+                    o => o.MapFrom(s => GetDeliveryReceiptTotal(s, DataConstants.ProductTypes.Round)));
+        }
 
-
-            Mapper.CreateMap<OrderDto, Model.Order>()
-                .AfterMap((x, y) => MapperConfiguration.MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(y.OrderDetails, x,
-                    z => z.ProductTypeId == DataConstants.ProductTypes.Round,
-                    (a, b) =>
-                    {
-                        a.OrderDetailId = b.RoundOrderDetailId;
-                        a.ProductTypeId = DataConstants.ProductTypes.Round;
-                        a.Qty = b.RoundQty;
-                    })
+        private static void MapOrderDtoToOrder()
+        {
+            Mapper.CreateMap<OrderDto, Order>()
+                .ForMember(x=> x.OrderStatusId,
+                    o=> o.MapFrom(y=> y.CalculatedStatusId))
+                .AfterMap(
+                    (x, y) =>
+                        MapperConfiguration.MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(
+                            y.OrderDetails, x,
+                            z => z.ProductTypeId == DataConstants.ProductTypes.Round,
+                            (a, b) =>
+                            {
+                                a.OrderDetailId = b.RoundOrderDetailId;
+                                a.ProductTypeId = DataConstants.ProductTypes.Round;
+                                a.Qty = b.RoundQty;
+                            })
                 )
-                .AfterMap((x, y) => MapperConfiguration.MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(y.OrderDetails, x,
-                    z => z.ProductTypeId == DataConstants.ProductTypes.Slim,
-                    (a, b) =>
-                    {
-                        a.OrderDetailId = b.SlimOrderDetailId;
-                        a.ProductTypeId = DataConstants.ProductTypes.Slim;
-                        a.Qty = b.SlimQty;
-                    })
+                .AfterMap(
+                    (x, y) =>
+                        MapperConfiguration.MapChildToCollection<ICollection<OrderDetail>, OrderDetail, OrderDto>(
+                            y.OrderDetails, x,
+                            z => z.ProductTypeId == DataConstants.ProductTypes.Slim,
+                            (a, b) =>
+                            {
+                                a.OrderDetailId = b.SlimOrderDetailId;
+                                a.ProductTypeId = DataConstants.ProductTypes.Slim;
+                                a.Qty = b.SlimQty;
+                            })
                 );
         }
 
-        private static int GetDeliveryReceiptTotal(Model.Order order, int productTypeId)
+
+        public static int GetDeliveryReceiptTotal(Order order, int productTypeId)
         {
             if (order.DeliveryReceipts == null)
             {
