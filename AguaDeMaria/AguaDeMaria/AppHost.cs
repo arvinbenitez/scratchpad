@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 using System.Web.Mvc;
+using AguaDeMaria.Configuration.Mappers;
 using Funq;
 using ServiceStack.CacheAccess;
 using ServiceStack.CacheAccess.Providers;
-using ServiceStack.Common.Utils;
 using ServiceStack.Common.Web;
 using ServiceStack.Mvc;
 using ServiceStack.OrmLite;
@@ -44,7 +40,7 @@ namespace AguaDeMaria
             ConfigureDependencies(container);
             ConfigureAuthorization(container);
 
-            Models.MapperConfiguration.Configure();
+            MapperConfiguration.Configure();
         }
 
         private static void ConfigureAuthorization(Funq.Container container)

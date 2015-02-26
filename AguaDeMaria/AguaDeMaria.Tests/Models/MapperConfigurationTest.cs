@@ -1,5 +1,5 @@
-﻿using AguaDeMaria.Model;
-using AguaDeMaria.Models;
+﻿using AguaDeMaria.Configuration.Mappers;
+using AguaDeMaria.Model;
 using AguaDeMaria.Models.Order;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

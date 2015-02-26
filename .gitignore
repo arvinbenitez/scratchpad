@@ -1,8 +1,7 @@
 [Bb]in
 [Dd]ebug*/
 AguaDeMaria/AguaDeMaria.Database/
-AguaDeMaria/TestResults/51a5e50a-8cc5-41c2-8ad2-4a3a48922611/Arvin_ARVIN-DELL-PC 2015-02-15 18_02_11.coverage
-AguaDeMaria/TestResults/7dbaf66e-e83c-4dad-8b85-964a1e1b9b25/Arvin_ARVIN-DELL-PC 2015-02-15 17_59_49.coverage
+*.coverage
 AguaDeMaria/AguaDeMaria.Database/AguaDeMaria.Database.dbmdl
-AguaDeMaria/AguaDeMaria.sln.DotSettings.user
-AguaDeMaria/AguaDeMaria.v12.suo
+*.user
+*.suo
