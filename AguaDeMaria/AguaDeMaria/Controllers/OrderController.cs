@@ -86,11 +86,11 @@ namespace AguaDeMaria.Controllers
                 OrderStatusId = DataConstants.OrderStatus.Pending,
                 OrderDetails = new List<OrderDetail>
                                     {
-                                        new OrderDetail(){ProductTypeId = DataConstants.ProductTypes.Slim},
-                                        new OrderDetail(){ProductTypeId = DataConstants.ProductTypes.Round}
+                                        new OrderDetail {ProductTypeId = DataConstants.ProductTypes.Slim},
+                                        new OrderDetail {ProductTypeId = DataConstants.ProductTypes.Round}
                                     }
             };
-            order.OrderNumber = this.SettingsManager.GetNextOrderNumber();
+            order.OrderNumber = SettingsManager.GetNextOrderNumber();
             return order;
         }
 
@@ -100,28 +100,28 @@ namespace AguaDeMaria.Controllers
         {
             if (ModelState.IsValid && orderDto.IsValid)
             {
-                Order order = null;
+                Order order;
                 if (orderDto.OrderId > 0)
                 {
-                    order = this.OrderRepository.Get(x => x.OrderId == orderDto.OrderId).FirstOrDefault();
+                    order = OrderRepository.Get(x => x.OrderId == orderDto.OrderId).FirstOrDefault();
                     Mapper.Map(orderDto, order);
-                    this.OrderRepository.Update(order);
+                    OrderRepository.Update(order);
                 }
                 else
                 {
-                    order = Mapper.Map<Model.Order>(orderDto);
-                    this.OrderRepository.Insert(order);
+                    order = Mapper.Map<Order>(orderDto);
+                    OrderRepository.Insert(order);
                 }
-                this.OrderRepository.Commit();
+                OrderRepository.Commit();
 
                 //TODO: Avoid looking this up again
                 orderDto.CustomerName =
-                    this.CustromeRepository.Get(x => x.CustomerId == orderDto.CustomerId).First().CustomerName;
+                    CustromeRepository.Get(x => x.CustomerId == orderDto.CustomerId).First().CustomerName;
                 orderDto.OrderStatusName =
-                    this.LookupDataManager.OrderStatuses.First(x => x.OrderStatusId == order.OrderStatusId)
+                    LookupDataManager.OrderStatuses.First(x => order != null && x.OrderStatusId == order.OrderStatusId)
                         .StatusName;
 
-                orderDto.OrderId = order.OrderId;
+                if (order != null) orderDto.OrderId = order.OrderId;
                 return Json(orderDto);
             }
             ViewBag.CustomerList = CustomerListItems();
@@ -146,7 +146,7 @@ namespace AguaDeMaria.Controllers
         private IEnumerable<SelectListItem> OrderStatusListItems()
         {
             var orderStatus = from c in LookupDataManager.OrderStatuses
-                              select new SelectListItem()
+                              select new SelectListItem
                               {
                                   Value = c.OrderStatusId.ToString(CultureInfo.InvariantCulture),
                                   Text = c.StatusName
