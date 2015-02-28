@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
-using AguaDeMaria.Model;
 
 namespace AguaDeMaria.Model.Dto
 {
@@ -65,5 +63,17 @@ namespace AguaDeMaria.Model.Dto
         }
 
         public string CustomerAddress { get; set; }
+
+        public decimal Amount
+        {
+            get { return SlimAmount + RoundAmount;  }
+        }
+
+        public decimal AmountPaid { get; set; }
+
+        public decimal AmountBalance
+        {
+            get { return Amount - AmountPaid; }
+        }
     }
 }
