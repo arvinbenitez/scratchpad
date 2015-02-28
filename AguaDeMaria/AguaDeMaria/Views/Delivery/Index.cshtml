@@ -50,17 +50,7 @@
             });
             //show the Navigator
             jQuery("#deliveryList")
-                .jqGrid('navGrid', '#deliveryListPager', { edit: false, add: false, del: false })
-                .navButtonAdd('#deliveryListPager', {
-                    caption: "",
-                    buttonicon: "ui-icon-plus",
-                    onClickButton: function () {
-                        newDelivery(null);
-                    },
-                    position: "last",
-                    title: "New Delivery",
-                    cursor: "pointer"
-                });
+                .jqGrid('navGrid', '#deliveryListPager', { edit: false, add: false, del: false });
         }
 
         function newDelivery() {
