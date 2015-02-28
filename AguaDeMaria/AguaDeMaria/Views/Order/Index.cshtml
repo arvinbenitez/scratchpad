@@ -35,6 +35,7 @@
                 width: 1200,
                 height: "100%",
                 loadonce: true,
+                footerrow: true,
                 gridComplete: function () {
                     //setup the custom
                     var grid = $("#orderList");
@@ -45,6 +46,16 @@
                         var orderAction = "<a class='fa fa-car' href='#' title='Create Delivery Receipt' onclick='ordersGrid.newDelivery(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
                     }
+                    //set the footer
+                    grid.jqGrid('footerData', 'set', {
+                        'CustomerName': 'Grand Total',
+                        'SlimQty': grid.jqGrid('getCol', 'SlimQty', false, 'sum'),
+                        'RoundQty': grid.jqGrid('getCol', 'RoundQty', false, 'sum'),
+                        'SlimQtyDelivered': grid.jqGrid('getCol', 'SlimQtyDelivered', false, 'sum'),
+                        'RoundQtyDelivered': grid.jqGrid('getCol', 'RoundQtyDelivered', false, 'sum'),
+                        'SlimQtyBalance': grid.jqGrid('getCol', 'SlimQtyBalance', false, 'sum'),
+                        'RoundQtyBalance': grid.jqGrid('getCol', 'RoundQtyBalance', false, 'sum'),
+                    });
                 },
                 loadComplete: function () {
                     //update the rowcolors
