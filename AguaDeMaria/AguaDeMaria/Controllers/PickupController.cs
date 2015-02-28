@@ -4,11 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
-using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Pickup;
 using AutoMapper;
-using Microsoft.Ajax.Utilities;
+
 namespace AguaDeMaria.Controllers
 {
     [Authorize]

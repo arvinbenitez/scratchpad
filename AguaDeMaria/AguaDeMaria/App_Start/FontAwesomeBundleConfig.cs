@@ -1,8 +1,10 @@
 using System.Web.Optimization;
+using AguaDeMaria;
+using WebActivatorEx;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(AguaDeMaria.App_Start.FontAwesomeBundleConfig), "RegisterBundles")]
+[assembly: PostApplicationStartMethod(typeof(FontAwesomeBundleConfig), "RegisterBundles")]
 
-namespace AguaDeMaria.App_Start
+namespace AguaDeMaria
 {
 	public class FontAwesomeBundleConfig
 	{

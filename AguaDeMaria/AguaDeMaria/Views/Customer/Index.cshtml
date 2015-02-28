@@ -1,5 +1,4 @@
-﻿@using Newtonsoft.Json
-@model IEnumerable<AguaDeMaria.Model.Customer>
+﻿@model IEnumerable<AguaDeMaria.Model.Customer>
 @{
     ViewBag.Title = "Customer";
 }
@@ -114,6 +113,7 @@
                 width: 1200,
                 height: "100%",
                 loadonce: true,
+                rowNum: 50,
                 gridComplete: function () {
                     //setup the custom
                     var grid = $("#customerList");

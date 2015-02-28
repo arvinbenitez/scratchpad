@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace AguaDeMaria.Areas.Accounts.Controllers
 {
@@ -16,5 +12,9 @@ namespace AguaDeMaria.Areas.Accounts.Controllers
             return View();
         }
 
+        public ActionResult Manage()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

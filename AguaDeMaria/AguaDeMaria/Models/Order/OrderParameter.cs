@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AguaDeMaria.Models.Order
+﻿namespace AguaDeMaria.Models.Order
 {
     public class OrderParameter
     {

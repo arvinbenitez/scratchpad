@@ -11,7 +11,7 @@ namespace AguaDeMaria.Configuration.Mappers
         public static void ConfigurePickupSlip()
         {
             //Map to Order to DeliveryReceipt
-            Mapper.CreateMap<Model.DeliveryReceipt, PickupSlipDto>()
+            Mapper.CreateMap<DeliveryReceipt, PickupSlipDto>()
                 .ForMember(x => x.SlimQty,
                     o => o.MapFrom(s => s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
                 .ForMember(x => x.RoundQty,
@@ -19,7 +19,7 @@ namespace AguaDeMaria.Configuration.Mappers
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName));
 
-            Mapper.CreateMap<Model.PickupSlip, PickupSlipDto>()
+            Mapper.CreateMap<PickupSlip, PickupSlipDto>()
                 .ForMember(x => x.SlimQty,
                     o => o.MapFrom(s => s.PickupSlipDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim).Quantity))
                 .ForMember(x => x.SlimPickupSlipDetailId,
@@ -31,7 +31,7 @@ namespace AguaDeMaria.Configuration.Mappers
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName));
 
-            Mapper.CreateMap<PickupSlipDto, Model.PickupSlip>()
+            Mapper.CreateMap<PickupSlipDto, PickupSlip>()
                 .AfterMap((x, y) => MapperConfiguration.MapChildToCollection<ICollection<PickupSlipDetail>, PickupSlipDetail, PickupSlipDto>(y.PickupSlipDetails, x,
                     z => z.ProductTypeId == DataConstants.ProductTypes.Round,
                     (a, b) =>

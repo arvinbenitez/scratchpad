@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,7 +15,7 @@ namespace AguaDeMaria.Controllers
 
         public AccountController(AuthService auth)
         {
-            this.AuthService = auth;
+            AuthService = auth;
         }
 
         public ActionResult Index()
@@ -28,7 +26,7 @@ namespace AguaDeMaria.Controllers
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
-            var loginData = new LoginModel() { Redirect = returnUrl };
+            var loginData = new LoginModel { Redirect = returnUrl };
             return View(loginData);
         }
 
@@ -44,7 +42,7 @@ namespace AguaDeMaria.Controllers
             try
             {
 
-                AuthResponse response = AuthService.Authenticate(new Auth()
+                AuthResponse response = AuthService.Authenticate(new Auth
                 {
                     UserName = model.UserName,
                     Password = model.Password,
@@ -60,17 +58,13 @@ namespace AguaDeMaria.Controllers
                     FormsAuthentication.Encrypt(authTicket));
 
                 Response.Cookies.Add(cookie);
-                ;
 
                 //FormsAuthentication.SetAuthCookie(response.UserName, false);
                 if (model.Redirect != null)
                 {
                     return Redirect(model.Redirect);
                 }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
             catch (HttpError ex)
             {

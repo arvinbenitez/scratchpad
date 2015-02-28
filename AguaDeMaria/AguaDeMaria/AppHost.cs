@@ -23,7 +23,7 @@ namespace AguaDeMaria
             : base("Aqua Kesh Web services", typeof(AppHost).Assembly)
         {
         }
-        public override void Configure(Funq.Container container)
+        public override void Configure(Container container)
         {
             //ASP.NET MVC integration
             ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
@@ -43,7 +43,7 @@ namespace AguaDeMaria
             MapperConfiguration.Configure();
         }
 
-        private static void ConfigureAuthorization(Funq.Container container)
+        private static void ConfigureAuthorization(Container container)
         {
             var userAuthRepository = (OrmLiteAuthRepository)container.Resolve<IUserAuthRepository>();
 #if DEBUG
@@ -61,7 +61,7 @@ namespace AguaDeMaria
         /// Setup Dependency Injection
         /// </summary>
         /// <param name="container"></param>
-        private void ConfigureDependencies(Funq.Container container)
+        private void ConfigureDependencies(Container container)
         {
             container.Register<ICacheClient>(new MemoryCacheClient());
             container.Register<IDbConnectionFactory>(

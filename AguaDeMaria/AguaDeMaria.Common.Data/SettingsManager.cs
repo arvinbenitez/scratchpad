@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using AguaDeMaria.Model;
 
 namespace AguaDeMaria.Common.Data
@@ -13,7 +9,7 @@ namespace AguaDeMaria.Common.Data
 
         public SettingsManager(IRepository<Setting> settingRepository)
         {
-            this.SettingRepository = settingRepository;
+            SettingRepository = settingRepository;
         }
 
         private IRepository<Setting> SettingRepository
@@ -26,14 +22,14 @@ namespace AguaDeMaria.Common.Data
         {
             var setting = GetSetting();
             var newNumber = setting.OrderNumberCounter++;
-            this.SettingRepository.Update(setting);
-            this.SettingRepository.Commit();
+            SettingRepository.Update(setting);
+            SettingRepository.Commit();
             return newNumber.ToString("0000000000");
         }
 
         private Setting GetSetting()
         {
-            var setting = this.SettingRepository.Get(x => x.SettingId > 0).FirstOrDefault();
+            var setting = SettingRepository.Get(x => x.SettingId > 0).FirstOrDefault();
             if (setting == null)
             {
                 setting = GenerateDefaultSetting();
@@ -43,9 +39,9 @@ namespace AguaDeMaria.Common.Data
 
         private Setting GenerateDefaultSetting()
         {
-            var setting = new Setting() {DeliveryReceiptNumberCounter = 1, OrderNumberCounter = 1};
-            this.SettingRepository.Insert(setting);
-            this.SettingRepository.Commit();
+            var setting = new Setting {DeliveryReceiptNumberCounter = 1, OrderNumberCounter = 1};
+            SettingRepository.Insert(setting);
+            SettingRepository.Commit();
             return setting;
         }
 
@@ -53,8 +49,8 @@ namespace AguaDeMaria.Common.Data
         {
             var setting = GetSetting();
             var newNumber = setting.DeliveryReceiptNumberCounter++;
-            this.SettingRepository.Update(setting);
-            this.SettingRepository.Commit();
+            SettingRepository.Update(setting);
+            SettingRepository.Commit();
             return newNumber.ToString("0000000000");
         }
 
@@ -62,8 +58,8 @@ namespace AguaDeMaria.Common.Data
         {
             var setting = GetSetting();
             var newNumber = setting.PickupSlipNumberCounter++;
-            this.SettingRepository.Update(setting);
-            this.SettingRepository.Commit();
+            SettingRepository.Update(setting);
+            SettingRepository.Commit();
             return newNumber.ToString("0000000000");
 
         }

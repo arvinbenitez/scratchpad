@@ -6,15 +6,15 @@
     myAppModule.factory('UserService', ['$http', function ($resource) {
 
         var getAllUsersImpl = function () {
-            return [{ "id": 1, "name": "Arvin" }, { "id": 2, "name": "Vince" }, { "id": 3, "name": "Lyn" }]
+            return [{ "id": 1, "name": "Arvin" }, { "id": 2, "name": "Vince" }, { "id": 3, "name": "Lyn" }];
         };
 
         var getNewUserImpl = function () {
-            return { "id": 0, "name": "New User" }
+            return { "id": 0, "name": "New User" };
         };
 
         var getUserImpl = function (userId) {
-            return { "id": userId, "name": "User " + userId}
+            return { "id": userId, "name": "User " + userId};
         };
 
 
@@ -22,8 +22,8 @@
             getAllUsers: getAllUsersImpl,
             getNewUser: getNewUserImpl,
             getUser: getUserImpl
+        };
         }
-    }
     ]);
 
 })();

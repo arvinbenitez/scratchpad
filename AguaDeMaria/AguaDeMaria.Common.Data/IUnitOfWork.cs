@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AguaDeMaria.Common.Data
+﻿namespace AguaDeMaria.Common.Data
 {
     public interface IUnitOfWork
     {

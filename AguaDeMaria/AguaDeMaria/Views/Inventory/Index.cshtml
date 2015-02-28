@@ -8,7 +8,7 @@
 <script>
     var inventoryGrid = function () {
         function showInventoriesGridImpl() {
-            var url = "/Inventory/GetInventorySummary"
+            var url = "/Inventory/GetInventorySummary";
             jQuery("#inventoryList").jqGrid({
                 url: url,
                 datatype: "json",
@@ -46,7 +46,7 @@
             });
             //show the Navigator
             jQuery("#inventoryList")
-                .jqGrid('navGrid', '#inventoryListPager', { edit: false, add: false, del: false })
+                .jqGrid('navGrid', '#inventoryListPager', { edit: false, add: false, del: false });
         }
 
         function inventoryDetailImpl(customerId)

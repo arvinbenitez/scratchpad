@@ -22,13 +22,13 @@ namespace AguaDeMaria.Tests.Models
             {
                 OrderDetails = new[]
                 {
-                    new OrderDetail()
+                    new OrderDetail
                     {
                         OrderDetailId = 1,
                         ProductTypeId = DataConstants.ProductTypes.Slim,
                         Qty = 10
                     },
-                    new OrderDetail()
+                    new OrderDetail
                     {
                         OrderDetailId = 1,
                         ProductTypeId = DataConstants.ProductTypes.Round,
@@ -90,13 +90,13 @@ namespace AguaDeMaria.Tests.Models
             {
                 OrderDetails = new[]
                 {
-                    new OrderDetail()
+                    new OrderDetail
                     {
                         OrderDetailId = 1,
                         ProductTypeId = DataConstants.ProductTypes.Slim,
                         Qty = 10
                     },
-                    new OrderDetail()
+                    new OrderDetail
                     {
                         OrderDetailId = 1,
                         ProductTypeId = DataConstants.ProductTypes.Round,

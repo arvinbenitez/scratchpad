@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using AguaDeMaria.Model;
@@ -18,7 +19,7 @@ namespace AguaDeMaria.Common.Data
         {
             _context = context;
 #if DEBUG
-            _context.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            _context.Database.Log = s => Debug.WriteLine(s);
 #endif
             _dbSet = context.Set<T>();
         }

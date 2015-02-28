@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Common.Data;
-using AguaDeMaria.Models;
 using AguaDeMaria.Models.Customer;
-using Newtonsoft.Json;
 
 namespace AguaDeMaria.Controllers
 {
@@ -20,8 +17,8 @@ namespace AguaDeMaria.Controllers
 
         public CustomerController(IRepository<Customer> customerRepository, LookupDataManager lookupManager)
         {
-            this._customerRepository = customerRepository;
-            this._lookupManager = lookupManager;
+            _customerRepository = customerRepository;
+            _lookupManager = lookupManager;
         }
 
         private LookupDataManager LookupManager
@@ -44,7 +41,7 @@ namespace AguaDeMaria.Controllers
                                let customerType = LookupManager.CustomerTypes.Where(x => x.CustomerTypeId == c.CustomerTypeId).FirstOrDefault()
                                orderby c.CustomerName
                                select new
-                               CustomerDto()
+                               CustomerDto
                                {
                                    CustomerId = c.CustomerId,
                                    CustomerCode = c.CustomerCode,
@@ -63,7 +60,7 @@ namespace AguaDeMaria.Controllers
             var customer = new Customer();
             if (customerId.HasValue)
             {
-                customer = this._customerRepository.Get(x => x.CustomerId == customerId).FirstOrDefault();
+                customer = _customerRepository.Get(x => x.CustomerId == customerId).FirstOrDefault();
             }
 
             SetCustomerTypes();
@@ -76,7 +73,7 @@ namespace AguaDeMaria.Controllers
                 select new SelectListItem
                 {
                     Text = custType.CustomerTypeName,
-                    Value = custType.CustomerTypeId.ToString()
+                    Value = custType.CustomerTypeId.ToString(CultureInfo.InvariantCulture)
                 };
             ViewBag.CustTypeList = customerTypesList;
         }
@@ -95,17 +92,17 @@ namespace AguaDeMaria.Controllers
 
                 if (customer.CustomerId > 0)
                 {
-                    this._customerRepository.Update(customer);
-                    this._customerRepository.Commit();
+                    _customerRepository.Update(customer);
+                    _customerRepository.Commit();
                 }
                 else
                 {
-                    this._customerRepository.Insert(customer);
-                    this._customerRepository.Commit();
+                    _customerRepository.Insert(customer);
+                    _customerRepository.Commit();
                 }
                 var selectedCustomerType =
                     LookupManager.CustomerTypes.FirstOrDefault(x => x.CustomerTypeId == customer.CustomerTypeId);
-                return Json(new CustomerDto()
+                return Json(new CustomerDto
                 {
                     CustomerId = customer.CustomerId,
                     CustomerCode = customer.CustomerCode,

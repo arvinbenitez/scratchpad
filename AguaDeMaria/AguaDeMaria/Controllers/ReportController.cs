@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
-using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
-using AguaDeMaria.Models.Delivery;
 using AutoMapper;
 using AguaDeMaria.Controllers.Helpers;
 using AguaDeMaria.Report;
-using System.IO;
-using AguaDeMaria.Models;
 using AguaDeMaria.Model.Dto;
 
 namespace AguaDeMaria.Controllers
@@ -41,6 +33,11 @@ namespace AguaDeMaria.Controllers
                 buffer = report.GenerateContent();
             }
             return new BinaryContentResult(buffer, "application/pdf");
+        }
+
+        public ActionResult Index()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

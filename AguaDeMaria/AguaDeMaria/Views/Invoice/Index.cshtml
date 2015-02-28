@@ -39,7 +39,7 @@
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='salesInvoiceGrid.edit(" + rowId + ")'></a>";
                         var printAction = "<a class='fa fa-print' href='#' title='Print Sales Invoice'  onclick='salesInvoiceGrid.print(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction + printAction });
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction + printAction });
                     }
                 },
                 loadComplete: function () {
@@ -53,13 +53,18 @@
                     caption: "",
                     buttonicon: "ui-icon-plus",
                     onClickButton: function () {
-                        newDelivery(null);
+                        newInvoice(null);
                     },
                     position: "last",
                     title: "New Delivery",
                     cursor: "pointer"
                 });
         }
+
+        var newInvoice = function (something) {
+            throw new Error("Not implemented");
+
+        };
 
         return ({
             showSalesInvoice: showSalesInvoicesGridImpl

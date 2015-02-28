@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.IO;
 
@@ -14,8 +11,8 @@ namespace AguaDeMaria.Controllers.Helpers
 
         public BinaryContentResult(byte[] contentBytes, string contentType)
         {
-            this.ContentBytes = contentBytes;
-            this.ContentType = contentType;
+            ContentBytes = contentBytes;
+            ContentType = contentType;
         }
 
         public override void ExecuteResult(ControllerContext context)
@@ -23,9 +20,9 @@ namespace AguaDeMaria.Controllers.Helpers
             var response = context.HttpContext.Response;
             response.Clear();
             response.Cache.SetCacheability(HttpCacheability.NoCache);
-            response.ContentType = this.ContentType;
+            response.ContentType = ContentType;
 
-            var stream = new MemoryStream(this.ContentBytes);
+            var stream = new MemoryStream(ContentBytes);
             stream.WriteTo(response.OutputStream);
             stream.Dispose();
         }
