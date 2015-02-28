@@ -13,17 +13,20 @@
             jQuery("#deliveryList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['DR Id', 'Customer', 'DR Number', 'DR Date', 'Order Number', 'Slim', 'Round', 'Amount','Balance','Actions'],
+                colNames: ['DR Id', 'Customer', 'DR Number', 'DR Date', 'Order Number', 'Slim', 'Round', 'Slim', 'Round', 'Amount', 'Paid', 'Balance', 'Actions'],
                 colModel: [
                         { name: 'DeliveryReceiptId', key: true, index: 'DeliveryReceiptId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerName', index: 'CustomerName', width: 100 },
                         { name: 'DRNumber', index: 'DRNumber', width: 50 },
                         { name: 'DRDate', index: 'DRDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
-                        { name: 'OrderNumber', index: 'OrderNumber', width: 50 },
-                        { name: 'SlimQty', index: 'SlimQty', width: 45, align: "right", sorttype: 'int' },
-                        { name: 'RoundQty', index: 'RoundQty', width: 45, align: "right", sorttype: 'int' },
-                        { name: 'Amount', index: 'Amount', width: 45, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
-                        { name: 'AmountBalance', index: 'AmountBalance', width: 45, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'OrderNumber', index: 'OrderNumber', width: 40 },
+                        { name: 'SlimQty', index: 'SlimQty', width: 30, align: "right", sorttype: 'int' },
+                        { name: 'RoundQty', index: 'RoundQty', width: 30, align: "right", sorttype: 'int' },
+                        { name: 'SlimUnitPrice', index: 'SlimUnitPrice', width: 25, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'RoundUnitPrice', index: 'RoundUnitPrice', width: 25, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'Amount', index: 'Amount', width: 30, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'AmountPaid', index: 'AmountPaid', width: 30, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'AmountBalance', index: 'AmountBalance', width: 30, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
                 sortname: 'OrderId',
                 viewrecords: true,
@@ -52,18 +55,36 @@
                         'SlimQty': grid.jqGrid('getCol', 'SlimQty', false, 'sum'),
                         'RoundQty': grid.jqGrid('getCol', 'RoundQty', false, 'sum'),
                         'Amount': grid.jqGrid('getCol', 'Amount', false, 'sum'),
+                        'AmountPaid': grid.jqGrid('getCol', 'AmountPaid', false, 'sum'),
                         'AmountBalance': grid.jqGrid('getCol', 'AmountBalance', false, 'sum'),
                     });
 
                 },
                 loadComplete: function () {
                     //update the rowcolors
+                    updateDeliveryGrid();
                 }
             });
             //show the Navigator
             jQuery("#deliveryList")
                 .jqGrid('navGrid', '#deliveryListPager', { edit: false, add: false, del: false });
+
+            //show multiple headers
+            jQuery("#deliveryList").jqGrid('setGroupHeaders', {
+                useColSpanStyle: false,
+                groupHeaders: [
+                  { startColumnName: 'SlimQty', numberOfColumns: 2, titleText: 'Delivered Quantity' },
+                  { startColumnName: 'SlimUnitPrice', numberOfColumns: 2, titleText: 'Unit Price' },
+                  { startColumnName: 'Amount', numberOfColumns: 3, titleText: 'Amounts' }
+                ]
+            });
         }
+
+        function updateDeliveryGrid() {
+            //<td role="gridcell" style="text-align:right;" title='₱ 0.00' aria-describedby='deliveryList_AmountBalance'>₱ 125.00</td>
+            $("tr.jqgrow:has(td[aria-describedby='deliveryList_AmountBalance'][title!='₱ 0.00'])").addClass("orderPendingColor");
+        }
+
 
         function newDelivery() {
             var url = "/Delivery/DeliveryEditor";
