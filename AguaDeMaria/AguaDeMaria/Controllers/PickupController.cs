@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Pickup;
+using AguaDeMaria.Service;
 using AutoMapper;
 
 namespace AguaDeMaria.Controllers
@@ -13,16 +14,19 @@ namespace AguaDeMaria.Controllers
     [Authorize]
     public class PickupController : Controller
     {
+        private readonly IOrderService orderService;
 
-        public PickupController(IRepository<PickupSlip> orderRepository,
-                                IRepository<Customer> customerRepository,
-                                IRepository<DeliveryReceipt> deliveryRepository,
-                                LookupDataManager manager,
-                                SettingsManager settingsManager)
+        public PickupController(IRepository<PickupSlip> pickupSlipRepository,
+            IRepository<Customer> customerRepository,
+            IRepository<DeliveryReceipt> deliveryRepository,
+            LookupDataManager manager,
+            SettingsManager settingsManager,
+            IOrderService orderService)
         {
-            PickupSlipRepository = orderRepository;
+            this.orderService = orderService;
+            PickupSlipRepository = pickupSlipRepository;
             DeliveryRepository = deliveryRepository;
-            CustromeRepository = customerRepository;
+            CustomerRepository = customerRepository;
             LookupDataManager = manager;
             SettingsManager = settingsManager;
         }
@@ -31,7 +35,7 @@ namespace AguaDeMaria.Controllers
 
         private IRepository<PickupSlip> PickupSlipRepository { get; set; }
 
-        private IRepository<Customer> CustromeRepository { get; set; }
+        private IRepository<Customer> CustomerRepository { get; set; }
 
         private LookupDataManager LookupDataManager { get; set; }
 
@@ -47,9 +51,10 @@ namespace AguaDeMaria.Controllers
             DateTime orderStartDate = startDate.HasValue ? startDate.Value.Date : DateTime.Today;
             DateTime orderEndDate = endDate.HasValue ? endDate.Value.Date.AddDays(1) : orderStartDate.AddDays(1);
 
-            var pickups = PickupSlipRepository.Get(x => x.PickupDate >= orderStartDate && x.PickupDate <= orderEndDate, includedProperties: "Customer");
+            var pickups = PickupSlipRepository.Get(x => x.PickupDate >= orderStartDate && x.PickupDate <= orderEndDate,
+                includedProperties: "Customer");
             var pickupsList = from p in pickups
-                              select Mapper.Map<PickupSlipDto>(p);
+                select Mapper.Map<PickupSlipDto>(p);
             return Json(pickupsList, JsonRequestBehavior.AllowGet);
         }
 
@@ -61,8 +66,15 @@ namespace AguaDeMaria.Controllers
                 PickupSlip pickupSlip = new PickupSlip();
                 if (pickupParams.DeliveryReceiptId.HasValue && pickupParams.DeliveryReceiptId > 0)
                 {
-                    var deliveryReceipt = DeliveryRepository.Get(x => x.DeliveryReceiptId == pickupParams.DeliveryReceiptId).First();
+                    var deliveryReceipt =
+                        DeliveryRepository.Get(x => x.DeliveryReceiptId == pickupParams.DeliveryReceiptId).First();
                     pickupSlipDto = Mapper.Map<PickupSlipDto>(deliveryReceipt);
+                }
+                else if (pickupParams.OrderId.HasValue && pickupParams.OrderId > 0)
+                {
+                    var order = orderService.Get(pickupParams.OrderId.Value);
+                    pickupSlipDto = Mapper.Map<PickupSlipDto>(pickupSlip);
+                    if (order != null) pickupSlipDto.CustomerId = order.CustomerId;
                 }
                 else
                 {
@@ -73,22 +85,23 @@ namespace AguaDeMaria.Controllers
             }
             else
             {
-                PickupSlip pickupSlip = PickupSlipRepository.Get(x => x.PickupSlipId == pickupParams.PickupSlipId).FirstOrDefault();
+                PickupSlip pickupSlip =
+                    PickupSlipRepository.Get(x => x.PickupSlipId == pickupParams.PickupSlipId).FirstOrDefault();
                 pickupSlipDto = Mapper.Map<PickupSlipDto>(pickupSlip);
             }
             ViewBag.CustomerList = CustomerListItems();
             return PartialView("PickupSlipEditor", pickupSlipDto);
-
         }
 
         public ActionResult SavePickupSlip(PickupSlipDto pickupSlipDto)
-        { 
+        {
             if (pickupSlipDto.IsValid)
             {
                 PickupSlip pickupSlip = null;
                 if (pickupSlipDto.PickupSlipId > 0)
                 {
-                    pickupSlip = PickupSlipRepository.Get(x => x.PickupSlipId == pickupSlipDto.PickupSlipId).FirstOrDefault();
+                    pickupSlip =
+                        PickupSlipRepository.Get(x => x.PickupSlipId == pickupSlipDto.PickupSlipId).FirstOrDefault();
                     if (pickupSlip != null)
                     {
                         Mapper.Map(pickupSlipDto, pickupSlip);
@@ -106,7 +119,7 @@ namespace AguaDeMaria.Controllers
 
                 //let's get the customer name from the lookup
                 pickupSlipDto.CustomerName =
-                    CustromeRepository.Get(x => x.CustomerId == pickupSlipDto.CustomerId).First().CustomerName;
+                    CustomerRepository.Get(x => x.CustomerId == pickupSlipDto.CustomerId).First().CustomerName;
 
                 return Json(pickupSlipDto);
             }
@@ -117,7 +130,7 @@ namespace AguaDeMaria.Controllers
         private IEnumerable<SelectListItem> CustomerListItems()
         {
             IEnumerable<SelectListItem> customerList =
-                CustromeRepository.Get(c => c.CustomerId > 0)
+                CustomerRepository.Get(c => c.CustomerId > 0)
                     .OrderBy(cust => cust.CustomerName)
                     .Select(cust => new SelectListItem
                     {
@@ -126,6 +139,5 @@ namespace AguaDeMaria.Controllers
                     });
             return customerList;
         }
-
     }
 }

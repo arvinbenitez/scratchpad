@@ -7,6 +7,8 @@
 
         public int? DeliveryReceiptId { get; set; }
 
+        public int? OrderId { get; set; }
+
         public bool IsNewPickup()
         {
             return (!PickupSlipId.HasValue || PickupSlipId.Value <= 0);
