@@ -1,4 +1,5 @@
-﻿@model  AguaDeMaria.Model.Dto.OrderDto
+﻿@using iTextSharp.text.pdf.qrcode
+@model  AguaDeMaria.Model.Dto.OrderDto
 
 @using (Html.BeginForm("SaveOrder", "Order", FormMethod.Post, new { id = "orderEntryForm" }))
 {
@@ -18,8 +19,15 @@
                 @Html.LabelFor(x => x.CustomerId)
             </td>
             <td>
-                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
-                @Html.ValidationMessageFor(x=>x.CustomerId)
+                @if (Model.IsEditable)
+                {
+                    @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new {@id = "customer"})
+                    @Html.ValidationMessageFor(x => x.CustomerId)
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => x.CustomerName, new {@readonly = "true"})
+                }
             </td>
         </tr>
         <tr>

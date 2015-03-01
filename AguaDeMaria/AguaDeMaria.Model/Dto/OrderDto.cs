@@ -57,6 +57,11 @@ namespace AguaDeMaria.Model.Dto
             get { return !ValidationErrors.Any(); }
         }
 
+        public bool IsEditable
+        {
+            get { return CalculatedStatusId == DataConstants.OrderStatus.Pending; }
+        }
+
         public int SlimQtyDelivered { get; set; }
         public int RoundQtyDelivered { get; set; }
 

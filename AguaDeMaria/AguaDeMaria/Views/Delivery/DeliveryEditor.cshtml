@@ -26,7 +26,8 @@
                 @Html.LabelFor(x => x.CustomerId)
             </td>
             <td>
-                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer" })
+                @Html.TextBoxFor(x=>x.CustomerName,new {@readonly="true"})
+                @*Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new { @id = "customer",disabled = "disabled" })*@
                 @Html.ValidationMessageFor(x => x.CustomerId)
             </td>
         </tr>

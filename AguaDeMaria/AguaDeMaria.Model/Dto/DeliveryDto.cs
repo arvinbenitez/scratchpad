@@ -7,6 +7,8 @@ namespace AguaDeMaria.Model.Dto
 {
     public class DeliveryDto
     {
+        private decimal slimUnitPrice;
+        private decimal roundUnitPrice;
         public int DeliveryReceiptId { get; set; }
 
         [Required]
@@ -38,10 +40,20 @@ namespace AguaDeMaria.Model.Dto
         public int SlimDeliveryReceiptDetailId { get; set; }
         public int RoundDeliveryReceiptDetailId { get; set; }
 
-        public decimal SlimUnitPrice { get; set; }
+        public decimal SlimUnitPrice
+        {
+            get { return SlimQty > 0 ? slimUnitPrice : 0; }
+            set { slimUnitPrice = value; }
+        }
+
         public decimal SlimAmount { get; set; }
 
-        public decimal RoundUnitPrice { get; set; }
+        public decimal RoundUnitPrice
+        {
+            get { return RoundQty > 0 ? roundUnitPrice : 0; }
+            set { roundUnitPrice = value; }
+        }
+
         public decimal RoundAmount { get; set; }
 
         public IEnumerable<string> ValidationErrors
@@ -60,6 +72,11 @@ namespace AguaDeMaria.Model.Dto
         public bool IsValid
         {
             get { return !ValidationErrors.Any(); }
+        }
+
+        public bool IsEditable
+        {
+            get { return DeliveryReceiptId <= 0; }
         }
 
         public string CustomerAddress { get; set; }
