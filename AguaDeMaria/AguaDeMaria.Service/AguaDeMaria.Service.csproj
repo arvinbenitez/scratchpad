@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDeliveryReceiptLedgerService.cs" />
+    <Compile Include="Implementation\DeliveryReceiptLedgerService.cs" />
     <Compile Include="Implementation\DeliveryReceiptService.cs" />
     <Compile Include="IDeliveryReceiptService.cs" />
     <Compile Include="IOrderService.cs" />

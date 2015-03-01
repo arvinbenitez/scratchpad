@@ -44,11 +44,17 @@ namespace AguaDeMaria.Configuration.Ioc
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<InventorySummary>, IRepository<InventorySummary>>()
                 .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<DeliveryReceiptLedger>, IRepository<DeliveryReceiptLedger>>()
+                .ReusedWithin(ReuseScope.Request);
+
             //Services
             container.RegisterAutoWiredAs<DeliveryReceiptService, IDeliveryReceiptService>()
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<OrderService, IOrderService>()
                 .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<DeliveryReceiptLedgerService, IDeliveryReceiptLedgerService>()
+                .ReusedWithin(ReuseScope.Request);
+
 
             //Lookup Dependencies
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();

@@ -11,6 +11,7 @@ namespace AguaDeMaria.Model
         public DeliveryReceipt()
         {
             DeliveryReceiptDetails = new HashSet<DeliveryReceiptDetail>();
+            DeliveryReceiptLedgers = new HashSet<DeliveryReceiptLedger>();
         }
 
         public int DeliveryReceiptId { get; set; }
@@ -27,8 +28,9 @@ namespace AguaDeMaria.Model
 
         public virtual Customer Customer { get; set; }
 
-
         public virtual ICollection<DeliveryReceiptDetail> DeliveryReceiptDetails { get; set; }
+
+        public virtual ICollection<DeliveryReceiptLedger> DeliveryReceiptLedgers { get; set; }
 
         public virtual Order Order { get; set; }
     }

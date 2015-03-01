@@ -19,15 +19,8 @@
                 @Html.LabelFor(x => x.CustomerId)
             </td>
             <td>
-                @if (Model.IsEditable)
-                {
                     @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new {@id = "customer"})
                     @Html.ValidationMessageFor(x => x.CustomerId)
-                }
-                else
-                {
-                    @Html.TextBoxFor(x => x.CustomerName, new {@readonly = "true"})
-                }
             </td>
         </tr>
         <tr>

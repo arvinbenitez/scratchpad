@@ -34,6 +34,8 @@ namespace AguaDeMaria.Model
         public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<InventorySummary> InventorySummaries { get; set; }
 
+        public virtual DbSet<DeliveryReceiptLedger> DeliveryReceiptLedgers { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -71,6 +73,11 @@ namespace AguaDeMaria.Model
 
             modelBuilder.Entity<DeliveryReceipt>()
                 .HasMany(e => e.DeliveryReceiptDetails)
+                .WithRequired(e => e.DeliveryReceipt)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DeliveryReceipt>()
+                .HasMany(e => e.DeliveryReceiptLedgers)
                 .WithRequired(e => e.DeliveryReceipt)
                 .WillCascadeOnDelete(false);
 

@@ -54,6 +54,7 @@
     <Compile Include="DataConstants.cs" />
     <Compile Include="DeliveryReceipt.cs" />
     <Compile Include="DeliveryReceiptDetail.cs" />
+    <Compile Include="DeliveryReceiptLedger.cs" />
     <Compile Include="Dto\DeliveryDto.cs" />
     <Compile Include="Dto\OrderDto.cs" />
     <Compile Include="Inventory.cs" />

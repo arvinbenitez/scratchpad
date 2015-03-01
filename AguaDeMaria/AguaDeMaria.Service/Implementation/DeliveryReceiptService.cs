@@ -8,11 +8,13 @@ namespace AguaDeMaria.Service.Implementation
 {
     public class DeliveryReceiptService : IDeliveryReceiptService
     {
+        private readonly IDeliveryReceiptLedgerService ledgerService;
         private readonly IRepository<DeliveryReceipt> deliveryRepository;
 
-        public DeliveryReceiptService(IRepository<DeliveryReceipt> deliveryRepository)
+        public DeliveryReceiptService(IRepository<DeliveryReceipt> deliveryRepository, IDeliveryReceiptLedgerService ledgerService)
         {
             this.deliveryRepository = deliveryRepository;
+            this.ledgerService = ledgerService;
         }
 
         public DeliveryReceipt GetByOrderId(int orderId)
@@ -36,11 +38,19 @@ namespace AguaDeMaria.Service.Implementation
         public void Update(DeliveryReceipt deliveryReceipt)
         {
             deliveryRepository.Update(deliveryReceipt);
+            RecordToLedger(deliveryReceipt);
         }
 
         public void Insert(DeliveryReceipt deliveryReceipt)
         {
             deliveryRepository.Insert(deliveryReceipt);
+            RecordToLedger(deliveryReceipt);
+        }
+
+        private void RecordToLedger(DeliveryReceipt deliveryReceipt)
+        {
+            var amount = deliveryReceipt.DeliveryReceiptDetails.Sum(x => x.UnitPrice*x.Quantity);
+            ledgerService.RecordToLedger(deliveryReceipt.DeliveryReceiptId,amount);
         }
     }
 }
