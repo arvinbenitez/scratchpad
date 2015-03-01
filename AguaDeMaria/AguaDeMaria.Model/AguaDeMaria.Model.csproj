@@ -55,6 +55,7 @@
     <Compile Include="DeliveryReceipt.cs" />
     <Compile Include="DeliveryReceiptDetail.cs" />
     <Compile Include="Dto\DeliveryDto.cs" />
+    <Compile Include="Dto\OrderDto.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventorySummary.cs" />
     <Compile Include="Order.cs" />

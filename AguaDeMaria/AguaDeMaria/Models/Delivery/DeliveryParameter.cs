@@ -6,7 +6,7 @@
 
         public int? DeliveryId { get; set; }
 
-        public bool IsNewDeliveryFromOrder
+        public bool IsDeliveryReceiptFromOrder
         {
             get { return (OrderId.HasValue && OrderId.Value > 0); }
         }

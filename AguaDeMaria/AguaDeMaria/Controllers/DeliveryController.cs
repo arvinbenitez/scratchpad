@@ -8,7 +8,7 @@ using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Delivery;
-using AguaDeMaria.Models.Order;
+using AguaDeMaria.Service;
 using AutoMapper;
 
 namespace AguaDeMaria.Controllers
@@ -16,7 +16,8 @@ namespace AguaDeMaria.Controllers
     [Authorize]
     public class DeliveryController : Controller
     {
-        private IRepository<Order> OrderRepository { get; set; }
+        private readonly IDeliveryReceiptService deliveryReceiptService;
+        private readonly IOrderService orderService;
 
         private IRepository<Customer> CustromeRepository { get; set; }
 
@@ -24,23 +25,20 @@ namespace AguaDeMaria.Controllers
 
         private SettingsManager SettingsManager { get; set; }
 
-        private IRepository<DeliveryReceipt> DeliveryRepository { get; set; }
-
         private IUnitOfWork UnitOfWork { get; set; }
 
-        public DeliveryController(IRepository<Order> orderRepository,
-                            IRepository<Customer> customerRepository,
-                            LookupDataManager manager,
-                            SettingsManager settingsManager,
-                            IRepository<DeliveryReceipt> deliveryRepository,
-                            IUnitOfWork unitOfWork
-            )
+        public DeliveryController(IRepository<Customer> customerRepository,
+            LookupDataManager manager,
+            SettingsManager settingsManager,
+            IUnitOfWork unitOfWork,
+            IDeliveryReceiptService deliveryReceiptService,
+            IOrderService orderService)
         {
-            OrderRepository = orderRepository;
+            this.deliveryReceiptService = deliveryReceiptService;
+            this.orderService = orderService;
             CustromeRepository = customerRepository;
             LookupDataManager = manager;
             SettingsManager = settingsManager;
-            DeliveryRepository = deliveryRepository;
             UnitOfWork = unitOfWork;
         }
 
@@ -54,8 +52,7 @@ namespace AguaDeMaria.Controllers
             DateTime drStartDate = startDate.HasValue ? startDate.Value : DateTime.Today;
             DateTime drEndDate = endDate.HasValue ? endDate.Value : drStartDate.AddDays(1);
 
-            var deliveryReceipts = DeliveryRepository.Get(x => x.DRDate >= drStartDate && x.DRDate <= drEndDate,
-                x => x.OrderBy(y => y.DRNumber));
+            var deliveryReceipts = deliveryReceiptService.DeliveryReceipts(drStartDate, drEndDate);
 
             var drList = from dr in deliveryReceipts
                 select Mapper.Map<DeliveryDto>(dr);
@@ -65,44 +62,62 @@ namespace AguaDeMaria.Controllers
         public ActionResult DeliveryEditor(DeliveryParameter parameter)
         {
             DeliveryDto deliveryDto = null;
-            if (parameter.IsNewDeliveryFromOrder || parameter.IsNewDelivery)
+            if (parameter.IsDeliveryReceiptFromOrder || parameter.IsNewDelivery)
             {
-                if (parameter.IsNewDeliveryFromOrder)
+                if (parameter.IsDeliveryReceiptFromOrder)
                 {
-                    //this must be a new delivery
-                    Order order =
-                        OrderRepository.Get(x => x.OrderId == parameter.OrderId,
-                            includedProperties: "DeliveryReceipts,DeliveryReceipts.DeliveryReceiptDetails")
-                            .FirstOrDefault();
-                    var orderDto = Mapper.Map<OrderDto>(order);
-                    deliveryDto = Mapper.Map<DeliveryDto>(orderDto);
+                    //check if there is an existing delivery receipt
+                    if (parameter.OrderId != null)
+                    {
+                        var delivery = deliveryReceiptService.GetByOrderId(parameter.OrderId.Value);
+                        if (delivery != null)
+                        {
+                            deliveryDto = Mapper.Map<DeliveryDto>(delivery);
+                        }
+                        else
+                        {
+                            //this must be a new delivery
+                            Order order = orderService.Get(parameter.OrderId.Value);
+                            var orderDto = Mapper.Map<OrderDto>(order);
+                            deliveryDto = Mapper.Map<DeliveryDto>(orderDto);
+                            AssignDefaultValues(deliveryDto);
+                        }
+                    }
                 }
                 else
                 {
                     deliveryDto = new DeliveryDto();
                     deliveryDto.OrderNumber = string.Format("{0:0000000000}", 0);
+                    AssignDefaultValues(deliveryDto);
                 }
-                AssignDefaultPrice(deliveryDto);
-                deliveryDto.DRDate = DateTime.Now;
-                deliveryDto.DRNumber = SettingsManager.GetNextDeliveryReceiptNumber();
             }
             else
             {
-                var delivery = DeliveryRepository.Get(x => x.DeliveryReceiptId == parameter.DeliveryId).FirstOrDefault();
-                deliveryDto = Mapper.Map<DeliveryDto>(delivery);
+                if (parameter.DeliveryId != null)
+                {
+                    var delivery = deliveryReceiptService.Get(parameter.DeliveryId.Value);
+                    deliveryDto = Mapper.Map<DeliveryDto>(delivery);
+                }
             }
             ViewBag.CustomerList = CustomerListItems();
             return PartialView(deliveryDto);
+        }
+
+        private void AssignDefaultValues(DeliveryDto deliveryDto)
+        {
+            AssignDefaultPrice(deliveryDto);
+            deliveryDto.DRDate = DateTime.Now;
+            deliveryDto.DRNumber = SettingsManager.GetNextDeliveryReceiptNumber();
         }
 
         private void AssignDefaultPrice(DeliveryDto deliveryDto)
         {
             deliveryDto.SlimUnitPrice =
                 LookupDataManager.ProductTypes.First(x => x.ProductTypeId == DataConstants.ProductTypes.Slim).BasePrice;
-            deliveryDto.SlimAmount = deliveryDto.SlimUnitPrice * deliveryDto.SlimQty;
+            deliveryDto.SlimAmount = deliveryDto.SlimUnitPrice*deliveryDto.SlimQty;
             deliveryDto.RoundUnitPrice =
                 LookupDataManager.ProductTypes.First(x => x.ProductTypeId == DataConstants.ProductTypes.Round).BasePrice;
-            deliveryDto.RoundAmount = deliveryDto.RoundUnitPrice * deliveryDto.RoundQty;
+            deliveryDto.RoundAmount = deliveryDto.RoundUnitPrice*deliveryDto.RoundQty;
         }
 
         [ExcludeIdValidation(IdField = "DeliveryReceiptId")]
@@ -114,26 +129,24 @@ namespace AguaDeMaria.Controllers
                 DeliveryReceipt deliveryReceipt;
                 if (deliveryDto.DeliveryReceiptId > 0)
                 {
-                    deliveryReceipt =
-                        DeliveryRepository.Get(x => x.DeliveryReceiptId == deliveryDto.DeliveryReceiptId)
-                            .FirstOrDefault();
+                    deliveryReceipt = deliveryReceiptService.Get(deliveryDto.DeliveryReceiptId);
                     if (deliveryReceipt != null)
                     {
                         Mapper.Map(deliveryDto, deliveryReceipt);
-                        DeliveryRepository.Update(deliveryReceipt);
+                        deliveryReceiptService.Update(deliveryReceipt);
                     }
                 }
                 else
                 {
                     deliveryReceipt = Mapper.Map<DeliveryReceipt>(deliveryDto);
-                    DeliveryRepository.Insert(deliveryReceipt);
+                    deliveryReceiptService.Insert(deliveryReceipt);
                 }
                 if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
                 {
                     UpdateOrderStatus(deliveryDto);
                 }
                 UnitOfWork.Commit();
-                deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
+                if (deliveryReceipt != null) deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
 
                 //let's get the customer name from the lookup
                 deliveryDto.CustomerName =
@@ -147,15 +160,15 @@ namespace AguaDeMaria.Controllers
 
         private void UpdateOrderStatus(DeliveryDto deliveryDto)
         {
-            var order =
-                OrderRepository.Get(x => x.OrderId == deliveryDto.OrderId,
-                    includedProperties: "DeliveryReceipts,DeliveryReceipts.DeliveryReceiptDetails")
-                    .FirstOrDefault();
-            if (order != null)
+            if (deliveryDto.OrderId != null)
             {
-                var orderDto = Mapper.Map<OrderDto>(order);
-                order.OrderStatusId = orderDto.CalculatedStatusId;
-                OrderRepository.Update(order);
+                var order = orderService.Get(deliveryDto.OrderId.Value);
+                if (order != null)
+                {
+                    var orderDto = Mapper.Map<OrderDto>(order);
+                    order.OrderStatusId = orderDto.CalculatedStatusId;
+                    orderService.Update(order);
+                }
             }
         }
 

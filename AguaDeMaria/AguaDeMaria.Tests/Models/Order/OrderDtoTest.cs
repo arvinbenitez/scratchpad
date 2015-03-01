@@ -1,5 +1,6 @@
 ﻿using AguaDeMaria.Configuration.Mappers;
 using AguaDeMaria.Model;
+using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Order;
 using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -4,11 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using AguaDeMaria.Model;
 
 #endregion
 
-namespace AguaDeMaria.Models.Order
+namespace AguaDeMaria.Model.Dto
 {
     public class OrderDto
     {

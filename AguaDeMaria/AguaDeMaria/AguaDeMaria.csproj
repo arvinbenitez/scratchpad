@@ -244,6 +244,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Accounts\AccountsAreaRegistration.cs" />
     <Compile Include="Areas\Accounts\Controllers\AccountController.cs" />
+    <Compile Include="Configuration\Ioc\WebBootStrapper.cs" />
     <Compile Include="Configuration\Mappers\DeliveryReceiptMapperConfiguration.cs" />
     <Compile Include="Configuration\Mappers\MapperConfiguration.cs" />
     <Compile Include="Configuration\Mappers\OrderMapperConfiguration.cs" />
@@ -268,7 +269,6 @@
     <Compile Include="Models\Customer\CustomerDto.cs" />
     <Compile Include="Models\Delivery\DeliveryParameter.cs" />
     <Compile Include="Models\Invoice\SalesInvoiceDto.cs" />
-    <Compile Include="Models\Order\OrderDto.cs" />
     <Compile Include="Models\Order\OrderParameter.cs" />
     <Compile Include="Models\Pickup\PickupSlipDto.cs" />
     <Compile Include="Models\Pickup\PickupSlipParameter.cs" />

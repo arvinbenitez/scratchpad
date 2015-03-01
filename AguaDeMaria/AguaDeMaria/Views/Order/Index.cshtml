@@ -44,7 +44,7 @@
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='ordersGrid.orderEdit(" + rowId + ")'></a>";
-                        var orderAction = "<a class='fa fa-car' href='#' title='Create Delivery Receipt' onclick='ordersGrid.newDelivery(" + rowId + ")'></a>";
+                        var orderAction = "<a class='fa fa-car' href='#' title='Create/Update Delivery Receipt' onclick='ordersGrid.deliveryReceipt(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction });
                     }
                     //set the footer
@@ -116,7 +116,7 @@
             });
         }
 
-        function newDelivery(orderId) {
+        function deliveryReceipt(orderId) {
             var url = "/Delivery/DeliveryEditor";
             $.ajax({
                 url: url,
@@ -222,7 +222,7 @@
         return ({
             showOrdersGrid: showOrdersGrid,
             orderEdit: orderEdit,
-            newDelivery: newDelivery,
+            deliveryReceipt: deliveryReceipt,
             newOrder: newOrder
         });
     }(DateFilter);

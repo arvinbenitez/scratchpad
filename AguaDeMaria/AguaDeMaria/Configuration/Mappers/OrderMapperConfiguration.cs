@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AguaDeMaria.Model;
-using AguaDeMaria.Models.Order;
+using AguaDeMaria.Model.Dto;
 using AutoMapper;
 
 namespace AguaDeMaria.Configuration.Mappers
