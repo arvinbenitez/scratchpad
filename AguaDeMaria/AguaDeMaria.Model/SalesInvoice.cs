@@ -23,15 +23,9 @@ namespace AguaDeMaria.Model
 
         public int CustomerId { get; set; }
 
-        [StringLength(200)]
-        public string Remarks { get; set; }
-
-        public int? OrderId { get; set; }
 
         public virtual Customer Customer { get; set; }
 
-
-        public virtual Order Order { get; set; }
 
         public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
     }

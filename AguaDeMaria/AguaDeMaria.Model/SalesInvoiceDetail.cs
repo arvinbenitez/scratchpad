@@ -9,14 +9,11 @@ namespace AguaDeMaria.Model
 
         public int SalesInvoiceId { get; set; }
 
-        public int ProductTypeId { get; set; }
+        public int DeliveryReceiptLedgerId { get; set; }
 
-        public decimal Quantity { get; set; }
-
-        public decimal Price { get; set; }
-
-        public virtual ProductType ProductType { get; set; }
+        public virtual DeliveryReceiptLedger DeliveryReceiptLedger { get; set; }
 
         public virtual SalesInvoice SalesInvoice { get; set; }
+
     }
 }

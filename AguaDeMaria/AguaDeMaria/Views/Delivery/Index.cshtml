@@ -8,6 +8,7 @@
 <div id="newPopupDialog" style="display: none">This is where the new Orders Dialog goes</div>
 <script>
     var deliveryReceiptGrid = function (dateFilter) {
+
         function showDeliveriesGridImpl(startDate, endDate) {
             var url = "/Delivery/GetDeliveryReceiptList?startDate=" + startDate + "&endDate=" + endDate;
             jQuery("#deliveryList").jqGrid({
@@ -45,10 +46,9 @@
                     var ids = grid.jqGrid('getDataIDs');
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
-                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='deliveryReceiptGrid.deliveryEdit(" + rowId + ")'></a>";
-                        var pickupAction = "<a class='fa fa-bicycle' href='#' title='Create Pickup Slip'  onclick='deliveryReceiptGrid.pickupCreate(" + rowId + ")'></a>";
                         var printAction = "<a class='fa fa-print' href='#' title='Print Delivery Receipt'  onclick='deliveryReceiptGrid.printDeliveryReceipt(" + rowId + ")'></a>";
-                        grid.jqGrid('setRowData', rowId, { editAction: editAction + pickupAction + printAction });
+                        var paymentAction = "<a class='fa fa fa-dollar' href='#' title='Enter Payment'  onclick='deliveryReceiptGrid.enterPayment(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: printAction + paymentAction});
                     }
                     //set the footer
                     grid.jqGrid('footerData', 'set', {
@@ -86,30 +86,23 @@
             $("tr.jqgrow:has(td[aria-describedby='deliveryList_AmountBalance'][title!='₱ 0.00'])").addClass("orderPendingColor");
         }
 
-
-        function newDelivery() {
-            var url = "/Delivery/DeliveryEditor";
-            $.ajax({
-                url: url,
-            }).success(function (data) {
-                $("#newPopupDialog").html(data);
-                showDrDialog("Delivery Receipt");
-            });
+        function printDeliveryReceiptImpl(deliveryId) {
+            var url = "/Report/DeliveryReceipt?deliveryReceiptId=" + deliveryId;
+            window.open(url, "deliveryReceipt", "width=500, height=500, location=no, titlebar=no");
         }
 
-        function pickupCreateImpl(deliveryId) {
-            var url = "/Pickup/PickupSlipEditor";
+        var enterPaymentImpl = function (deliveryReceiptId) {
+            var url = "/Payment/PaymentEditor";
             $.ajax({
                 url: url,
-                data: { DeliveryReceiptId: deliveryId },
+                data: { DeliveryReceiptId: deliveryReceiptId },
             }).success(function (data) {
                 $("#newPopupDialog").html(data);
-                showPickupDialog("Create Pickup Slip");
+                showPaymentDialog("Payment");
             });
-        }
+        };
 
-        function showPickupDialog(title)
-        {
+        function showPaymentDialog(title) {
             $("#newPopupDialog").dialog({
                 modal: true,
                 title: title,
@@ -119,83 +112,22 @@
                         //submit the form
                         $.ajax({
                             type: "POST",
-                            url: "/Pickup/SavePickupSlip",
-                            data: $("#pickupSlipEntryForm").serialize(),
+                            url: "/Payment/Save",
+                            data: $("#paymentEntryForm").serialize(),
                             context: $(this)
                         }).success(function (data) {
-                            if (typeof (data.PickupSlipId) == 'undefined') {
+                            if (typeof (data.SalesInvoiceId) == 'undefined') {
                                 //replace the contents of the dialog
                                 $("#newPopupDialog").html(data);
                             } else {
                                 $(this).dialog("close");
                                 //this must have been successful
-                                window.location.href = "/Pickup/Index";
+                                window.location.href = "/Delivery/Index";
                             }
                         });
                     }
                 }]
             }).dialog("open");
-        }
-
-        function showDrDialog(title) {
-            $("#newPopupDialog").dialog({
-                modal: true,
-                title: title,
-                buttons: [
-                    {
-                        text: "Print",
-                        click: function () {
-                            //save it first - then print
-                            //get the deliveryId
-                            var deliveryId = $("#DeliveryReceiptId").val();
-                            printDeliveryReceiptImpl(deliveryId);
-                        }
-                    },
-                    {text: "Save",
-                    click: function () {
-                        //submit the form
-                        $.ajax({
-                            type: "POST",
-                            url: "/Delivery/SaveDeliveryReceipt",
-                            data: $("#drEntryForm").serialize(),
-                            context: $(this)
-                        }).success(function (data) {
-                            if (typeof (data.OrderId) == 'undefined') {
-                                //replace the contents of the dialog
-                                $("#newPopupDialog").html(data);
-                            } else {
-                                //this must have been successful
-                                var row = $("#deliveryList").jqGrid('getRowData', data.DeliveryReceiptId);
-                                if (typeof (row.DeliveryReceiptId) == 'undefined') {
-                                    $("#deliveryList").jqGrid('addRowData', data.DeliveryReceiptId, data, "first");
-                                } else {
-                                    $("#deliveryList").jqGrid('setRowData', data.DeliveryReceiptId, data);
-                                    $("#deliveryList").jqGrid().trigger("reloadGrid");
-                                }
-                                //this must have been successful
-                                $(this).dialog("close");
-
-                            }
-                        });
-                    }
-                }]
-            }).dialog("open");
-        }
-
-        function printDeliveryReceiptImpl(deliveryId) {
-            var url = "/Report/DeliveryReceipt?deliveryReceiptId=" + deliveryId;
-            window.open(url, "deliveryReceipt", "width=500, height=500, location=no, titlebar=no");
-        }
-
-        function deliveryEditImpl(deliveryId) {
-            var url = "/Delivery/DeliveryEditor";
-            $.ajax({
-                url: url,
-                data: { DeliveryId: deliveryId},
-            }).success(function (data) {
-                $("#newPopupDialog").html(data);
-                showDrDialog("Edit Delivery");
-            });
         }
 
         $(document).ready(function () {
@@ -230,12 +162,9 @@
 
         return ({
             showDeliveriesGrid: showDeliveriesGridImpl,
-            deliveryEdit: deliveryEditImpl,
-            pickupCreate: pickupCreateImpl,
-            printDeliveryReceipt: printDeliveryReceiptImpl
+            printDeliveryReceipt: printDeliveryReceiptImpl,
+            enterPayment: enterPaymentImpl
         });
     }(DateFilter);
-
-
 
 </script>

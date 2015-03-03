@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AguaDeMaria.Model
@@ -10,6 +11,7 @@ namespace AguaDeMaria.Model
 
         public virtual DeliveryReceipt DeliveryReceipt { get; set; }
 
+        public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
         public decimal Amount { get; set; }
 
         public bool IsNew()

@@ -36,6 +36,8 @@ namespace AguaDeMaria.Model
 
         public virtual DbSet<DeliveryReceiptLedger> DeliveryReceiptLedgers { get; set; }
 
+        public virtual DbSet<Receivable> Receivables { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -81,6 +83,11 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.DeliveryReceipt)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<DeliveryReceiptLedger>()
+                .HasMany(e=> e.SalesInvoiceDetails)
+                .WithRequired(e=> e.DeliveryReceiptLedger)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Order>()
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Order)
@@ -111,11 +118,6 @@ namespace AguaDeMaria.Model
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ProductType>()
-                .HasMany(e => e.SalesInvoiceDetails)
-                .WithRequired(e => e.ProductType)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ProductType>()
                 .HasMany(e => e.PickupSlipDetails)
                 .WithRequired(e => e.ProductType)
                 .WillCascadeOnDelete(false);
@@ -129,20 +131,10 @@ namespace AguaDeMaria.Model
                 .Property(e => e.Quantity)
                 .HasPrecision(9, 2);
 
-            modelBuilder.Entity<SalesInvoice>();
-
             modelBuilder.Entity<SalesInvoice>()
                 .HasMany(e => e.SalesInvoiceDetails)
                 .WithRequired(e => e.SalesInvoice)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<SalesInvoiceDetail>()
-                .Property(e => e.Quantity)
-                .HasPrecision(9, 2);
-
-            modelBuilder.Entity<SalesInvoiceDetail>()
-                .Property(e => e.Price)
-                .HasPrecision(9, 2);
 
             modelBuilder.Entity<PickupSlip>()
                 .HasMany(e => e.PickupSlipDetails)

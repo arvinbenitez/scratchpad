@@ -43,7 +43,9 @@
     <Compile Include="Implementation\DeliveryReceiptLedgerService.cs" />
     <Compile Include="Implementation\DeliveryReceiptService.cs" />
     <Compile Include="IDeliveryReceiptService.cs" />
+    <Compile Include="Implementation\PaymentService.cs" />
     <Compile Include="IOrderService.cs" />
+    <Compile Include="IPaymentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -46,7 +46,7 @@
                         var rowId = ids[i];
                         var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='ordersGrid.orderEdit(" + rowId + ")'></a>";
                         var orderAction = "<a class='fa fa-car' href='#' title='Create/Update Delivery Receipt' onclick='ordersGrid.deliveryReceipt(" + rowId + ")'></a>";
-                        var pickupAction = "<a class='fa fa-bicycle' href='#' title='Create/Update Delivery Receipt' onclick='ordersGrid.pickupSlip(" + rowId + ")'></a>";
+                        var pickupAction = "<a class='fa fa-bicycle' href='#' title='Create Pickup Slip' onclick='ordersGrid.pickupSlip(" + rowId + ")'></a>";
                         grid.jqGrid('setRowData', rowId, { editAction: editAction + orderAction + pickupAction });
                     }
                     //set the footer

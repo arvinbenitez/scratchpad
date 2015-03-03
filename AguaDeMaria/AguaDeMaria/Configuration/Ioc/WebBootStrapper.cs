@@ -46,6 +46,8 @@ namespace AguaDeMaria.Configuration.Ioc
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<DeliveryReceiptLedger>, IRepository<DeliveryReceiptLedger>>()
                 .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<Receivable>, IRepository<Receivable>>()
+                .ReusedWithin(ReuseScope.Request);
 
             //Services
             container.RegisterAutoWiredAs<DeliveryReceiptService, IDeliveryReceiptService>()
@@ -54,7 +56,8 @@ namespace AguaDeMaria.Configuration.Ioc
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<DeliveryReceiptLedgerService, IDeliveryReceiptLedgerService>()
                 .ReusedWithin(ReuseScope.Request);
-
+            container.RegisterAutoWiredAs<PaymentService, IPaymentService>()
+                .ReusedWithin(ReuseScope.Request);
 
             //Lookup Dependencies
             container.RegisterAutoWiredAs<GenericRepository<CustomerType>, IRepository<CustomerType>>();

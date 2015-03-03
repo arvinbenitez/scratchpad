@@ -24,7 +24,7 @@ namespace AguaDeMaria.Service.Implementation
 
         public DeliveryReceipt Get(int deliveryReceiptId)
         {
-            return deliveryRepository.Get(x => x.DeliveryReceiptId == deliveryReceiptId).FirstOrDefault();
+            return deliveryRepository.Get(x => x.DeliveryReceiptId == deliveryReceiptId,includedProperties:"Customer").FirstOrDefault();
         }
 
         public IEnumerable<DeliveryReceipt> DeliveryReceipts(DateTime drStartDate, DateTime drEndDate)

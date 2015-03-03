@@ -259,6 +259,7 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PickupController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Filters\ExcludeIdValidation.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="Models\Delivery\DeliveryParameter.cs" />
     <Compile Include="Models\Invoice\SalesInvoiceDto.cs" />
     <Compile Include="Models\Order\OrderParameter.cs" />
+    <Compile Include="Models\Payment\PaymentParameter.cs" />
     <Compile Include="Models\Pickup\PickupSlipDto.cs" />
     <Compile Include="Models\Pickup\PickupSlipParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -517,6 +519,7 @@
     <Content Include="Views\Inventory\InventoryDetail.cshtml" />
     <Content Include="Views\Report\DeliveryReceipt.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Payment\PaymentEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

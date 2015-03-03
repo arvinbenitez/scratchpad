@@ -63,5 +63,14 @@ namespace AguaDeMaria.Common.Data
             return newNumber.ToString("0000000000");
 
         }
+
+        public string GetNextInvoiceNumber()
+        {
+            var setting = GetSetting();
+            var newNumber = setting.InvoiceNumberCounter++;
+            SettingRepository.Update(setting);
+            SettingRepository.Commit();
+            return newNumber.ToString("0000000000");
+        }
     }
 }
