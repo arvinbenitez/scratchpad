@@ -28,5 +28,7 @@ namespace AguaDeMaria.Model
 
 
         public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
+
+        public bool IsNew { get { return SalesInvoiceId <= 0; } }
     }
 }

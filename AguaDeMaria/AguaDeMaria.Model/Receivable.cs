@@ -9,6 +9,7 @@ namespace AguaDeMaria.Model
     {
         [Key]
         public int DeliveryReceiptId { get; set; }
+
         public int CustomerId { get; set; }
         public string DrNumber { get; set; }
         public DateTime DrDate { get; set; }
@@ -16,5 +17,11 @@ namespace AguaDeMaria.Model
 
         public decimal PaidAmount { get; set; }
 
+        public decimal ReceivableAmount
+        {
+            get { return Amount - PaidAmount; }
+        }
+
+        public int DeliveryReceiptLedgerId { get; set; }
     }
 }

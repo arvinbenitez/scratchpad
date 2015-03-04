@@ -48,6 +48,10 @@ namespace AguaDeMaria.Configuration.Ioc
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<Receivable>, IRepository<Receivable>>()
                 .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<SalesInvoice>, IRepository<SalesInvoice>>()
+                .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<SalesInvoiceDetail>, IRepository<SalesInvoiceDetail>>()
+                .ReusedWithin(ReuseScope.Request);
 
             //Services
             container.RegisterAutoWiredAs<DeliveryReceiptService, IDeliveryReceiptService>()

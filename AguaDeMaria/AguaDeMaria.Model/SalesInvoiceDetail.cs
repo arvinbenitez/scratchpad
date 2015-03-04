@@ -10,6 +10,7 @@ namespace AguaDeMaria.Model
         public int SalesInvoiceId { get; set; }
 
         public int DeliveryReceiptLedgerId { get; set; }
+        public decimal Amount { get; set; }
 
         public virtual DeliveryReceiptLedger DeliveryReceiptLedger { get; set; }
 

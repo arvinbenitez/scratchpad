@@ -12,7 +12,6 @@ namespace AguaDeMaria.Model
             DeliveryReceiptDetails = new HashSet<DeliveryReceiptDetail>();
             OrderDetails = new HashSet<OrderDetail>();
             ReturnReceiptDetails = new HashSet<ReturnReceiptDetail>();
-            SalesInvoiceDetails = new HashSet<SalesInvoiceDetail>();
         }
 
         public int ProductTypeId { get; set; }
@@ -34,8 +33,6 @@ namespace AguaDeMaria.Model
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
         public virtual ICollection<ReturnReceiptDetail> ReturnReceiptDetails { get; set; }
-
-        public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
 
         public virtual ICollection<PickupSlipDetail> PickupSlipDetails { get; set; }
     }

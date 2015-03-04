@@ -25,6 +25,7 @@ namespace AguaDeMaria.Controllers
         {
             if (ModelState.IsValid && paymentDto.IsValid)
             {
+                paymentDto.SalesInvoiceId = paymentService.Pay(paymentDto);
                 return Json(paymentDto);
             }
             return PartialView("PaymentEditor", paymentDto);
