@@ -49,7 +49,7 @@ namespace AguaDeMaria.Service.Implementation
 
         private void RecordToLedger(DeliveryReceipt deliveryReceipt)
         {
-            var amount = deliveryReceipt.DeliveryReceiptDetails.Sum(x => x.UnitPrice*x.Quantity);
+            var amount = deliveryReceipt.DeliveryReceiptDetails.Sum(x => x.Amount);
             ledgerService.RecordToLedger(deliveryReceipt.DeliveryReceiptId,amount);
         }
     }
