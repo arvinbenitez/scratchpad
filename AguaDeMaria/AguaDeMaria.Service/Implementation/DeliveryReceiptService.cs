@@ -30,7 +30,7 @@ namespace AguaDeMaria.Service.Implementation
         public IEnumerable<DeliveryReceipt> DeliveryReceipts(DateTime drStartDate, DateTime drEndDate)
         {
             var deliveryReceipts = deliveryRepository.Get(x => x.DRDate >= drStartDate && x.DRDate <= drEndDate,
-                x => x.OrderBy(y => y.DRNumber));
+                x => x.OrderBy(y => y.DRNumber), "DeliveryReceiptPayment");
             return deliveryReceipts.ToList();
 
         }

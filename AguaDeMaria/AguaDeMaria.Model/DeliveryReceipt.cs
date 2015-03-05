@@ -33,5 +33,7 @@ namespace AguaDeMaria.Model
         public virtual ICollection<DeliveryReceiptLedger> DeliveryReceiptLedgers { get; set; }
 
         public virtual Order Order { get; set; }
+
+        public DeliveryReceiptPayment DeliveryReceiptPayment { get; set; }
     }
 }

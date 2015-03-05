@@ -56,56 +56,66 @@ namespace AguaDeMaria.Configuration.Mappers
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
                                     .Quantity))
                 .ForMember(x => x.SlimDeliveryReceiptDetailId,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
                                     .DeliveryReceiptDetailId))
                 .ForMember(x => x.SlimAmount,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
                                     .Amount))
                 .ForMember(x => x.SlimUnitPrice,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Slim)
                                     .UnitPrice))
                 .ForMember(x => x.RoundQty,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Round)
                                     .Quantity))
                 .ForMember(x => x.RoundDeliveryReceiptDetailId,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Round)
                                     .DeliveryReceiptDetailId))
                 .ForMember(x => x.RoundAmount,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Round)
                                     .Amount))
                 .ForMember(x => x.RoundUnitPrice,
                     o =>
                         o.MapFrom(
                             s =>
-                                s.DeliveryReceiptDetails.FirstOrDefault(n => n.ProductTypeId == DataConstants.ProductTypes.Round)
+                                s.DeliveryReceiptDetails.FirstOrDefault(
+                                    n => n.ProductTypeId == DataConstants.ProductTypes.Round)
                                     .UnitPrice))
                 .ForMember(x => x.CustomerName,
                     o => o.MapFrom(s => s.Customer.CustomerName))
                 .ForMember(x => x.OrderNumber,
                     o => o.MapFrom(s => s.Order.OrderNumber))
                 .ForMember(x => x.CustomerAddress,
-                    o => o.MapFrom(s => s.Customer.Address));
+                    o => o.MapFrom(s => s.Customer.Address))
+                .ForMember(x => x.AmountPaid,
+                    o => o.MapFrom((s => s.DeliveryReceiptPayment != null ? s.DeliveryReceiptPayment.AmountPaid : 0)));
         }
         
         private static void MapOrderDtoToDeliveryDto()

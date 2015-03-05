@@ -38,7 +38,8 @@ namespace AguaDeMaria.Model
 
         public virtual DbSet<Receivable> Receivables { get; set; }
 
-
+        public virtual DbSet<DeliveryReceiptPayment> DeliveryReceiptPayments { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Configuration.LazyLoadingEnabled = true;
@@ -81,6 +82,11 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<DeliveryReceipt>()
                 .HasMany(e => e.DeliveryReceiptLedgers)
                 .WithRequired(e => e.DeliveryReceipt)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DeliveryReceiptPayment>()
+                .HasRequired(e => e.DeliveryReceipt)
+                .WithOptional(e => e.DeliveryReceiptPayment)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DeliveryReceiptLedger>()
