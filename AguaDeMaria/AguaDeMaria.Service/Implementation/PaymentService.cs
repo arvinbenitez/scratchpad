@@ -44,6 +44,7 @@ namespace AguaDeMaria.Service.Implementation
 
             //let's delete anything on this invoice, before reapplying the amount
             invoice.SalesInvoiceDetails.ToList().ForEach(x=> invoiceDetailsRepository.Delete(x));
+            unitOfWork.Commit();
 
             var receivables = receivableRepository.Get(x => x.CustomerId == payment.CustomerId)
                 .OrderBy(x => x.DeliveryReceiptId).ToList();

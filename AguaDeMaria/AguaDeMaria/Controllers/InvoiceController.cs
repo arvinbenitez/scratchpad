@@ -9,6 +9,7 @@ using AutoMapper;
 
 namespace AguaDeMaria.Controllers
 {
+    [Authorize]
     public class InvoiceController : Controller
     {
         private readonly IPaymentService paymentService;
