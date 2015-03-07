@@ -90,5 +90,39 @@ namespace AguaDeMaria.Service.Implementation
                 includedProperties: "Customer,SalesInvoiceDetails");
             return invoices;
         }
+
+        public SalesInvoice GetByDeliveryReceipt(int deliveryReceiptId)
+        {
+            var ledger =
+                invoiceDetailsRepository.Get(
+                    x => x.DeliveryReceiptLedger != null &&
+                         x.DeliveryReceiptLedger.DeliveryReceiptId == deliveryReceiptId,
+                    z => z.OrderByDescending(inv => inv.SalesInvoiceDetailId),
+                    "SalesInvoice").FirstOrDefault();
+            if (ledger != null)
+            {
+                return ledger.SalesInvoice;
+            }
+            return null;
+        }
+
+        public IEnumerable<Receivable> DeliveryReceiptList(int salesInvoiceId)
+        {
+            var invoiceDetails = invoiceDetailsRepository.Get(x => x.SalesInvoiceId == salesInvoiceId,
+                z => z.OrderBy(inv => inv.SalesInvoiceDetailId),
+                "SalesInvoice,DeliveryReceiptLedger,DeliveryReceiptLedger.DeliveryReceipt");
+            var receivables = from detail in invoiceDetails
+                select new Receivable
+                {
+                    Amount = detail.DeliveryReceiptLedger.Amount,
+                    CustomerId = detail.SalesInvoice.CustomerId,
+                    DeliveryReceiptId = detail.DeliveryReceiptLedger.DeliveryReceiptId,
+                    DeliveryReceiptLedgerId = detail.DeliveryReceiptLedgerId,
+                    DrDate = detail.DeliveryReceiptLedger.DeliveryReceipt.DRDate,
+                    DrNumber = detail.DeliveryReceiptLedger.DeliveryReceipt.DRNumber,
+                    PaidAmount = detail.Amount
+                };
+            return receivables;
+        }
     }
 }

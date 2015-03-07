@@ -1,12 +1,13 @@
 ﻿@model  AguaDeMaria.Model.Dto.PaymentDto
 
-@using (Html.BeginForm("Save", "Payment", FormMethod.Post, new { id = "paymentEntryForm" }))
+@using (Html.BeginForm("Save", "Payment", FormMethod.Post, new {id = "paymentEntryForm"}))
 {
     <table>
-        <tr style="display:none">
+        <tr style="display: none">
             <td></td>
             <td>
                 @Html.HiddenFor(x => x.CustomerId)
+                @Html.HiddenFor(x => x.SalesInvoiceId)
             </td>
         </tr>
         <tr>
@@ -22,7 +23,7 @@
                 @Html.LabelFor(x => x.InvoiceNumber)
             </td>
             <td>
-                @Html.TextBoxFor(x => x.InvoiceNumber, new { @readonly = "true" })
+                @Html.TextBoxFor(x => x.InvoiceNumber, new {@readonly = "true"})
             </td>
         </tr>
         <tr>
@@ -47,7 +48,7 @@
                 <td colspan="2">
                     @foreach (string errorMessage in Model.ValidationErrors)
                     {
-                        @Html.Label("* " + errorMessage, new { @class = "validationError" })
+                        @Html.Label("* " + errorMessage, new {@class = "validationError"})
                     }
                 </td>
             </tr>
@@ -64,8 +65,9 @@
 <script>
     var paymentEditorGrid = function () {
 
-        function showPaymentGridImpl(customerId) {
-            var url = "/Payment/ReceivableList?customerId=" + customerId;
+        function showPaymentGridImpl(customerId, salesInvoiceId) {
+            var url = salesInvoiceId == 0 ? "/Payment/ReceivableList?customerId=" + customerId :
+                "/Payment/DeliveryReceiptList?salesInvoiceId=" + salesInvoiceId;
             jQuery("#receivableList").jqGrid({
                 url: url,
                 datatype: "json",
@@ -114,7 +116,8 @@
     $(document).ready(function () {
         //show the grid
         var customerId = $("#CustomerId").val();
-        paymentEditorGrid.showPaymentGrid(customerId);
+        var salesInvoiceId = $("#SalesInvoiceId").val();
+        paymentEditorGrid.showPaymentGrid(customerId, salesInvoiceId);
     });
 
 </script>

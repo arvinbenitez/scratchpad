@@ -36,7 +36,7 @@ namespace AguaDeMaria.Model.Dto
         {
             get
             {
-                if (Amount <= 0 )
+                if (Amount <= 0 && IsNew)
                     yield return "You must enter an Amount";
             }
         }

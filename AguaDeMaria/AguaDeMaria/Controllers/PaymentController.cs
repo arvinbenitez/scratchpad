@@ -4,6 +4,7 @@ using AguaDeMaria.Common.Data;
 using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Payment;
 using AguaDeMaria.Service;
+using AutoMapper;
 
 namespace AguaDeMaria.Controllers
 {
@@ -34,9 +35,14 @@ namespace AguaDeMaria.Controllers
         public ActionResult PaymentEditor(PaymentParameter parameter)
         {
             var paymentDto = new PaymentDto();
-            if (parameter.IsNew)
+            if (parameter.DeliveryReceiptId.HasValue)
             {
-                if (parameter.DeliveryReceiptId != null)
+                var payment = paymentService.GetByDeliveryReceipt(parameter.DeliveryReceiptId.Value);
+                if (payment != null)
+                {
+                    paymentDto = Mapper.Map<PaymentDto>(payment);
+                }
+                else
                 {
                     var deliveryReceipt = deliveryReceiptService.Get(parameter.DeliveryReceiptId.Value);
                     paymentDto.CustomerId = deliveryReceipt.CustomerId;
@@ -52,6 +58,11 @@ namespace AguaDeMaria.Controllers
         public JsonResult ReceivableList(int customerId)
         {
             return Json(paymentService.GetReceivables(customerId), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeliveryReceiptList(int salesInvoiceId)
+        {
+            return Json(paymentService.DeliveryReceiptList(salesInvoiceId), JsonRequestBehavior.AllowGet);
         }
     }
 }
