@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Model;
@@ -39,6 +40,7 @@ namespace AguaDeMaria.Service.Implementation
             invoice.CustomerId = payment.CustomerId;
             invoice.InvoiceDate = payment.InvoiceDate;
             invoice.InvoiceNumber = payment.InvoiceNumber;
+            invoice.Amount = payment.Amount;
 
             //let's delete anything on this invoice, before reapplying the amount
             invoice.SalesInvoiceDetails.ToList().ForEach(x=> invoiceDetailsRepository.Delete(x));
@@ -80,6 +82,13 @@ namespace AguaDeMaria.Service.Implementation
             }
             unitOfWork.Commit();
             return invoice.SalesInvoiceId;
+        }
+
+        public IEnumerable<SalesInvoice> GetInvoices(DateTime startDate, DateTime endDate)
+        {
+            var invoices = salesInvoiceRepository.Get(x => x.InvoiceDate >= startDate && x.InvoiceDate <= endDate,
+                includedProperties: "Customer,SalesInvoiceDetails");
+            return invoices;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace AguaDeMaria.Models.Invoice
         public string CustomerName { get; set; }
         public string InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public string OrderNumber{get;set;}
+        public decimal Amount { get; set; }
 
-        public bool IsPaid { get; set; }
+        public string DeliveryReceipts { get; set; }
     }
 }

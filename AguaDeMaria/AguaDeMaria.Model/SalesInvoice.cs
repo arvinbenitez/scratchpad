@@ -26,6 +26,8 @@ namespace AguaDeMaria.Model
 
         public virtual Customer Customer { get; set; }
 
+        public decimal? Amount { get; set; }
+
 
         public virtual ICollection<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
 

@@ -4,16 +4,18 @@ using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Invoice;
+using AguaDeMaria.Service;
 using AutoMapper;
 
 namespace AguaDeMaria.Controllers
 {
     public class InvoiceController : Controller
     {
-        private IRepository<SalesInvoice> InvoiceRepository{get;set;}
-        public InvoiceController(IRepository<SalesInvoice> invoiceRepository)
+        private readonly IPaymentService paymentService;
+
+        public InvoiceController(IPaymentService paymentService)
         {
-            InvoiceRepository = invoiceRepository;
+            this.paymentService = paymentService;
         }
 
 
@@ -24,7 +26,7 @@ namespace AguaDeMaria.Controllers
 
         public ActionResult GetInvoicesList(DateTime startDate, DateTime endDate)
         {
-            var invoices = InvoiceRepository.Get(x => x.InvoiceDate >= startDate && x.InvoiceDate <= endDate, x => x.OrderBy(y => y.InvoiceNumber));
+            var invoices = paymentService.GetInvoices(startDate, endDate);
 
             var list = from inv in invoices
                          select Mapper.Map<SalesInvoiceDto>(inv);
