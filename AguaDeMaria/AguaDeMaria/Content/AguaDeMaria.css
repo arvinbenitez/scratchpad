@@ -41,9 +41,6 @@
     left: 95px;
 }
 
-
-
-
 /* Menu Styles */
 .admTopNavigation {
     float: left;
@@ -62,26 +59,25 @@ ul.admTopNavigation {
         list-style: none;
         padding-left: 5px;
         padding-right: 5px;
+        position: relative;
     }
 
-        ul.admTopNavigation li a {
-            background: none;
-            color: navy;
-            text-decoration: none;
-            font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-            padding-left: 3px;
-        }
+    ul.admTopNavigation li a {
+        background: none;
+        color: navy;
+        text-decoration: none;
+        padding-left: 3px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    }
 
-            ul.admTopNavigation li a:hover {
-                color: #333;
-                text-decoration: none;
-            }
+    ul.admTopNavigation li a:hover {
+        color: #b22222;
+        text-decoration: none;
+    }
 
 li.verticalLine {
     border-right-style: solid;
 }
-
-
 
 /* Body */
 .admBody {

@@ -94,4 +94,42 @@ div#newPopupDialog form table td input {
   font-size: 0.8em;
   padding-bottom: 10px;
 }
+.reportNavigationContainer {
+  float: left;
+}
+ul.admTopNavigation li ul {
+  padding: 2px;
+  position: absolute;
+  top: 13px;
+  left: 0;
+  width: 150px;
+  -webkit-box-shadow: 5px 5px 2px #888888;
+  -moz-box-shadow: 5px 5px 2px #888888;
+  box-shadow: 5px 5px 2px #888888;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  border: 1px solid;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background: #fff;
+}
+ul.admTopNavigation li ul li {
+  padding: 5px;
+  display: block;
+  color: #fff;
+  text-align: left;
+  font-size: 0.85em;
+  font-weight: 600;
+  font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+}
+ul.admTopNavigation li ul li:hover {
+  background: #ddd;
+}
+ul.admTopNavigation li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
 /*# sourceMappingURL=base.css.map */
