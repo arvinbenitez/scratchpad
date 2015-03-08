@@ -25,9 +25,13 @@ namespace AguaDeMaria.Service.Implementation
             this.unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Receivable> GetReceivables(int customerId)
+        public IEnumerable<Receivable> GetReceivables(int? customerId)
         {
-            return receivableRepository.Get(x => x.CustomerId == customerId);
+            if (customerId.HasValue)
+            {
+                return receivableRepository.Get(x => x.CustomerId == customerId);
+            }
+            return receivableRepository.Get(x => x.DeliveryReceiptId > 0,includedProperties:"Customer");
         }
 
         public int Pay(PaymentDto payment)

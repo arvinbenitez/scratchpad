@@ -39,5 +39,10 @@ namespace AguaDeMaria.Controllers
         {
             throw new System.NotImplementedException();
         }
+
+        public ActionResult Receivables()
+        {
+            return View();
+        }
     }
 }

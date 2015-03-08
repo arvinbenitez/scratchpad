@@ -11,6 +11,13 @@ namespace AguaDeMaria.Model
         public int DeliveryReceiptId { get; set; }
 
         public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
+
+        public string CustomerName
+        {
+            get { return Customer != null ? Customer.CustomerName : string.Empty; }
+        }
+
         public string DrNumber { get; set; }
         public DateTime DrDate { get; set; }
         public decimal Amount { get; set; }

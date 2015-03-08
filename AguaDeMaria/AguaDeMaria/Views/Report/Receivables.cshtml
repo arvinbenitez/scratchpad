@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Receivables";
+}
+<table id="receivableList"></table>
+<div id="receivableListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Customer Dialog goes</div>
+<script>
+    var receivablesGrid = (function () {
+
+        function showReceivableGrid() {
+            var url = "/Receivable/List";
+            jQuery("#receivableList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['DeliveryReceiptId', 'Customer Name', 'DR Number', 'DR Date', 'Amount', 'Paid', 'Balance', 'Actions'],
+                colModel: [
+                        { name: 'DeliveryReceiptId', key: true, index: 'DeliveryReceiptId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'CustomerName', index: 'CustomerName', width: 110 },
+                        { name: 'DrNumber', index: 'DrNumber', width: 35 },
+                        { name: 'DrDate', index: 'DrDate', width: 35, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
+                        { name: 'Amount', index: 'Amount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'PaidAmount', index: 'PaidAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'ReceivableAmount', index: 'ReceivableAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'CustomerName',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#receivableListPager',
+                sortorder: "asc",
+                caption: "Receivables",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                rowNum: 50,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#receivableList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var payAction = "<a class='fa fa-dollar' href='#' title='Enter Payment' onclick='receivablesGrid.enterPayment(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: payAction });
+                    }
+                },
+                loadComplete: function () {
+                    $("#loadingIndicator").hide();
+                }
+            });
+            //show the Navigator
+            jQuery("#customerList")
+                .jqGrid('navGrid', '#customerListPager', { edit: false, add: false, del: false });
+        }
+
+        var enterPaymentImpl = function (deliveryReceiptId) {
+            var url = "/Payment/PaymentEditor";
+            $.ajax({
+                url: url,
+                data: { DeliveryReceiptId: deliveryReceiptId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showPaymentDialog("Payment");
+            });
+        };
+
+        function showPaymentDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Payment/Save",
+                            data: $("#paymentEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.SalesInvoiceId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                $(this).dialog("close");
+                                //this must have been successful
+                                window.location.href = "/Report/Receivables";
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
+
+        return ({
+            showReceivableGrid: showReceivableGrid,
+            enterPayment: enterPaymentImpl
+        });
+    })();
+
+    $(document).ready(function () {
+        $("#newPopupDialog").dialog({
+            width: 500,
+            height: 400,
+            autoOpen: false
+        });
+        //show the grid
+        receivablesGrid.showReceivableGrid();
+    });
+</script>

@@ -261,6 +261,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PickupController.cs" />
+    <Compile Include="Controllers\ReceivableController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Filters\ExcludeIdValidation.cs" />
     <Compile Include="Global.asax.cs">
@@ -520,6 +521,7 @@
     <Content Include="Views\Report\DeliveryReceipt.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Payment\PaymentEditor.cshtml" />
+    <Content Include="Views\Report\Receivables.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

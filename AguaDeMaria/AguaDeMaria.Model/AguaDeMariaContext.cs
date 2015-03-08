@@ -69,6 +69,11 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Customer>()
+                .HasMany(e=> e.Receivables)
+                .WithRequired(e=> e.Customer)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<CustomerType>()
                 .HasMany(e => e.Customers)
                 .WithRequired(e => e.CustomerType)

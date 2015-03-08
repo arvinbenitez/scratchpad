@@ -66,20 +66,21 @@
     var paymentEditorGrid = function () {
 
         function showPaymentGridImpl(customerId, salesInvoiceId) {
-            var url = salesInvoiceId == 0 ? "/Payment/ReceivableList?customerId=" + customerId :
+            var url = salesInvoiceId == 0
+                ? "/Payment/ReceivableList?customerId=" + customerId :
                 "/Payment/DeliveryReceiptList?salesInvoiceId=" + salesInvoiceId;
             jQuery("#receivableList").jqGrid({
                 url: url,
                 datatype: "json",
                 colNames: ['DR Id', 'DR Number', 'DR Date', 'Amount', 'Paid','Balance'],
                 colModel: [
-                        { name: 'DeliveryReceiptId', key: true, index: 'DeliveryReceiptId', width: 75, hidden: true, sorttype: 'int' },
-                        { name: 'DrNumber', index: 'DrNumber', width: 35 },
-                        { name: 'DrDate', index: 'DrDate', width: 35, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
-                        { name: 'Amount', index: 'Amount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
-                        { name: 'PaidAmount', index: 'PaidAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
-                        { name: 'ReceivableAmount', index: 'ReceivableAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' }
-                            ],
+                    { name: 'DeliveryReceiptId', key: true, index: 'DeliveryReceiptId', width: 75, hidden: true, sorttype: 'int' },
+                    { name: 'DrNumber', index: 'DrNumber', width: 35 },
+                    { name: 'DrDate', index: 'DrDate', width: 35, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
+                    { name: 'Amount', index: 'Amount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                    { name: 'PaidAmount', index: 'PaidAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                    { name: 'ReceivableAmount', index: 'ReceivableAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' }
+                ],
                 sortname: 'DeliveryReceiptId',
                 viewrecords: true,
                 ignoreCase: true,
@@ -100,7 +101,6 @@
                         'PaidAmount': grid.jqGrid('getCol', 'PaidAmount', false, 'sum'),
                         'ReceivableAmount': grid.jqGrid('getCol', 'ReceivableAmount', false, 'sum')
                     });
-
                 }
             });
             //show the Navigator
