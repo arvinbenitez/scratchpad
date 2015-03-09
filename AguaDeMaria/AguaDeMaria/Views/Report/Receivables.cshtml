@@ -12,17 +12,23 @@
             jQuery("#receivableList").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['DeliveryReceiptId', 'Customer Name', 'DR Number', 'DR Date', 'Amount', 'Paid', 'Balance', 'Actions'],
+                colNames: ['DeliveryReceiptId', 'Customer Name', 'DR Number', 'DR Date', 'Amount', 'Paid', 'Balance'],
                 colModel: [
                         { name: 'DeliveryReceiptId', key: true, index: 'DeliveryReceiptId', width: 75, hidden: true, sorttype: 'int' },
                         { name: 'CustomerName', index: 'CustomerName', width: 110 },
-                        { name: 'DrNumber', index: 'DrNumber', width: 35 },
+                        { name: 'DrNumber', index: 'DrNumber', width: 35, summaryType:'count',summaryTpl: '<b>{0} DR(s)</b>' },
                         { name: 'DrDate', index: 'DrDate', width: 35, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' }, sorttype: 'date' },
                         { name: 'Amount', index: 'Amount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'PaidAmount', index: 'PaidAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
-                        { name: 'ReceivableAmount', index: 'ReceivableAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
-                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                        { name: 'ReceivableAmount', index: 'ReceivableAmount', width: 27, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number',summaryType:'sum' },
+                        ],
                 sortname: 'CustomerName',
+                grouping: true,
+                groupingView : { 
+                    groupField : ['CustomerName'],
+                    groupDataSorted: true,
+                    groupText: ['<b>{0}</b>'],
+                    groupSummary:true},
                 viewrecords: true,
                 ignoreCase: true,
                 pager: '#receivableListPager',
@@ -47,8 +53,8 @@
                 }
             });
             //show the Navigator
-            jQuery("#customerList")
-                .jqGrid('navGrid', '#customerListPager', { edit: false, add: false, del: false });
+            jQuery("#receivableList")
+                .jqGrid('navGrid', '#receivableListPager', { edit: false, add: false, del: false });
         }
 
         var enterPaymentImpl = function (deliveryReceiptId) {
@@ -89,7 +95,6 @@
                 }]
             }).dialog("open");
         }
-
 
         return ({
             showReceivableGrid: showReceivableGrid,

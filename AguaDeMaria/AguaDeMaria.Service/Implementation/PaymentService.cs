@@ -31,7 +31,9 @@ namespace AguaDeMaria.Service.Implementation
             {
                 return receivableRepository.Get(x => x.CustomerId == customerId);
             }
-            return receivableRepository.Get(x => x.DeliveryReceiptId > 0,includedProperties:"Customer");
+            return
+                receivableRepository.Get(x => x.DeliveryReceiptId > 0, includedProperties: "Customer")
+                    .OrderBy(x => x.CustomerName);
         }
 
         public int Pay(PaymentDto payment)
