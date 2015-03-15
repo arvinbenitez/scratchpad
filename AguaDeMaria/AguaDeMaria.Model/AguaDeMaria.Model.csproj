@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Receivable.cs" />
     <Compile Include="RefStatus.cs" />
+    <Compile Include="Report\DailySummary.cs" />
     <Compile Include="ReturnReceipt.cs" />
     <Compile Include="ReturnReceiptDetail.cs" />
     <Compile Include="SalesInvoice.cs" />

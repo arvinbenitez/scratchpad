@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Model;
+using AguaDeMaria.Model.Report;
 using AguaDeMaria.Service;
 using AguaDeMaria.Service.Implementation;
 using Funq;
@@ -52,6 +53,8 @@ namespace AguaDeMaria.Configuration.Ioc
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<GenericRepository<SalesInvoiceDetail>, IRepository<SalesInvoiceDetail>>()
                 .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<GenericRepository<DailySummary>, IRepository<DailySummary>>()
+                            .ReusedWithin(ReuseScope.Request);
 
             //Services
             container.RegisterAutoWiredAs<DeliveryReceiptService, IDeliveryReceiptService>()
@@ -61,6 +64,8 @@ namespace AguaDeMaria.Configuration.Ioc
             container.RegisterAutoWiredAs<DeliveryReceiptLedgerService, IDeliveryReceiptLedgerService>()
                 .ReusedWithin(ReuseScope.Request);
             container.RegisterAutoWiredAs<PaymentService, IPaymentService>()
+                .ReusedWithin(ReuseScope.Request);
+            container.RegisterAutoWiredAs<ReportService, IReportService>()
                 .ReusedWithin(ReuseScope.Request);
 
             //Lookup Dependencies

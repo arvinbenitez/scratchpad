@@ -1,4 +1,5 @@
 using System.Data.Entity;
+using AguaDeMaria.Model.Report;
 
 namespace AguaDeMaria.Model
 {
@@ -39,6 +40,8 @@ namespace AguaDeMaria.Model
         public virtual DbSet<Receivable> Receivables { get; set; }
 
         public virtual DbSet<DeliveryReceiptPayment> DeliveryReceiptPayments { get; set; }
+
+        public virtual DbSet<DailySummary> DailySummaries { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

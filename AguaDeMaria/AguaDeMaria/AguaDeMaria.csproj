@@ -253,6 +253,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DailySummaryController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\Helpers\BinaryContentResult.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -502,7 +503,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -522,6 +522,7 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Payment\PaymentEditor.cshtml" />
     <Content Include="Views\Report\Receivables.cshtml" />
+    <Content Include="Views\Report\DailySummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
