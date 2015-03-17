@@ -1,7 +1,8 @@
 ﻿CREATE View DailySummary
 AS
 SELECT 
-	ISNULL(O.Date, ISNULL(D.Date,ISNULL(S.Date,ISNULL(P.DATE,null)))) as [Date] , O.RoundOrderQty, O.SlimOrderQty,
+	CAST(ISNULL(O.Date, ISNULL(D.Date,ISNULL(S.Date,ISNULL(P.DATE,null)))) as DateTime) as [Date], 
+	O.RoundOrderQty, O.SlimOrderQty,
 	D.RoundDeliveredQty, D.SlimDeliveredQty, D.RoundDeliveredAmt, D.SlimDeliveredAmt,
 	S.Amount as CollectionAmount,
 	P.RoundPickupQty, P.SlimPickupQty
