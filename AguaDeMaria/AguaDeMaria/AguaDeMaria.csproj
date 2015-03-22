@@ -402,6 +402,8 @@
     <Content Include="Content\base.css.map">
       <DependentUpon>base.css</DependentUpon>
     </Content>
+    <Content Include="Images\WaterStationLeft.gif" />
+    <Content Include="Images\WaterStationRight.gif" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-ui-router.js" />

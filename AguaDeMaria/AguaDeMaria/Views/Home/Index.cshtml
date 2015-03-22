@@ -1,28 +1,43 @@
 ﻿@{
     ViewBag.Title = "Aqua Kesh";
 }
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                To learn more about Aqua Kesh Purified Water Station visit us at .
-                We are giving special prices and discounts to dealers subject to conditions. If you have any questions, please call or SMS us at .
-                You may also send your inquires to <a href="mailto:marialyn.benitez@yahoo.com.ph">Marialyn Benitez</a>.
-            </p>
-        </div>
-    </section>
-}
-<!--<h3>We suggest the following:</h3>-->
-<ol class="round">
-    <li class="one">
+<section class="mainHomeInfo">
+    <div>
+        <h1>Aqua Kesh - Purified Drinking Water</h1>
         <h5>The Taste of Natural Fresh Water</h5>
-        Purified using our process inclduing Sand Filtration, Activated Carbon Filtration, Regenerable Water Softener,
+        Purified using our process including Sand Filtration, Activated Carbon Filtration, Regenerable Water Softener,
         Reverse Osmosis, Ozonization Carbon Filter, 20'5 Micron Filtration, UV Sterilization,
         Utilizes State of the Art "21 Stages" per DOH and BFAD Guidelines.
-    </li>
-</ol>
-
+    </div>
+    <div>
+        <h5>Contact Information</h5>
+        For orders and additional information, please contact us at the following numbers:
+        <table>
+            <tr><td>Smart</td><td><b>0928-896-7363</b></td></tr>
+            <tr><td>Globe</td><td><b>0927-511-9611</b></td></tr>
+        </table>
+        <div class="announcement">We are giving away special discounts for dealers and bulk orders. Call or text us at the above numbers.</div>
+    </div>
+</section>
+<section class="mainHomeMap">
+    <h5>Where we are:</h5>
+    <div id="locationMap" class="locationMap">
+    </div>
+</section>
+<script>
+    function initialize() {
+        var mapCanvas = document.getElementById('locationMap');
+        var location = new google.maps.LatLng(14.399, 120.960);
+        var mapOptions = {
+            center: location,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>

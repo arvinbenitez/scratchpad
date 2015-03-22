@@ -11,7 +11,7 @@
             jQuery("#list").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Date', 'Day', 'Slim', 'Round', 'Slim', 'Round','Total', 'Slim', 'Round', 'Total', 'Unit Price', 'Collection', 'Slim', 'Round'],
+                colNames: ['Date', 'Day', 'Slim', 'Round', 'Slim', 'Round','Total', 'Slim', 'Round', 'Total', 'Unit Price', 'Collection', 'Slim', 'Round',''],
                 colModel: [
                         { name: 'Date', key: true, index: 'Date', width: 30, sorttype: 'date', formatter: 'date', formatoptions: { srcformat: 'm/d/Y', newformat: 'M-d-Y' } },
                         { name: 'Day', index: 'Day', align: "center", width: 20},
@@ -26,7 +26,8 @@
                         { name: 'UnitPrice', index: 'UnitPrice', width: 25, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'CollectionAmount', index: 'CollectionAmount', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'SlimPickupQty', index: 'SlimPickupQty', align: "right", width: 20, sorttype: 'int' },
-                        { name: 'RoundPickupQty', index: 'RoundPickupQty', align: "right", width: 20, sorttype: 'int' }
+                        { name: 'RoundPickupQty', index: 'RoundPickupQty', align: "right", width: 20, sorttype: 'int' },
+                        { name: 'editAction', index: 'editAction', align: "right", width: 5 }
                         ],
                 sortname: 'CustomerName',
                 viewrecords: true,

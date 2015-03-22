@@ -132,4 +132,7 @@ ul.admTopNavigation li:hover ul {
   opacity: 1;
   visibility: visible;
 }
+.mainHomeInfo div h1 {
+  margin: 0;
+}
 /*# sourceMappingURL=base.css.map */
