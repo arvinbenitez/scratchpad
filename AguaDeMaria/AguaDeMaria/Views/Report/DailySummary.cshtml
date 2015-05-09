@@ -11,7 +11,7 @@
             jQuery("#list").jqGrid({
                 url: url,
                 datatype: "json",
-                colNames: ['Date', 'Day', 'Slim', 'Round', 'Slim', 'Round','Total', 'Slim', 'Round', 'Total', 'Unit Price', 'Collection', 'Slim', 'Round',''],
+                colNames: ['Date', 'Day', 'Slim', 'Round', 'Slim', 'Round','Total', 'Slim', 'Round', 'Total', 'Paid','Balance', 'Unit Price', 'Collection', 'Slim', 'Round',''],
                 colModel: [
                         { name: 'Date', key: true, index: 'Date', width: 30, sorttype: 'date', formatter: 'date', formatoptions: { srcformat: 'm/d/Y', newformat: 'M-d-Y' } },
                         { name: 'Day', index: 'Day', align: "center", width: 20},
@@ -23,6 +23,8 @@
                         { name: 'SlimDeliveredAmt', index: 'SlimDeliveredAmt', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'RoundDeliveredAmt', index: 'RoundDeliveredAmt', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'TotalDeliveredAmt', index: 'TotalDeliveredAmt', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'AmountPaid', index: 'AmountPaid', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'PendingAmount', index: 'PendingAmount', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'UnitPrice', index: 'UnitPrice', width: 25, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'CollectionAmount', index: 'CollectionAmount', width: 35, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
                         { name: 'SlimPickupQty', index: 'SlimPickupQty', align: "right", width: 20, sorttype: 'int' },
@@ -56,7 +58,7 @@
                 groupHeaders: [
                   { startColumnName: 'SlimOrderQty', numberOfColumns: 2, titleText: 'Order Quantity' },
                   { startColumnName: 'SlimDeliveredQty', numberOfColumns: 3, titleText: 'Delivered Quantity' },
-                  { startColumnName: 'SlimDeliveredAmt', numberOfColumns: 3, titleText: 'Delivered Amount' },
+                  { startColumnName: 'SlimDeliveredAmt', numberOfColumns: 5, titleText: 'Delivered Amount' },
                   { startColumnName: 'SlimPickupQty', numberOfColumns: 2, titleText: 'Pickup Quantity' }
                 ]
             });

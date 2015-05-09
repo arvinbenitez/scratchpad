@@ -29,6 +29,17 @@ namespace AguaDeMaria.Model.Report
         public int? RoundDeliveredQty { get; set; }
         public int? SlimDeliveredQty { get; set; }
 
+        public decimal? AmountPaid { get; set; }
+
+        public decimal? PendingAmount
+        {
+            get
+            {
+                decimal? pendingAmount = TotalDeliveredAmt - AmountPaid;
+                return pendingAmount.HasValue && pendingAmount > 0 ? pendingAmount : 0;
+            }
+        }
+
         public int? TotalDeliveredQty
         {
             get
