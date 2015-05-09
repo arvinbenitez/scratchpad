@@ -41,7 +41,7 @@
   <ItemGroup>
     <Content Include="Deployed\20150316.00.sql" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="ToBeDeployed\20150509.00.sql" />
+    <Content Include="Deployed\20150509.00.sql" />
     <Content Include="ToBeDeployed\ExpenseScripts.sql" />
   </ItemGroup>
   <ItemGroup />
