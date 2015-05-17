@@ -50,7 +50,7 @@ namespace AguaDeMaria.Controllers
         public JsonResult GetPickupSlipList(DateTime? startDate, DateTime? endDate)
         {
             DateTime orderStartDate = startDate.HasValue ? startDate.Value : DateTime.Today;
-            DateTime orderEndDate = endDate.HasValue ? endDate.Value.AddDays(1) : orderStartDate.AddDays(1);
+            DateTime orderEndDate = endDate.HasValue ? endDate.Value : orderStartDate.AddDays(1);
 
             var pickups = PickupSlipRepository.Get(x => x.PickupDate >= orderStartDate && x.PickupDate <= orderEndDate,
                 includedProperties: "Customer");
