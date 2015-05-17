@@ -1,4 +1,5 @@
-﻿@model AguaDeMaria.Model.Dto.DeliveryDto
+﻿@using AguaDeMaria.Filters
+@model AguaDeMaria.Model.Dto.DeliveryDto
 
 @using (Html.BeginForm("SaveDelivery", "Delivery", FormMethod.Post, new { id = "drEntryForm" }))
 {
@@ -11,6 +12,7 @@
                 @Html.HiddenFor(x => x.RoundDeliveryReceiptDetailId)
                 @Html.HiddenFor(x => x.OrderId)
                 @Html.HiddenFor(x => x.OrderNumber)
+                @Html.Hidden(ConvertDatesToUtcAttribute.DateOffset, "0")
             </td>
         </tr>
         <tr>
@@ -44,7 +46,7 @@
                 @Html.LabelFor(x => x.DRDate)
             </td>
             <td>
-                @Html.TextBoxFor(x => x.DRDate)
+                @Html.TextBoxFor(x=> x.DRDate)
                 @Html.ValidationMessageFor(x => x.DRDate)
             </td>
         </tr>
@@ -82,9 +84,14 @@
     </table>
 }
 <script>
+    
+    $(document).ready(function () {
+        var localized = DateFunctions.UtctoLocalDate($("#DRDate").val());
+        $("#DRDate").val(localized.toLocaleDateString() + " " + localized.toLocaleTimeString());
+        $("#@ConvertDatesToUtcAttribute.DateOffset").val((new Date()).getTimezoneOffset());
+    });
+
     var deliveryEditorFunctions = function () {
-
-
         function attachListenersImpl() {
             $("#SlimQty").on("change", function () {
                 var $qtyInput = $(this);

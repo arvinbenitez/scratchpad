@@ -21,11 +21,15 @@
 
 
         function getStartDateImpl() {
-            return $("#startDate").val();
+            var localDate = new Date($("#startDate").val());
+            var utcDate = new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate(), localDate.getUTCHours(), localDate.getUTCMinutes(), localDate.getUTCSeconds());
+            return utcDate.toLocaleDateString() + " " + utcDate.toLocaleTimeString();
         }
 
         function getEndDateImpl() {
-            return $("#endDate").val();
+            var localDate = new Date($("#endDate").val());
+            var utcDate = new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate(), localDate.getUTCHours(), localDate.getUTCMinutes(), localDate.getUTCSeconds());
+            return utcDate.toLocaleDateString() + " " + utcDate.toLocaleTimeString();
         }
 
         function setClickDelegateImpl(clickDelegate) {

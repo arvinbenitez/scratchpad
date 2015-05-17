@@ -1,4 +1,5 @@
-﻿@model  AguaDeMaria.Models.Pickup.PickupSlipDto
+﻿@using AguaDeMaria.Filters
+@model  AguaDeMaria.Models.Pickup.PickupSlipDto
 
 @using (Html.BeginForm("SavePickupSlip", "Pickup", FormMethod.Post, new { id = "pickupSlipEntryForm" }))
 {
@@ -9,6 +10,7 @@
                 @Html.HiddenFor(x => x.PickupSlipId)
                 @Html.HiddenFor(x => x.RoundPickupSlipDetailId)
                 @Html.HiddenFor(x => x.SlimPickupSlipDetailId)
+                @Html.Hidden(ConvertDatesToUtcAttribute.DateOffset, "0")
             </td>
         </tr>
         <tr>
@@ -79,3 +81,10 @@
         }
     </table>
 }
+<script>
+        $(document).ready(function() {
+            var localized = DateFunctions.UtctoLocalDate($("#PickupDate").val());
+            $("#PickupDate").val(localized.toLocaleDateString() + " " + localized.toLocaleTimeString());
+            $("#@ConvertDatesToUtcAttribute.DateOffset").val((new Date()).getTimezoneOffset());
+        });
+</script>

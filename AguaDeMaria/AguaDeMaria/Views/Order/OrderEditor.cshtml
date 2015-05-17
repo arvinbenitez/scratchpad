@@ -1,4 +1,4 @@
-﻿@using iTextSharp.text.pdf.qrcode
+﻿@using AguaDeMaria.Filters
 @model  AguaDeMaria.Model.Dto.OrderDto
 
 @using (Html.BeginForm("SaveOrder", "Order", FormMethod.Post, new { id = "orderEntryForm" }))
@@ -12,6 +12,7 @@
                 @Html.HiddenFor(x => x.SlimOrderDetailId)
                 @Html.HiddenFor(x => x.SlimQtyDelivered)
                 @Html.HiddenFor(x => x.RoundQtyDelivered)
+                @Html.Hidden(ConvertDatesToUtcAttribute.DateOffset,"0")
             </td>
         </tr>
         <tr>
@@ -19,8 +20,8 @@
                 @Html.LabelFor(x => x.CustomerId)
             </td>
             <td>
-                    @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new {@id = "customer"})
-                    @Html.ValidationMessageFor(x => x.CustomerId)
+                @Html.DropDownListFor(x => x.CustomerId, ViewBag.CustomerList as IEnumerable<SelectListItem>, new {@id = "customer"})
+                @Html.ValidationMessageFor(x => x.CustomerId)
             </td>
         </tr>
         <tr>
@@ -80,4 +81,11 @@
             </tr>
         }
     </table>
+    <script>
+        $(document).ready(function() {
+            var localized = DateFunctions.UtctoLocalDate($("#OrderDate").val());
+            $("#OrderDate").val(localized.toLocaleDateString() + " " + localized.toLocaleTimeString());
+            $("#@ConvertDatesToUtcAttribute.DateOffset").val((new Date()).getTimezoneOffset());
+        });
+</script>
 }

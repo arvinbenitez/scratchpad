@@ -106,7 +106,7 @@ namespace AguaDeMaria.Controllers
         private void AssignDefaultValues(DeliveryDto deliveryDto)
         {
             AssignDefaultPrice(deliveryDto);
-            deliveryDto.DRDate = DateTime.Now;
+            deliveryDto.DRDate = DateTime.UtcNow;
             deliveryDto.DRNumber = SettingsManager.GetNextDeliveryReceiptNumber();
         }
 
@@ -122,6 +122,7 @@ namespace AguaDeMaria.Controllers
 
         [ExcludeIdValidation(IdField = "DeliveryReceiptId")]
         [HttpPost]
+        [ConvertDatesToUtc]
         public ActionResult SaveDeliveryReceipt(DeliveryDto deliveryDto)
         {
             if (ModelState.IsValid && deliveryDto.IsValid)

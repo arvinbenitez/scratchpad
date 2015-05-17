@@ -264,6 +264,7 @@
     <Compile Include="Controllers\PickupController.cs" />
     <Compile Include="Controllers\ReceivableController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Filters\ConvertDatesToUtcAttribute.cs" />
     <Compile Include="Filters\ExcludeIdValidation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

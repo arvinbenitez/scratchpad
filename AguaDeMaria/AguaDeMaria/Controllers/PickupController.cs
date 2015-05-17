@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
+using AguaDeMaria.Filters;
 using AguaDeMaria.Model;
 using AguaDeMaria.Models.Pickup;
 using AguaDeMaria.Service;
@@ -80,7 +81,7 @@ namespace AguaDeMaria.Controllers
                 {
                     pickupSlipDto = Mapper.Map<PickupSlipDto>(pickupSlip);
                 }
-                pickupSlipDto.PickupDate = DateTime.Now;
+                pickupSlipDto.PickupDate = DateTime.UtcNow;
                 pickupSlipDto.PickupSlipNumber = SettingsManager.GetNextPickupSlipNumber();
             }
             else
@@ -93,6 +94,7 @@ namespace AguaDeMaria.Controllers
             return PartialView("PickupSlipEditor", pickupSlipDto);
         }
 
+        [ConvertDatesToUtc]
         public ActionResult SavePickupSlip(PickupSlipDto pickupSlipDto)
         {
             if (pickupSlipDto.IsValid)

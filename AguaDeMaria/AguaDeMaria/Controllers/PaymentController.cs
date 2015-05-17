@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
+using AguaDeMaria.Filters;
 using AguaDeMaria.Model.Dto;
 using AguaDeMaria.Models.Payment;
 using AguaDeMaria.Service;
@@ -23,6 +24,7 @@ namespace AguaDeMaria.Controllers
             this.deliveryReceiptService = deliveryReceiptService;
         }
 
+        [ConvertDatesToUtc]
         public ActionResult Save(PaymentDto paymentDto)
         {
             if (ModelState.IsValid && paymentDto.IsValid)
@@ -49,7 +51,7 @@ namespace AguaDeMaria.Controllers
                     paymentDto.CustomerId = deliveryReceipt.CustomerId;
                     paymentDto.CustomerName = deliveryReceipt.Customer.CustomerName;
                     paymentDto.InvoiceNumber = settingsManager.GetNextInvoiceNumber();
-                    paymentDto.InvoiceDate = DateTime.Now;
+                    paymentDto.InvoiceDate = DateTime.UtcNow;
                 }
             }
 

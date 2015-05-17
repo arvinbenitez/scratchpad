@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
@@ -83,7 +84,7 @@ namespace AguaDeMaria.Controllers
             Order order = new Order
             {
                 CustomerId = parameter.CustomerId.HasValue ? parameter.CustomerId.Value : 0,
-                OrderDate = DateTime.Now,
+                OrderDate = DateTime.UtcNow,
                 OrderStatusId = DataConstants.OrderStatus.Pending,
                 OrderDetails = new List<OrderDetail>
                                     {
@@ -97,6 +98,7 @@ namespace AguaDeMaria.Controllers
 
         [ExcludeIdValidation(IdField = "OrderId")]
         [HttpPost]
+        [ConvertDatesToUtc]
         public ActionResult SaveOrder(OrderDto orderDto)
         {
             if (ModelState.IsValid && orderDto.IsValid)
