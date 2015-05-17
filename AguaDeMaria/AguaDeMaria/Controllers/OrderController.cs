@@ -44,8 +44,8 @@ namespace AguaDeMaria.Controllers
 
         public ActionResult GetOrderList(DateTime? startDate, DateTime? endDate)
         {
-            DateTime orderStartDate = startDate.HasValue? startDate.Value.Date: DateTime.Today;
-            DateTime orderEndDate = endDate.HasValue ? endDate.Value.Date.AddDays(1) : orderStartDate.AddDays(1);
+            DateTime orderStartDate = startDate.HasValue? startDate.Value: DateTime.Today;
+            DateTime orderEndDate = endDate.HasValue ? endDate.Value.AddDays(1) : orderStartDate.AddDays(1);
             //Get the orders for Today
             var orders = OrderRepository.Get(
                 x => x.OrderDate >= orderStartDate && x.OrderDate <= orderEndDate,
