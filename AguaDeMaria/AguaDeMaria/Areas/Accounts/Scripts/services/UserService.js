@@ -10,11 +10,11 @@
             };
 
             var getNewUserImpl = function() {
-                return { "id": 0, "name": "New User" };
+                return { "Id": 0, "Email": "", "UserName": "New User", "FirstName": "", "LastName": "" };
             };
 
             var getUserImpl = function(userId) {
-                return $http.get('/accounts/user/get/1');
+                return $http.get('/accounts/user/get/' + userId);
             };
 
             var updateUserImpl = function (currentUser) {

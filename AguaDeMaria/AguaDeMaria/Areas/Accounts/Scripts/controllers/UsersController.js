@@ -9,8 +9,6 @@
 
     myAppModule.controller('UsersController', ['$scope', '$state', '$stateParams', 'UserService', 'fieldState',
             function ($scope, $state, $stateParams, userService, fieldState) {
-                console.log('1 controller called: ' + $state.current.name);
-                console.log(fieldState);
 
                 $scope.fieldState = fieldState;
                 $scope.fieldState.showList = true;
@@ -23,9 +21,6 @@
 
     myAppModule.controller('UserEditController', ['$scope', '$state', '$stateParams', 'UserService', 'fieldState',
             function ($scope, $state, $stateParams, userService,fieldState) {
-                console.log('2 controller called: ' + $state.current.name);
-                console.log(fieldState);
-
                 $scope.fieldState = fieldState;
                 $scope.fieldState.showList = false;
 
@@ -40,14 +35,11 @@
                 }
 
                 $scope.submit = function () {
-                    console.log('submitted data');
-                    console.log($scope.currentUser);
                     userService.updateUser($scope.currentUser).then(function (response) {
                         if (response.data.Success === true) {
                             $scope.fieldState.showList = true;
                             $state.go('users');
                         } else {
-                            console.log(response.data);
                             $scope.fieldState.errorMessage = response.data.Message;
                         }
                     });
