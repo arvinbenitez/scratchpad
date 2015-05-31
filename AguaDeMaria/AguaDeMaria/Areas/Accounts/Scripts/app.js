@@ -3,8 +3,9 @@
 
     var myAppModule = angular.module('myApp', ['ui.router']);
     myAppModule.config(function ($stateProvider, $urlRouterProvider) {
+
         // For any unmatched url, send to /users
-        //$urlRouterProvider.otherwise("/users");
+        $urlRouterProvider.otherwise("/users");
 
         $stateProvider
           .state('users', {
@@ -12,15 +13,15 @@
               templateUrl: "areas/accounts/scripts/views/users.html",
               controller: "UsersController"
           })
-         .state('users_new', {
-             url: "users/new",
+         .state('users.new', {
+             url: "/new",
              templateUrl: "areas/accounts/scripts/views/useredit.html",
-             controller: "UsersController"
+             controller: "UserEditController"
          })
-        .state('users_edit', {
-            url: "users/edit/:userId",
+        .state('users.edit', {
+            url: "/edit/:userId",
             templateUrl: "areas/accounts/scripts/views/useredit.html",
-            controller: "UsersController"
+            controller: "UserEditController"
         });
     });
 })();

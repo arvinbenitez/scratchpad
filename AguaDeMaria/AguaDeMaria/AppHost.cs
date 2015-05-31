@@ -45,7 +45,7 @@ namespace AguaDeMaria
 #if DEBUG
             userAuthRepository.CreateMissingTables();
 #endif
-            if (userAuthRepository.GetUserAuthByUserName("admin@getsomething.com") == null)
+            if (userAuthRepository.GetUserAuthByUserName("Administrator") == null)
             {
                 userAuthRepository.CreateUserAuth(
                     new UserAuth

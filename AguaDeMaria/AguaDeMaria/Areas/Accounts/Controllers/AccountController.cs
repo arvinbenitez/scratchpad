@@ -2,6 +2,7 @@
 
 namespace AguaDeMaria.Areas.Accounts.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         //

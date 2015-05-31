@@ -1,12 +1,17 @@
-﻿<label>{{mode}}</label>
-<table>
-    <tr>
-        <td>User Id</td>
-        <td><input type="text" value="{{currentUser.id}}" /></td>
-    </tr>
-
-    <tr>
-        <td>Name</td>
-        <td><input type="text" value="{{currentUser.name}}" /></td>
-    </tr>
-</table>
+﻿<div class="userDetails">
+    <fieldset>
+        <legend>User Details</legend>
+        <p><label>User Name :</label><input type="text" ng-model="currentUser.UserName" /></p>
+        <p><label>Email :</label><input type="text" ng-model="currentUser.Email" /></p>
+        <p><label>First Name :</label><input type="text" ng-model="currentUser.FirstName" /></p>
+        <p><label>Last Name :</label><input type="text" ng-model="currentUser.LastName" /></p>
+    </fieldset>
+    <fieldset>
+        <legend>Change Password</legend>
+        <p ng-show="!currentUser.IsNew"><label>Current Password :</label><input type="password" ng-model="currentUser.CurrentPassword" /></p>
+        <p><label>New Password :</label><input type="password" ng-model="currentUser.NewPassword" /></p>
+        <p><label>Confirm Password :</label><input type="password" ng-model="currentUser.ConfirmNewPassword" /></p>
+    </fieldset>
+    <label class="userDetailErrorMessage">{{fieldState.errorMessage}}</label>
+</div>
+<div class="userEditButtonControls"><a class="aguaDeMariaSaveButton" ng-click="submit()">Save</a><a class="aguaDeMariaSaveButton" ng-click="cancel()">Cancel</a></div>

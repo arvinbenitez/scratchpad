@@ -244,6 +244,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Accounts\AccountsAreaRegistration.cs" />
     <Compile Include="Areas\Accounts\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Accounts\Controllers\UserController.cs" />
     <Compile Include="Configuration\Ioc\WebBootStrapper.cs" />
     <Compile Include="Configuration\Mappers\DeliveryReceiptMapperConfiguration.cs" />
     <Compile Include="Configuration\Mappers\MapperConfiguration.cs" />

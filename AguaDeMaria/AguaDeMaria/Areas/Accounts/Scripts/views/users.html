@@ -1,12 +1,22 @@
-﻿<h4>Users</h4>
-<label>ShowList = {{showList}}</label>
-<div ng-show="showList">
+﻿<h4 ng-show="fieldState.showList">User List</h4>
+<div ng-show="fieldState.showList" class="aguaDeMariaTable">
     <table>
-        <thead>
-            <tr><td>Name</td></tr>
-        </thead>
+        <tr>
+            <td>User Name</td>
+            <td>Email</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td style="width: 80px"></td>
+        </tr>
         <tr ng-repeat="user in userList">
-            <td><a ui-sref="users_edit({userId: user.id})">Edit</a> {{user.name}}</td>
+            <td>{{user.UserName}}</td>
+            <td>{{user.Email}}</td>
+            <td>{{user.FirstName}}</td>
+            <td>{{user.LastName}}</td>
+            <td>
+                <a ui-sref=".edit({userId: {{user.Id}}})" class="aguaDeMariaSaveButton">Edit</a>
+            </td>
         </tr>
     </table>
 </div>
+<div ui-view></div>

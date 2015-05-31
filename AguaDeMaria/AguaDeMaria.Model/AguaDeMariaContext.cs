@@ -42,6 +42,8 @@ namespace AguaDeMaria.Model
         public virtual DbSet<DeliveryReceiptPayment> DeliveryReceiptPayments { get; set; }
 
         public virtual DbSet<DailySummary> DailySummaries { get; set; }
+
+        public virtual DbSet<User> Users { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

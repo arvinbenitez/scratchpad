@@ -135,4 +135,178 @@ ul.admTopNavigation li:hover ul {
 .mainHomeInfo div h1 {
   margin: 0;
 }
+.aguaDeMariaTable {
+  margin: 0px;
+  padding: 0px;
+  width: 1000px;
+  box-shadow: 5px 5px 3px #888888;
+  border: 1px solid #000000;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.aguaDeMariaTable table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+.aguaDeMariaTable tr:last-child td:last-child {
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.aguaDeMariaTable table tr:first-child td:first-child {
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.aguaDeMariaTable table tr:first-child td:last-child {
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.aguaDeMariaTable tr:last-child td:first-child {
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.aguaDeMariaTable tr:nth-child(odd) {
+  background-color: #aad4ff;
+}
+.aguaDeMariaTable tr:nth-child(even) {
+  background-color: #ffffff;
+}
+.aguaDeMariaTable td {
+  vertical-align: middle;
+  border: 1px solid #000000;
+  border-width: 0px 1px 1px 0px;
+  text-align: left;
+  padding: 5px;
+  font-size: 12px;
+  font-family: Arial;
+  font-weight: normal;
+  color: #000000;
+}
+.aguaDeMariaTable tr:last-child td {
+  border-width: 0px 1px 0px 0px;
+}
+.aguaDeMariaTable tr td:last-child {
+  border-width: 0px 0px 1px 0px;
+}
+.aguaDeMariaTable tr:last-child td:last-child {
+  border-width: 0px 0px 0px 0px;
+}
+.aguaDeMariaTable tr:first-child td {
+  background: -o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f));
+  background: -moz-linear-gradient(center top, #005fbf 5%, #003f7f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");
+  background: -o-linear-gradient(top, #005fbf, 3f 7f);
+  background-color: #005fbf;
+  border: 0px solid #000000;
+  text-align: center;
+  border-width: 0px 0px 1px 1px;
+  font-size: 14px;
+  font-family: Arial;
+  font-weight: bold;
+  color: #ffffff;
+}
+.aguaDeMariaTable tr:first-child:hover td {
+  background: -o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f));
+  background: -moz-linear-gradient(center top, #005fbf 5%, #003f7f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");
+  background: -o-linear-gradient(top, #005fbf, 3f 7f);
+  background-color: #005fbf;
+}
+.aguaDeMariaTable tr:first-child td:first-child {
+  border-width: 0px 0px 1px 0px;
+}
+.aguaDeMariaTable tr:first-child td:last-child {
+  border-width: 0px 0px 1px 1px;
+}
+.aguaDeMariaSaveButton {
+  -moz-box-shadow: 2px 2px 4px 0px #9ba399;
+  -webkit-box-shadow: 2px 2px 4px 0px #9ba399;
+  box-shadow: 2px 2px 4px 0px #9ba399;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #4579c7), color-stop(1, #2aa7bd));
+  background: -moz-linear-gradient(top, #4579c7 5%, #2aa7bd 100%);
+  background: -webkit-linear-gradient(top, #4579c7 5%, #2aa7bd 100%);
+  background: -o-linear-gradient(top, #4579c7 5%, #2aa7bd 100%);
+  background: -ms-linear-gradient(top, #4579c7 5%, #2aa7bd 100%);
+  background: linear-gradient(to bottom, #4579c7 5%, #2aa7bd 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4579c7', endColorstr='#2aa7bd', GradientType=0);
+  background-color: #4579c7;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #196cab;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+}
+.aguaDeMariaSaveButton:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #2aa7bd), color-stop(1, #4579c7));
+  background: -moz-linear-gradient(top, #2aa7bd 5%, #4579c7 100%);
+  background: -webkit-linear-gradient(top, #2aa7bd 5%, #4579c7 100%);
+  background: -o-linear-gradient(top, #2aa7bd 5%, #4579c7 100%);
+  background: -ms-linear-gradient(top, #2aa7bd 5%, #4579c7 100%);
+  background: linear-gradient(to bottom, #2aa7bd 5%, #4579c7 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2aa7bd', endColorstr='#4579c7', GradientType=0);
+  background-color: #2aa7bd;
+}
+.aguaDeMariaSaveButton:active {
+  position: relative;
+  top: 1px;
+}
+.userDetails {
+  margin-bottom: 10px;
+}
+.userDetails legend {
+  font-weight: bold;
+}
+.userDetails label {
+  margin-top: 3px;
+  margin-right: 5px;
+  width: 120px;
+  text-align: right;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+}
+.userDetails input {
+  width: 300px;
+}
+.userDetailErrorMessage {
+  clear: both;
+  display: inline-block;
+  color: red;
+  font-size: 10px;
+  font-style: italic;
+}
+.userEditButtonControls {
+  clear: both;
+  display: inline-block;
+  float: left;
+  -ms-align-content: center;
+  -webkit-align-content: center;
+  align-content: center;
+}
 /*# sourceMappingURL=base.css.map */

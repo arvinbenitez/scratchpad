@@ -3,26 +3,30 @@
 
     var myAppModule = angular.module('myApp');
 
-    myAppModule.factory('UserService', ['$http', function ($resource) {
+    myAppModule.factory('UserService', ['$http', function($http) {
 
-        var getAllUsersImpl = function () {
-            return [{ "id": 1, "name": "Arvin" }, { "id": 2, "name": "Vince" }, { "id": 3, "name": "Lyn" }];
-        };
+            var getAllUsersImpl = function() {
+                return $http.get('/accounts/user/list');
+            };
 
-        var getNewUserImpl = function () {
-            return { "id": 0, "name": "New User" };
-        };
+            var getNewUserImpl = function() {
+                return { "id": 0, "name": "New User" };
+            };
 
-        var getUserImpl = function (userId) {
-            return { "id": userId, "name": "User " + userId};
-        };
+            var getUserImpl = function(userId) {
+                return $http.get('/accounts/user/get/1');
+            };
 
+            var updateUserImpl = function (currentUser) {
+                return $http.post('/accounts/user/post',currentUser);
+            };
 
-        return {
-            getAllUsers: getAllUsersImpl,
-            getNewUser: getNewUserImpl,
-            getUser: getUserImpl
-        };
+            return {
+                getAllUsers: getAllUsersImpl,
+                getNewUser: getNewUserImpl,
+                updateUser: updateUserImpl,
+                getUser: getUserImpl
+            };
         }
     ]);
 
