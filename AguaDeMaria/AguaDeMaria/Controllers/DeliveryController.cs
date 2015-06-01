@@ -18,6 +18,7 @@ namespace AguaDeMaria.Controllers
     {
         private readonly IDeliveryReceiptService deliveryReceiptService;
         private readonly IOrderService orderService;
+        private readonly IInventoryLedgerService inventoryLedgerService;
 
         private IRepository<Customer> CustromeRepository { get; set; }
 
@@ -32,10 +33,12 @@ namespace AguaDeMaria.Controllers
             SettingsManager settingsManager,
             IUnitOfWork unitOfWork,
             IDeliveryReceiptService deliveryReceiptService,
-            IOrderService orderService)
+            IOrderService orderService,
+            IInventoryLedgerService inventoryLedgerService)
         {
             this.deliveryReceiptService = deliveryReceiptService;
             this.orderService = orderService;
+            this.inventoryLedgerService = inventoryLedgerService;
             CustromeRepository = customerRepository;
             LookupDataManager = manager;
             SettingsManager = settingsManager;
@@ -142,11 +145,15 @@ namespace AguaDeMaria.Controllers
                     deliveryReceipt = Mapper.Map<DeliveryReceipt>(deliveryDto);
                     deliveryReceiptService.Insert(deliveryReceipt);
                 }
+
                 if (deliveryReceipt != null && deliveryReceipt.OrderId > 0)
                 {
                     UpdateOrderStatus(deliveryDto);
                 }
                 UnitOfWork.Commit();
+
+                inventoryLedgerService.PostToLedger(deliveryReceipt);
+
                 if (deliveryReceipt != null) deliveryDto.DeliveryReceiptId = deliveryReceipt.DeliveryReceiptId;
 
                 //let's get the customer name from the lookup

@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDeliveryReceiptLedgerService.cs" />
+    <Compile Include="IInventoryLedgerService.cs" />
     <Compile Include="Implementation\DeliveryReceiptLedgerService.cs" />
     <Compile Include="Implementation\DeliveryReceiptService.cs" />
     <Compile Include="IDeliveryReceiptService.cs" />
+    <Compile Include="Implementation\InventoryLedgerService.cs" />
     <Compile Include="Implementation\PaymentService.cs" />
     <Compile Include="Implementation\ReportService.cs" />
     <Compile Include="IOrderService.cs" />

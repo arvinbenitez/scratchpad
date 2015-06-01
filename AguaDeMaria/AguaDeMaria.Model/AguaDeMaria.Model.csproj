@@ -57,9 +57,11 @@
     <Compile Include="DeliveryReceiptLedger.cs" />
     <Compile Include="DeliveryReceiptPayment.cs" />
     <Compile Include="Dto\DeliveryDto.cs" />
+    <Compile Include="Dto\InventoryLedgerDto.cs" />
     <Compile Include="Dto\OrderDto.cs" />
     <Compile Include="Dto\PaymentDto.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="InventoryLedger.cs" />
     <Compile Include="InventorySummary.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />

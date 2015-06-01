@@ -73,7 +73,7 @@ namespace AguaDeMaria.Controllers
             }
             ViewBag.CustomerList = CustomerListItems();
             ViewBag.OrderStatusList = OrderStatusListItems();
-            OrderDto orderDto = Mapper.Map<OrderDto>(order);
+            var orderDto = Mapper.Map<OrderDto>(order);
 
             return PartialView(orderDto);
         }

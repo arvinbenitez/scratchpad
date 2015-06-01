@@ -44,6 +44,7 @@ namespace AguaDeMaria.Model
         public virtual DbSet<DailySummary> DailySummaries { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<InventoryLedger> InventoryReceiptLedgers { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -160,6 +161,10 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<Inventory>()
                 .Property(e => e.TransactionType)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<InventoryLedger>()
+                .Property(e => e.Notes)
+                .IsUnicode(true);
         }
     }
 }

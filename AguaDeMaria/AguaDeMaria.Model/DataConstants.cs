@@ -16,5 +16,18 @@
             public const int Cancelled = 3;
             public const int PartiallyDelivered = 4;
         }
+
+        public static class Inventory
+        {
+            public const int BeginningBalanceId = 100;
+        }
+
+        public enum InventoryLedgerType
+        {
+            Undefined = 0,
+            Delivery = 1,
+            PickupSlip = 2,
+            Adjustment = 3
+        }
     }
 }

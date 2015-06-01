@@ -36,7 +36,10 @@
                     var ids = grid.jqGrid('getDataIDs');
                     for (var i = 0; i < ids.length; i++) {
                         var rowId = ids[i];
-                        var editAction = "<a class='fa fa-calculator' href='#' title='Show Inventory Details'  onclick='inventoryGrid.inventoryDetail(" + rowId + ")'></a>";
+                        var inventoryDetailAction = "<a class='fa fa-calculator' href='#' title='Show Inventory Details'  onclick='inventoryGrid.inventoryDetail(" + rowId + ")'></a>";
+                        var beginningBalanceAction = "<a class='fa fa-credit-card' href='#' title='Enter Beginning Balance'  onclick='inventoryGrid.beginningBalance(" + rowId + ")'></a>";
+                        var adjustmentAction = "<a class='fa fa-exchange' href='#' title='Input Adjustment'  onclick='inventoryGrid.inventoryAdjustment(" + rowId + ")'></a>";
+                        var editAction = inventoryDetailAction + beginningBalanceAction + adjustmentAction;
                         grid.jqGrid('setRowData', rowId, { editAction: editAction });
                     }
                 },
@@ -59,13 +62,57 @@
                 $("#newPopupDialog").html(data);
                 showDialog("Inventory Details");
             });
+        }
 
+        function inventoryAdjustmentImpl(customerId)
+        {
+            var url = "/Inventory/InventoryAdjustment";
+            $.ajax({
+                url: url,
+                data: { CustomerId: customerId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showDialog("Inventory Adjustment");
+            });
+        }
+
+        function beginningBalanceImpl(customerId) {
+            var url = "/Inventory/BeginningBalanceEditor";
+            $.ajax({
+                url: url,
+                data: { CustomerId: customerId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showInventoryDialog("Beginning Balance");
+            });
         }
 
         function showDialog(title) {
             $("#newPopupDialog").dialog({
                 modal: true,
                 title: title,
+            }).dialog("open");
+        }
+
+        function showInventoryDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Inventory/SaveAdjustment",
+                            data: $("#inventoryEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            $("#inventoryList").jqGrid('setRowData', data.CustomerId, data);
+                            $(this).dialog("close");
+                        });
+                    }
+                }]
             }).dialog("open");
         }
 
@@ -82,7 +129,9 @@
 
         return ({
             showInventoriesGrid: showInventoriesGridImpl,
-            inventoryDetail: inventoryDetailImpl
+            inventoryDetail: inventoryDetailImpl,
+            inventoryAdjustment: inventoryAdjustmentImpl,
+            beginningBalance: beginningBalanceImpl
         });
     }();
 

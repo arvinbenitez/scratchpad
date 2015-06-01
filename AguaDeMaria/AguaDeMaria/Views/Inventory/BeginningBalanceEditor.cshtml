@@ -1,0 +1,58 @@
+﻿@using AguaDeMaria.Filters
+@model AguaDeMaria.Model.Dto.InventoryLedgerDto
+
+@using (Html.BeginForm("SaveAdjustment", "Inventory", FormMethod.Post, new { id = "inventoryEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.CustomerId)
+                @Html.Hidden(ConvertDatesToUtcAttribute.DateOffset, "0")
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.PostDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.PostDate)
+                @Html.ValidationMessageFor(x => x.PostDate)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.SlimQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.SlimQty)
+                @Html.ValidationMessageFor(x => x.SlimQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.RoundQty)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.RoundQty)
+                @Html.ValidationMessageFor(x => x.RoundQty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Notes)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.Notes)
+                @Html.ValidationMessageFor(x => x.Notes)
+            </td>
+        </tr>
+    </table>
+    <script>
+        $(document).ready(function() {
+            var localized = DateFunctions.UtctoLocalDate($("#PostDate").val());
+            $("#PostDate").val(localized.toLocaleDateString() + " " + localized.toLocaleTimeString());
+            $("#@ConvertDatesToUtcAttribute.DateOffset").val((new Date()).getTimezoneOffset());
+        });
+    </script>
+}

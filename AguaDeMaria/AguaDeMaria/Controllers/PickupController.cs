@@ -16,15 +16,18 @@ namespace AguaDeMaria.Controllers
     public class PickupController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly IInventoryLedgerService inventoryLedgerService;
 
         public PickupController(IRepository<PickupSlip> pickupSlipRepository,
             IRepository<Customer> customerRepository,
             IRepository<DeliveryReceipt> deliveryRepository,
             LookupDataManager manager,
             SettingsManager settingsManager,
-            IOrderService orderService)
+            IOrderService orderService,
+            IInventoryLedgerService inventoryLedgerService)
         {
             this.orderService = orderService;
+            this.inventoryLedgerService = inventoryLedgerService;
             PickupSlipRepository = pickupSlipRepository;
             DeliveryRepository = deliveryRepository;
             CustomerRepository = customerRepository;
@@ -115,9 +118,10 @@ namespace AguaDeMaria.Controllers
                     pickupSlip = Mapper.Map<PickupSlip>(pickupSlipDto);
                     PickupSlipRepository.Insert(pickupSlip);
                 }
-
                 PickupSlipRepository.Commit();
                 pickupSlipDto.PickupSlipId = pickupSlip.PickupSlipId;
+
+                inventoryLedgerService.PostToLedger(pickupSlip);
 
                 //let's get the customer name from the lookup
                 pickupSlipDto.CustomerName =

@@ -528,6 +528,7 @@
     <Content Include="Views\Payment\PaymentEditor.cshtml" />
     <Content Include="Views\Report\Receivables.cshtml" />
     <Content Include="Views\Report\DailySummary.cshtml" />
+    <Content Include="Views\Inventory\BeginningBalanceEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
