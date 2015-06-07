@@ -60,6 +60,9 @@
     <Compile Include="Dto\InventoryLedgerDto.cs" />
     <Compile Include="Dto\OrderDto.cs" />
     <Compile Include="Dto\PaymentDto.cs" />
+    <Compile Include="Expense.cs" />
+    <Compile Include="ExpenseCategory.cs" />
+    <Compile Include="ExpenseType.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryLedger.cs" />
     <Compile Include="InventorySummary.cs" />

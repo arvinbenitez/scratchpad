@@ -1,0 +1,99 @@
+﻿@using AguaDeMaria.Filters
+@model AguaDeMaria.Models.Expense.ExpenseDto
+
+@using (Html.BeginForm("Save", "Expense", FormMethod.Post, new { id = "expenseEntryForm" }))
+{
+    <table>
+        <tr style="display:none">
+            <td></td>
+            <td>
+                @Html.HiddenFor(x => x.ExpenseId)
+                @Html.Hidden(ConvertDatesToUtcAttribute.DateOffset, "0")
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.ExpenseCategoryTypeId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.ExpenseCategoryTypeId, ViewBag.ExpenseCategoryList as IEnumerable<SelectListItem>, new { @id = "expenseCategory" })
+                @Html.ValidationMessageFor(x => x.ExpenseCategoryTypeId)
+            </td>
+        </tr>
+        <tr>
+            <td class="editLabel">
+                @Html.LabelFor(x => x.ExpenseTypeId)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.ExpenseTypeId, ViewBag.ExpenseTypeList as IEnumerable<SelectListItem>, new { @id = "expenseType" })
+                @Html.ValidationMessageFor(x => x.ExpenseTypeId)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.ExpenseDate)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.ExpenseDate)
+                @Html.ValidationMessageFor(x => x.ExpenseDate)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Amount)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.Amount)
+                @Html.ValidationMessageFor(x => x.Amount)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Remarks)
+            </td>
+            <td>
+                @Html.TextBoxFor(x => x.Remarks)
+                @Html.ValidationMessageFor(x => x.Remarks)
+            </td>
+        </tr>
+        @if (!Model.IsValid)
+        {
+            <tr>
+                <td colspan="2">
+                    @foreach (string errorMessage in Model.ValidationErrors)
+                    {
+                        @Html.Label("* " + errorMessage, new { @class = "validationError" })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
+<script>
+        $(document).ready(function() {
+            var localized = DateFunctions.UtctoLocalDate($("#ExpenseDate").val());
+            $("#ExpenseDate").val(localized.toLocaleDateString() + " " + localized.toLocaleTimeString());
+            $("#@ConvertDatesToUtcAttribute.DateOffset").val((new Date()).getTimezoneOffset());
+
+            $("#expenseCategory").change(function() {
+                var selectedCategory = $(this).val();
+                if (selectedCategory != null && selectedCategory != '') {
+                    var url = "/Expense/GetExpenseTypes/";
+                    $.ajax({
+                        url: url,
+                        data: {expenseCategoryId:selectedCategory}
+                    }).success(function (expenseTypes) {
+                        var expenseTypeSelect = $("#expenseType");
+                        expenseTypeSelect.empty();
+                        $.each(expenseTypes, function (index, expenseType) {
+                            console.log("Appending " + expenseType.Value + " " + expenseType.Text);
+                            expenseTypeSelect.append($('<option>', {
+                                value: expenseType.Value,
+                                text: expenseType.Text
+                            }));
+                        });
+                    });
+                }
+            });
+        });
+</script>

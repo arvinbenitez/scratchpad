@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Expenses";
+}
+
+@Html.Partial("_DateFilter")
+<table id="expenseList"></table>
+<div id="expenseListPager"></div>
+<div id="newPopupDialog" style="display: none">This is where the new Pickup Slip Dialog goes</div>
+<script>
+    var expensesGrid = function (dateFilter) {
+        function showexpensesGrid(startDate, endDate) {
+            var url = "/Expense/GetExpenseList?startDate=" + startDate + "&endDate=" + endDate;
+            jQuery("#expenseList").jqGrid({
+                url: url,
+                datatype: "json",
+                colNames: ['Expense Id', 'Expense Date', 'Category', 'Type', 'Amount', 'Remarks', 'Actions'],
+                colModel: [
+                        { name: 'ExpenseId', key: true, index: 'ExpenseId', width: 75, hidden: true, sorttype: 'int' },
+                        { name: 'ExpenseDate', index: 'PickupDate', width: 50, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y H:i' } },
+                        { name: 'ExpenseCategory', index: 'ExpenseCategory', width: 50 },
+                        { name: 'ExpenseType', index: 'ExpenseType', width: 50 },
+                        { name: 'Amount', index: 'Amount', width: 30, formatter: 'currency', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " }, align: "right", sorttype: 'number' },
+                        { name: 'Remarks', index: 'Remarks', width: 50 },
+                        { name: 'editAction', index: 'editAction', width: 40, sortable: false }],
+                sortname: 'ExpenseId',
+                viewrecords: true,
+                ignoreCase: true,
+                pager: '#expenseListPager',
+                sortorder: "asc",
+                caption: "Expense List",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                footerrow: true,
+                gridComplete: function () {
+                    //setup the custom
+                    var grid = $("#expenseList");
+                    var ids = grid.jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var rowId = ids[i];
+                        var editAction = "<a class='fa fa-edit' href='#' title='Edit'  onclick='expensesGrid.expenseEdit(" + rowId + ")'></a>";
+                        grid.jqGrid('setRowData', rowId, { editAction: editAction });
+                    }
+
+                    //set the footer
+                    grid.jqGrid('footerData', 'set', {
+                        'ExpenseDate': 'Grand Total',
+                        'Amount': grid.jqGrid('getCol', 'Amount', false, 'sum')
+                    });
+                },
+                loadComplete: function () {
+                }
+            });
+            //show the Navigator
+            jQuery("#expenseList")
+                .jqGrid('navGrid', '#expenseListPager', { edit: false, add: false, del: false })
+                .navButtonAdd('#expenseListPager', {
+                    caption: "",
+                    buttonicon: "ui-icon-plus",
+                    onClickButton: function () {
+                        newExpense();
+                    },
+                    position: "last",
+                    title: "New Expense",
+                    cursor: "pointer"
+                });
+        }
+
+        function expenseEdit(expenseId) {
+            var url = "/Expense/ExpenseEditor";
+            $.ajax({
+                url: url,
+                data: { ExpenseId: expenseId },
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showExpenseDialog("Edit Expense");
+            });
+        }
+
+        function newExpense() {
+            var url = "/Expense/ExpenseEditor";
+            $.ajax({
+                url: url,
+                data: {},
+            }).success(function (data) {
+                $("#newPopupDialog").html(data);
+                showExpenseDialog("New Expense Entry");
+            });
+        }
+
+        function showExpenseDialog(title) {
+            $("#newPopupDialog").dialog({
+                modal: true,
+                title: title,
+                buttons: [{
+                    text: "Save",
+                    click: function () {
+                        //submit the form
+                        $.ajax({
+                            type: "POST",
+                            url: "/Expense/Save",
+                            data: $("#expenseEntryForm").serialize(),
+                            context: $(this)
+                        }).success(function (data) {
+                            if (typeof (data.ExpenseId) == 'undefined') {
+                                //replace the contents of the dialog
+                                $("#newPopupDialog").html(data);
+                            } else {
+                                var row = $("#expenseList").jqGrid('getRowData', data.ExpenseId);
+                                if (typeof (row.ExpenseId) == 'undefined') {
+                                    $("#expenseList").jqGrid('addRowData', data.ExpenseId, data, "first");
+                                } else {
+                                    $("#expenseList").jqGrid('setRowData', data.ExpenseId, data);
+                                    $("#expenseList").jqGrid().trigger("reloadGrid");
+                                }
+                                //this must have been successful
+                                $(this).dialog("close");
+                            }
+                        });
+                    }
+                }]
+            }).dialog("open");
+        }
+
+        function reloadPickupGrid() {
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+            var url = "/Expense/GetExpenseList?startDate=" + startDate + "&endDate=" + endDate;
+
+            jQuery("#expenseList").jqGrid().setGridParam({
+                datatype: 'json',
+                page: 1,
+                url: url
+            }).trigger("reloadGrid");
+        }
+
+        $(document).ready(function () {
+
+            $("#newPopupDialog").dialog({
+                width: 500,
+                height: 450,
+                autoOpen: false
+            });
+
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+
+            //show the grid
+            dateFilter.setClickDelegate(reloadPickupGrid);
+            expensesGrid.showexpensesGrid(startDate, endDate);
+
+        });
+
+        return ({
+            showexpensesGrid: showexpensesGrid,
+            expenseEdit: expenseEdit
+        });
+    }(DateFilter);
+
+
+</script>

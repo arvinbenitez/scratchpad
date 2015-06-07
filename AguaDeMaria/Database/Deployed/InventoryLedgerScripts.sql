@@ -33,7 +33,7 @@ BEGIN
 		CONSTRAINT FK_InventoryLedger_Customer FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId)
 	)
 END
-
+GO
 
 ALTER VIEW [dbo].[Inventory]
 AS

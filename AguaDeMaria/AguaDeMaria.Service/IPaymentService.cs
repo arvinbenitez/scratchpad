@@ -12,5 +12,6 @@ namespace AguaDeMaria.Service
         IEnumerable<SalesInvoice> GetInvoices(DateTime startDate, DateTime endDate);
         SalesInvoice GetByDeliveryReceipt(int deliveryReceiptId);
         IEnumerable<Receivable> DeliveryReceiptList(int salesInvoiceId);
+
     }
 }

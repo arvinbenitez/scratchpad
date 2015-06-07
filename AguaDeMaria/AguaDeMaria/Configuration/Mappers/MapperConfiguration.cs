@@ -12,6 +12,7 @@ namespace AguaDeMaria.Configuration.Mappers
             DeliveryReceiptMapperConfiguration.ConfigureDeliveryReceipt();
             PickupSlipMapperConfiguration.ConfigurePickupSlip();
             SalesInvoiceMapperConfiguration.ConfigureSalesInvoice();
+            ExpenseMapperConfiguration.ConfigureExpense();
         }
 
         #region Common Functions

@@ -24,9 +24,7 @@ namespace AguaDeMaria.Model
         public virtual DbSet<SalesInvoiceDetail> SalesInvoiceDetails { get; set; }
 
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
-        //public virtual DbSet<UserAuth> UserAuths { get; set; }
-        //public virtual DbSet<UserOAuthProvider> UserOAuthProviders { get; set; }
-
+ 
         public virtual DbSet<Setting> Settings { get; set; }
 
         public virtual DbSet<PickupSlip> PickupSlips { get; set; }
@@ -45,6 +43,12 @@ namespace AguaDeMaria.Model
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<InventoryLedger> InventoryReceiptLedgers { get; set; }
+
+        public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
+        public virtual DbSet<ExpenseType> ExpenseTypes { get; set; }
+
+        public virtual DbSet<Expense> Expenses { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -165,6 +169,14 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<InventoryLedger>()
                 .Property(e => e.Notes)
                 .IsUnicode(true);
+
+            modelBuilder.Entity<ExpenseCategory>()
+                .HasMany(e => e.ExpenseTypes)
+                .WithRequired(e => e.ExpenseCategory);
+
+            modelBuilder.Entity<ExpenseType>()
+                .HasMany(e => e.Expenses)
+                .WithRequired(e => e.ExpenseType);
         }
     }
 }
