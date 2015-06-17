@@ -9,10 +9,12 @@ namespace AguaDeMaria.Service.Implementation
     public class ExpenseService : IExpenseService
     {
         private readonly IRepository<Expense> expenseRepository;
+        private readonly IRepository<ExpenseSummary> expenseSummaryRepository;
 
-        public ExpenseService(IRepository<Expense> expenseRepository)
+        public ExpenseService(IRepository<Expense> expenseRepository, IRepository<ExpenseSummary> expenseSummaryRepository )
         {
             this.expenseRepository = expenseRepository;
+            this.expenseSummaryRepository = expenseSummaryRepository;
         }
 
         public IEnumerable<Expense> GetExpenses(DateTime startDate, DateTime endDate)
@@ -38,6 +40,14 @@ namespace AguaDeMaria.Service.Implementation
             return
                 expenseRepository.Get(x => x.ExpenseId == expenseId, x => x.OrderBy(y => y.ExpenseDate),
                     "ExpenseType,ExpenseType.ExpenseCategory").FirstOrDefault();
+        }
+
+        public IEnumerable<ExpenseSummary> GetExpenseSummaries(DateTime startDate, DateTime endDate)
+        {
+            var expenseSummary =
+             expenseSummaryRepository.Get(x => x.ExpenseDate >= startDate && x.ExpenseDate <= endDate,
+                x => x.OrderBy(y => y.ExpenseDate));
+            return expenseSummary;
         }
     }
 }

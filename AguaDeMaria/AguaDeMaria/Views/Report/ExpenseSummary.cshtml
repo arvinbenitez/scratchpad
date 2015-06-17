@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Expense Summary";
+}
+
+@Html.Partial("_DateFilter")
+<table id="expenseSummary"></table>
+<div id="expenseSummaryPager"></div>
+<script>
+    var expenseGrid = function (dateFilter) {
+
+        function showExpenseGrid() {
+            var startDate = dateFilter.getStartDate();
+            var endDate = dateFilter.getEndDate();
+            var url = "/Expense/GetExpenseSummary?startDate=" + startDate + "&endDate=" + endDate;
+
+            jQuery("#expenseSummary").jqGrid('jqPivot',
+                url,
+                // pivot options
+                {
+                    xDimension: [{ dataName: 'ExpenseDate', label:'Date', width:100, formatter: 'date', formatoptions: { srcformat: 'm/d/Y H:i', newformat: 'm/d/Y' } }],
+                    yDimension: [{ dataName: 'ExpenseType', converter: function (val) { return val.replace(/\s/g, '&#x2002;'); } }],
+                    aggregates: [
+                        {
+                            member: 'Amount',
+                            aggregator: 'sum',
+                            width: 80,
+                            formatter: 'currency', 
+                            formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "₱ " },
+                            label: 'Total Expense',
+                            align: "right",
+                            summaryType: "sum"
+                        }
+                    ],
+                    rowTotals: true,
+                    colTotals: true,
+                    frozenStaticCols: true
+                },
+                // grid options
+                {
+                    width: 1000,
+                    height: 500,
+                    rowNum: 150,
+                    shrinkToFit: false,
+                    forceFit: true,
+                    pager: "#expenseSummaryPager",
+                    caption: "Amounts of each Expense Category"
+                });
+        }
+
+        $(document).ready(function () {
+            //show the grid
+            dateFilter.setMonthRageFromDate(new Date());
+            //dateFilter.setClickDelegate(reloadExpenseGrid);
+            dateFilter.disableRefresh();
+            expenseGrid.showExpenseGrid();
+        });
+
+        //function reloadExpenseGrid() {
+        //    var startDate = dateFilter.getStartDate();
+        //    var endDate = dateFilter.getEndDate();
+        //    var url = "/Expense/GetExpenseSummary?startDate=" + startDate + "&endDate=" + endDate;
+
+        //    jQuery("#expenseSummary").jqGrid().setGridParam({
+        //        datatype: 'json',
+        //        page: 1,
+        //        url: url
+        //    }).trigger("reloadGrid");
+        //}
+
+        return ({
+            showExpenseGrid: showExpenseGrid
+        });
+    }(DateFilter);
+
+
+</script>

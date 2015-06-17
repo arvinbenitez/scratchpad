@@ -13,7 +13,7 @@ BEGIN
 	(1,'Monthly Dues'),
 	(2,'Phone Load'),
 	(3,'Delivery Vehicle'),
-	(4,'Container Seal/Sticker'),
+	(4,'Container/Seal/Sticker'),
 	(5,'Deep Well/Machine Maintenance'),
 	(6,'Cleaning Agents'),
 	(7,'Food'),
@@ -90,3 +90,15 @@ BEGIN
 		CONSTRAINT FK_Expense_ExpenseType FOREIGN KEY (ExpenseTypeId) REFERENCES ExpenseType(ExpenseTypeId)
 	)
 END
+GO
+
+CREATE VIEW ExpenseSummary
+AS
+SELECT 
+	MAX(E.ExpenseId) as ExpenseId,
+	CONVERT(DATETIME, CONVERT(NVARCHAR(10),E.ExpenseDate,110)) as ExpenseDate,
+	EC.Name as ExpenseCategory, ET.Name as ExpenseType, SUM(E.Amount) as Amount
+FROM ExpenseCategory EC
+	INNER JOIn ExpenseType ET on EC.ExpenseCategoryId = ET.ExpenseCategoryId
+	INNER JOIN Expense E on ET.ExpenseTypeId = E.ExpenseTypeId
+GROUP BY CONVERT(NVARCHAR(10),E.ExpenseDate,110), EC.Name, ET.Name

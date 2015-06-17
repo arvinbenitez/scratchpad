@@ -49,6 +49,7 @@ namespace AguaDeMaria.Model
         public virtual DbSet<ExpenseType> ExpenseTypes { get; set; }
 
         public virtual DbSet<Expense> Expenses { get; set; }
+        public virtual DbSet<ExpenseSummary> ExpenseSummaries { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -177,6 +178,8 @@ namespace AguaDeMaria.Model
             modelBuilder.Entity<ExpenseType>()
                 .HasMany(e => e.Expenses)
                 .WithRequired(e => e.ExpenseType);
+
+            modelBuilder.Entity<ExpenseSummary>();
         }
     }
 }

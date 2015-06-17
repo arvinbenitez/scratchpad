@@ -36,10 +36,25 @@
             $("#dateFilterRefreshButton").click(clickDelegate);
         }
 
+       function setMonthRangeFromDateImpl(currentDate) {
+           var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+           var yearOfNextMonth = currentDate.getMonth() == 11 ? currentDate.getFullYear() + 1 : currentDate.getFullYear();
+           var nextMonth = currentDate.getMonth() == 11 ? 1 : currentDate.getMonth() + 1;
+           var endDate = new Date(yearOfNextMonth, nextMonth, 1);
+           $("#startDate").datepicker('setDate', startDate);
+           $("#endDate").datepicker('setDate', endDate);
+       }
+
+        function disableRefreshImpl() {
+            $("#dateFilterRefreshButton").attr('disabled', 'disabled');
+        }
+
         return ({
             getStartDate: getStartDateImpl,
             getEndDate: getEndDateImpl,
-            setClickDelegate: setClickDelegateImpl
+            setClickDelegate: setClickDelegateImpl,
+            setMonthRageFromDate: setMonthRangeFromDateImpl,
+            disableRefresh: disableRefreshImpl
         });
     }();
 </script>

@@ -44,6 +44,15 @@ namespace AguaDeMaria.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetExpenseSummary(DateTime? startDate, DateTime? endDate)
+        {
+            DateTime expenseStartDate = startDate.HasValue ? startDate.Value : DateTime.Today;
+            DateTime expenseEndDate = endDate.HasValue ? endDate.Value : expenseStartDate.AddDays(1);
+
+            var result = expenseService.GetExpenseSummaries(expenseStartDate, expenseEndDate);
+            return Json(new {rows = result}, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult ExpenseEditor(int? expenseId)
         {
             var expenseDto = new ExpenseDto {ExpenseDate = DateTime.UtcNow, ExpenseCategoryTypeId = 1};

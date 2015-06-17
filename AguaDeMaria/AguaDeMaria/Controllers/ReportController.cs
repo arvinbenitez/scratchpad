@@ -49,5 +49,10 @@ namespace AguaDeMaria.Controllers
         {
             return View();
         }
+
+        public ActionResult ExpenseSummary()
+        {
+            return View();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace AguaDeMaria.Service
         void Update(Expense expense);
 
         Expense Get(int expenseId);
+        IEnumerable<ExpenseSummary> GetExpenseSummaries(DateTime startDate, DateTime endDate); 
     }
 }

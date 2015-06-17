@@ -85,6 +85,7 @@ namespace AguaDeMaria.Configuration.Ioc
             container.RegisterAutoWiredAs<GenericRepository<Setting>, IRepository<Setting>>();
             container.RegisterAutoWiredAs<GenericRepository<ExpenseCategory>, IRepository<ExpenseCategory>>();
             container.RegisterAutoWiredAs<GenericRepository<ExpenseType>, IRepository<ExpenseType>>();
+            container.RegisterAutoWiredAs<GenericRepository<ExpenseSummary>, IRepository<ExpenseSummary>>();
 
             container.RegisterAutoWired<LookupDataManager>();
             container.RegisterAutoWired<SettingsManager>();

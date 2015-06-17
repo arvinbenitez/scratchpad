@@ -62,6 +62,7 @@
     <Compile Include="Dto\PaymentDto.cs" />
     <Compile Include="Expense.cs" />
     <Compile Include="ExpenseCategory.cs" />
+    <Compile Include="ExpenseSummary.cs" />
     <Compile Include="ExpenseType.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryLedger.cs" />
