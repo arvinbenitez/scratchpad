@@ -3,12 +3,15 @@
 }
 
 @Html.Partial("_DateFilter")
-<table id="expenseSummary"></table>
+<table id="expenseSummary"><tr><td><h3>Select Date Range and Click Refresh</h3></td></tr></table>
 <div id="expenseSummaryPager"></div>
 <script>
     var expenseGrid = function (dateFilter) {
 
         function showExpenseGrid() {
+
+            dateFilter.disableRefresh();
+
             var startDate = dateFilter.getStartDate();
             var endDate = dateFilter.getEndDate();
             var url = "/Expense/GetExpenseSummary?startDate=" + startDate + "&endDate=" + endDate;
@@ -50,22 +53,8 @@
         $(document).ready(function () {
             //show the grid
             dateFilter.setMonthRageFromDate(new Date());
-            //dateFilter.setClickDelegate(reloadExpenseGrid);
-            dateFilter.disableRefresh();
-            expenseGrid.showExpenseGrid();
+            dateFilter.setClickDelegate(showExpenseGrid);
         });
-
-        //function reloadExpenseGrid() {
-        //    var startDate = dateFilter.getStartDate();
-        //    var endDate = dateFilter.getEndDate();
-        //    var url = "/Expense/GetExpenseSummary?startDate=" + startDate + "&endDate=" + endDate;
-
-        //    jQuery("#expenseSummary").jqGrid().setGridParam({
-        //        datatype: 'json',
-        //        page: 1,
-        //        url: url
-        //    }).trigger("reloadGrid");
-        //}
 
         return ({
             showExpenseGrid: showExpenseGrid
