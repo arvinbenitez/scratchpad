@@ -28,7 +28,7 @@ namespace AguaDeMaria.Controllers
             var inventorySummary = InventoryRepository.Get(x => x.CustomerId == deliveryReceipt.CustomerId).FirstOrDefault();
             var deliveryDto = Mapper.Map<DeliveryDto>(deliveryReceipt);
             byte[] buffer;
-            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryDto, inventorySummary, Server.MapPath(@"~\Images\DeliveryReceipt.png")))
+            using (DeliveryReceiptPdf report = new DeliveryReceiptPdf(deliveryDto, inventorySummary, Server.MapPath(@"~\Images\DeliveryReceipt1.png")))
             {
                 buffer = report.GenerateContent();
             }

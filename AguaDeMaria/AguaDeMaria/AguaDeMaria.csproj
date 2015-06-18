@@ -398,6 +398,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\DeliveryReceipt.png" />
+    <Content Include="Images\DeliveryReceipt1.png" />
     <Content Include="Images\SmallWater.png" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />

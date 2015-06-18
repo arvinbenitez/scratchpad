@@ -23,58 +23,74 @@ namespace AguaDeMaria.Report
         {
             SetFont(11);
             //DR Number
-            PrintText(deliveryReceipt.DRNumber, 300, 445);
-            PrintText(deliveryReceipt.DRNumber, 670, 445);
+            PrintText(deliveryReceipt.DRNumber, 300, 465);
+            PrintText(deliveryReceipt.DRNumber, 670, 465);
 
             //DR Date
-            PrintText("Customer's Copy", 40, 445);
-            PrintText("Merchant's Copy", 410, 445);
+            PrintText("Customer's Copy", 40, 465);
+            PrintText("Merchant's Copy", 410, 465);
 
             //DR Date
-            PrintText(deliveryReceipt.DRDate.ToString("MMM-dd-yyy"), 290, 425);
-            PrintText(deliveryReceipt.DRDate.ToString("MMM-dd-yyy"), 660, 425);
+            PrintText(deliveryReceipt.DRDate.ToString("MMM-dd-yyy"), 290, 445);
+            PrintText(deliveryReceipt.DRDate.ToString("MMM-dd-yyy"), 660, 445);
 
             //Customer Name
-            PrintText(deliveryReceipt.CustomerName, 70, 400);
-            PrintText(deliveryReceipt.CustomerName, 440, 400);
+            PrintText(deliveryReceipt.CustomerName, 70, 425);
+            PrintText(deliveryReceipt.CustomerName, 440, 425);
 
             //Customer Name
-            PrintText(deliveryReceipt.CustomerAddress, 70, 378);
-            PrintText(deliveryReceipt.CustomerAddress, 440, 378);
+            PrintText(deliveryReceipt.CustomerAddress, 70, 400);
+            PrintText(deliveryReceipt.CustomerAddress, 440, 400);
 
             if (deliveryReceipt.SlimQty > 0)
             {
                 //Slim Qty
-                PrintText(deliveryReceipt.SlimQty.ToString(), 40, 315);
-                PrintText(deliveryReceipt.SlimQty.ToString(), 410, 315);
+                PrintText(deliveryReceipt.SlimQty.ToString(), 40, 350);
+                PrintText(deliveryReceipt.SlimQty.ToString(), 410, 350);
 
                 //Slim Amount
-                PrintText(deliveryReceipt.SlimAmount.ToString("#,##0.00"), 320, 315);
-                PrintText(deliveryReceipt.SlimAmount.ToString("#,##0.00"), 685, 315);
+                PrintText(deliveryReceipt.SlimAmount.ToString("#,##0.00"), 320, 350);
+                PrintText(deliveryReceipt.SlimAmount.ToString("#,##0.00"), 685, 350);
             }
 
             if (deliveryReceipt.RoundQty > 0)
             {
                 //Round Qty
-                PrintText(deliveryReceipt.RoundQty.ToString(), 40, 295);
-                PrintText(deliveryReceipt.RoundQty.ToString(), 410, 295);
+                PrintText(deliveryReceipt.RoundQty.ToString(), 40, 332);
+                PrintText(deliveryReceipt.RoundQty.ToString(), 410, 332);
 
                 //Slim Amount
-                PrintText(deliveryReceipt.RoundAmount.ToString("#,##0.00"), 320, 295);
-                PrintText(deliveryReceipt.RoundAmount.ToString("#,##0.00"), 685, 295);
+                PrintText(deliveryReceipt.RoundAmount.ToString("#,##0.00"), 320, 332);
+                PrintText(deliveryReceipt.RoundAmount.ToString("#,##0.00"), 685, 332);
             }
 
 
             //Total Amount
-            PrintText((deliveryReceipt.RoundAmount + deliveryReceipt.SlimAmount).ToString("#,##0.00"), 320, 225);
-            PrintText((deliveryReceipt.RoundAmount + deliveryReceipt.SlimAmount).ToString("#,##0.00"), 685, 225);
+            PrintText((deliveryReceipt.RoundAmount + deliveryReceipt.SlimAmount).ToString("#,##0.00"), 320, 265);
+            PrintText((deliveryReceipt.RoundAmount + deliveryReceipt.SlimAmount).ToString("#,##0.00"), 685, 265);
 
+            var previousSlimBalance = inventorySummary.Slim - deliveryReceipt.SlimQty;
+            var previousRoundBalance = inventorySummary.Round - deliveryReceipt.RoundQty;
             //Print Inventory Balance
-            PrintText(inventorySummary.Slim.ToString(), 160, 100);
-            PrintText(inventorySummary.Round.ToString(), 280, 100);
+            PrintText(previousSlimBalance.ToString(), 160, 218);
+            PrintText(previousRoundBalance.ToString(), 280, 218);
 
-            PrintText(inventorySummary.Slim.ToString(), 540, 100);
-            PrintText(inventorySummary.Round.ToString(), 650, 100);
+            PrintText(previousSlimBalance.ToString(), 540, 218);
+            PrintText(previousRoundBalance.ToString(), 650, 218);
+            
+            //current delivery
+            PrintText(deliveryReceipt.SlimQty.ToString(), 160, 202);
+            PrintText(deliveryReceipt.RoundQty.ToString(), 280, 202);
+
+            PrintText(deliveryReceipt.SlimQty.ToString(), 540, 202);
+            PrintText(deliveryReceipt.RoundQty.ToString(), 650, 202);
+
+            //new balance
+            PrintText(inventorySummary.Slim.ToString(), 160, 184);
+            PrintText(inventorySummary.Round.ToString(), 280, 184);
+
+            PrintText(inventorySummary.Slim.ToString(), 540, 184);
+            PrintText(inventorySummary.Round.ToString(), 650, 184);
 
             //Print Date
             SetFont(7);
