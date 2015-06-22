@@ -42,7 +42,8 @@
     <Content Include="Deployed\20150316.00.sql" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Deployed\20150509.00.sql" />
-    <Content Include="ToBeDeployed\ExpenseScripts.sql" />
+    <Content Include="ToBeDeployed\2015.06.21.InventorySummary.sql" />
+    <Content Include="Deployed\ExpenseScripts.sql" />
     <Content Include="Deployed\InventoryLedgerScripts.sql" />
   </ItemGroup>
   <ItemGroup />

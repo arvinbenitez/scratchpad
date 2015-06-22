@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using AguaDeMaria.Common.Data;
 using AguaDeMaria.Filters;
@@ -21,9 +22,6 @@ namespace AguaDeMaria.Controllers
             InventoryRepository = inventoryRepository;
             InventorySummaryRepository = inventorySummaryRepository;
         }
-
-        //
-        // GET: /Inventory/
 
         public ActionResult Index()
         {
@@ -62,7 +60,8 @@ namespace AguaDeMaria.Controllers
 
         public JsonResult GetInventoryDetail(int? customerId)
         {
-            var result = InventoryRepository.Get(x => x.CustomerId == customerId, x => x.OrderBy(y => y.RefDate));
+            var result = InventoryRepository.Get(x => x.CustomerId == customerId, x => x.OrderBy(y => y.RefDate)) ??
+                         new List<Inventory>();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
