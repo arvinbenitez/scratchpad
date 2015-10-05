@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIT.CAB.Web.Entity", "CIT.CAB.Web.Entity\CIT.CAB.Web.Entity.csproj", "{F7FD60AE-EFFE-4C3F-A0F0-EE849F177A27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIT.CAB.Web.Domain", "CIT.CAB.Web.Domain\CIT.CAB.Web.Domain.csproj", "{65E6317A-2999-4C25-801B-C4FA3D55A788}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIT.CAB.Web", "CIT.CAB.Web\CIT.CAB.Web.csproj", "{EF324269-6D97-413F-AC71-C25D5F45E6D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIT.CAB.Web.Service", "CIT.CAB.Web.Service\CIT.CAB.Web.Service.csproj", "{2A15C03D-B48D-44D6-AE13-C0CA0D6B76E6}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 5
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CIT.CAB.Web.Domain\\CIT.CAB.Web.Domain.csproj
+		SccLocalPath1 = .
+		SccProjectFilePathRelativizedFromConnection1 = CIT.CAB.Web.Domain\\
+		SccProjectUniqueName2 = CIT.CAB.Web.Entity\\CIT.CAB.Web.Entity.csproj
+		SccLocalPath2 = .
+		SccProjectFilePathRelativizedFromConnection2 = CIT.CAB.Web.Entity\\
+		SccProjectUniqueName3 = CIT.CAB.Web.Service\\CIT.CAB.Web.Service.csproj
+		SccLocalPath3 = .
+		SccProjectFilePathRelativizedFromConnection3 = CIT.CAB.Web.Service\\
+		SccProjectUniqueName4 = CIT.CAB.Web\\CIT.CAB.Web.csproj
+		SccLocalPath4 = .
+		SccProjectFilePathRelativizedFromConnection4 = CIT.CAB.Web\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7FD60AE-EFFE-4C3F-A0F0-EE849F177A27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7FD60AE-EFFE-4C3F-A0F0-EE849F177A27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7FD60AE-EFFE-4C3F-A0F0-EE849F177A27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7FD60AE-EFFE-4C3F-A0F0-EE849F177A27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65E6317A-2999-4C25-801B-C4FA3D55A788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E6317A-2999-4C25-801B-C4FA3D55A788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E6317A-2999-4C25-801B-C4FA3D55A788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E6317A-2999-4C25-801B-C4FA3D55A788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF324269-6D97-413F-AC71-C25D5F45E6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF324269-6D97-413F-AC71-C25D5F45E6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF324269-6D97-413F-AC71-C25D5F45E6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF324269-6D97-413F-AC71-C25D5F45E6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A15C03D-B48D-44D6-AE13-C0CA0D6B76E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A15C03D-B48D-44D6-AE13-C0CA0D6B76E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A15C03D-B48D-44D6-AE13-C0CA0D6B76E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A15C03D-B48D-44D6-AE13-C0CA0D6B76E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

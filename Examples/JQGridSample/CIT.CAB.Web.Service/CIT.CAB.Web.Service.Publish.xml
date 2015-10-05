@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\ArvinShared\CABWeb" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="CAB" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/CIT.CAB.Web.Entity.dll" publishTime="05/12/2014 15:47:34" />
+    <file relUrl="bin/CIT.CAB.Web.Service.pdb" publishTime="05/12/2014 15:54:43" />
+    <file relUrl="Web.config" publishTime="05/12/2014 15:54:45" />
+    <file relUrl="bin/CIT.CAB.Web.Entity.pdb" publishTime="05/12/2014 15:47:34" />
+    <file relUrl="bin/CIT.CAB.Web.Service.dll" publishTime="05/12/2014 15:54:43" />
+    <file relUrl="bin/CIT.CAB.Web.Domain.pdb" publishTime="05/12/2014 15:50:16" />
+    <file relUrl="bin/CIT.CAB.Web.Domain.dll" publishTime="05/12/2014 15:50:17" />
+    <file relUrl="TradeService.svc" publishTime="05/12/2014 14:30:25" />
+  </publishProfile>
+</publishData>

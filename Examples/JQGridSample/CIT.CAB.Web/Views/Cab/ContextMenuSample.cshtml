@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/start/jquery-ui-1.10.4.custom.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/sitelite.css" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="~/plugins/jquery.contextmenu.js" type="text/javascript"></script>
+    <script src="~/js/i18n/grid.locale-en.js" type="text/javascript"></script>
+    <script src="~/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <img src="~/Images/ISON-small.JPG" alt="ISON "/>
+                </div>
+                <div class="float-left">
+                    <p class="site-title">ISON v1.0</p>
+                    <div style="font-style:italic">Risen from the ashes of a dead comet...</div>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        Hello, <span class="username">@User.Identity.Name</span>!
+                    </section>
+                </div>
+            </div>
+        </header>
+    <div class="contextMenu" id="menu">
+        <ol style="width: 200px">
+            <li id="add"><span class="ui-icon ui-icon-plus" style="float: left"></span><span
+                style="font-size: 11px; font-family: Verdana">Add Row</span> </li>
+            <li id="edit"><span class="ui-icon ui-icon-pencil" style="float: left"></span><span
+                style="font-size: 11px; font-family: Verdana">Edit Row</span> </li>
+            <li id="del"><span class="ui-icon ui-icon-trash" style="float: left"></span><span
+                style="font-size: 11px; font-family: Verdana">Delete Row</span> </li>
+        </ol>
+    </div>
+    <div id="body">
+        <button onclick="SetupContextMenu()">
+            Setup Context Menu</button>
+        <button id="contextMenuTarget">
+            Right Click Me</button>
+        <section class="content-wrapper main-content clear-fix"></section>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            try {
+                $("#body").bind("contextmenu", function (e) {
+                    e.preventDefault();
+                    $("#menu").css({ top: e.pageY + "px", left: e.pageX + "px" }).show(100);
+                });
+                $("#body").mouseup(function (e) {
+                    var container = $("#menu");
+                    if (container.has(e.target).length == 0) {
+                        container.hide();
+                    }
+                });
+                $(document).mouseup(function (e) {
+                    var container = $("#contextMenuTarget");
+                    if (container.has(e.target).length == 0) {
+                        $("#menu").hide();
+                    }
+                });
+            }
+            catch (err) {
+                alert(err);
+            }
+        });
+        function SetupContextMenu() {
+            //            $("#contextMenuTarget").bind("contextmenu", function (e) {
+            //                $("#myMenu1").dialog();
+            //                return false;
+            //            });
+            $("#contextMenuTarget").contextmenu("myMenu1", {
+                bindings: {
+                    'edit': function (trigger) { alert('edit'); },
+                    'add': function (/*trigger*/) { alert('add'); },
+                    'del': function (trigger) { alert('delete'); }
+                },
+                onContextMenu: function () {
+                    return true;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

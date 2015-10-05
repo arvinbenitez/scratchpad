@@ -1,0 +1,256 @@
+﻿@{
+    Layout = "~/Views/Cab/_BlotterLayout.cshtml";
+    ViewBag.Title = "ISON Trade Blotter";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+                    <hgroup class="title">
+                <h2>Filter Preferences</h2>
+            </hgroup>
+            <table>
+                <tr>
+                    <td class="filterLabel">Trading Group</td>
+                    <td>@Html.ListBox("tradingGroups", ViewBag.TradingGroups as IEnumerable<SelectListItem>)</td>
+                </tr>
+                <tr>
+                <td class="filterLabel">Trade Date</td>
+                <td><input type="text" id="tradeDatePicker" /></td></tr>
+                <tr>
+                <td colspan="2"><button style="float: right" id="getTradesButton" type="button" onclick="getTrades()">Get Trades</button></td></tr>
+            </table>
+        </div>
+</section>
+}
+<style>
+    .filterLabel
+    {
+        vertical-align: top;
+        color: White;
+        padding-right: 20px;
+    }
+    
+    .updateLabel
+    {
+        font-size: 0.8em;
+    }
+    
+    .gridErrorColor
+    {
+        color: red;
+    }
+</style>
+<div class="contextMenu" id="myMenu">
+    <ol style="width: 200px">
+        <li id="logs" onclick="showLogs();"><span class="ui-icon ui-icon-comment" style="float: left"></span><span
+            style="font-size: 11px; font-family: Verdana">Show Logs</span> </li>
+        <li id="published" onclick="showPublishedMsg();"><span class="ui-icon ui-icon-document" style="float: left"></span><span
+            style="font-size: 11px; font-family: Verdana">Show Published Message</span>
+        </li>
+        <li id="trade" onclick="showTradeMsg();"><span class="ui-icon ui-icon-suitcase" style="float: left"></span><span
+            style="font-size: 11px; font-family: Verdana">Show Trade Message</span> </li>
+    </ol>
+</div>
+<div id="popupDialog"></div>
+<div class="datagrid">
+    <table id="blotter">
+    </table>
+    <div id="pager">
+    </div>
+    <div id="statusBar" class="updateLabel">
+    </div>
+</div>
+<script type="text/javascript">
+    var isLoaded;
+    var timeoutId;
+    var selectedGroups = "";
+    var lastUpdate;
+
+    $(function () {
+        $("#tradeDatePicker").datepicker({ dateFormat: 'd-MM-yy' }).datepicker("setDate", new Date());
+        $("#getTradesButton").button();
+    });
+
+    function getTrades() {
+        selectedGroups = "";
+        //let's stop any updates for now
+        window.clearTimeout(timeoutId);
+
+        $("#tradingGroups option:selected").each(function () {
+            selectedGroups = selectedGroups.concat($(this).val()).concat("|");
+        });
+
+        var cabUrl = '@Url.Action("Trades", "Cab")';
+        cabUrl = cabUrl.concat("?tradeDate=").concat($("#tradeDatePicker").val());
+        cabUrl = cabUrl.concat("&tradingGroups=").concat(selectedGroups);
+
+        if (isLoaded) {
+            jQuery("#blotter").jqGrid().setGridParam({
+                datatype: 'json',
+                page: 1,
+                url: cabUrl
+            }).trigger("reloadGrid");
+        }
+        else {
+            jQuery("#blotter").jqGrid({
+                url: cabUrl,
+                datatype: "json",
+                colNames: ['MessageId', 'TradeId', 'TradeTime', 'Market', 'Mini Market', 'Status', 'Trading Group',
+                        'Trade Group', 'SourceTrader', 'Trader', 'Openlink Id'],
+                colModel: [
+                        { name: 'MessageId', key: true, index: 'MessageId', width: 110 },
+                        { name: 'TradeId', index: 'TradeId', width: 110 },
+                        { name: 'TradeTime', index: 'TradeTime', width: 140, formatter: 'date', formatoptions: { srcformat: 'd/m/Y H:i', newformat: 'd/m/Y H:i'} },
+                        { name: 'MarketName', index: 'MarketName', width: 150 },
+                        { name: 'MiniMarketName', index: 'MiniMarketName', width: 150 },
+                        { name: 'Status', index: 'Status', width: 140 },
+                        { name: 'TradingGroupName', index: 'TradingGroupName', width: 120 },
+                        { name: 'TradeGroupName', index: 'TradeGroupName', width: 120 },
+                        { name: 'SourceTrader', index: 'SourceTrader', width: 120 },
+                        { name: 'Trader', index: 'Trader', width: 120 },
+                        { name: 'OpenlinkDealId', index: 'OpenlinkDealId', width: 150 }
+                    ],
+                pager: '#pager',
+                sortname: 'MessageId',
+                viewrecords: true,
+                sortorder: "desc",
+                caption: "Trade Blotter",
+                width: 1200,
+                height: "100%",
+                loadonce: true,
+                gridComplete: function () { pollUpdates(); },
+                loadComplete: function () { updateRows(); }
+            });
+            jQuery("#blotter").jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+
+            $.jgrid.extend({
+                updateRowData: function (rowId, data) {
+                    var oGrid = $(this);
+                    oGrid.setRowData(rowId, data);
+
+                    var blinks = 1;
+                    var delay = 500;
+                    var blinkCnt = 0;
+                    var changeColor = 'yellow';
+                    var curr = false;
+                    var rr = setInterval(function () {
+                        var color;
+                        if (curr === false) {
+                            color = changeColor;
+                            curr = color;
+                        } else {
+                            color = '';
+                            curr = false;
+                        }
+                        oGrid.setRowData(rowId, false, { background: color });
+                        if (blinkCnt >= blinks * 2) {
+                            blinkCnt = 0;
+                            clearInterval(rr);
+                            oGrid.setRowData(rowId, false, { background: '' });
+                        } else {
+                            blinkCnt++;
+                        }
+                    }, delay);
+                }
+            });
+        }
+        isLoaded = true;
+    }
+
+    function pollUpdates() {
+
+        var cabUrl = '@Url.Action("TradeUpdates", "Cab")';
+        cabUrl = cabUrl.concat("?tradeDate=").concat($("#tradeDatePicker").val()).concat("&tradingGroups=").concat(selectedGroups);
+        lastUpdate = new Date().toUTCString().substring(5, 25);
+
+        //show when it was last updated
+        $("#statusBar").text("Last updated: " + lastUpdate + ' UTC');
+
+        //when was the lastUpdate?
+        var cabUrlLastUpdate = cabUrl.concat("&lastUpdate=").concat(lastUpdate);
+
+        window.clearTimeout(timeoutId);
+        timeoutId = setTimeout(function () {
+            $.ajax({
+                type: 'GET',
+                dataType: "json",
+                url: cabUrlLastUpdate,
+                success: function (data) {
+
+                    $.each(data, function (index, element) {
+                        var row = jQuery("#blotter").getRowData(element.MessageId);
+                        if (!row) {
+                            jQuery("#blotter").addRowData(element.MessageId, element, "first");
+                        }
+                        jQuery("#blotter").updateRowData(element.MessageId, element);
+                    });
+                    jQuery("#blotter").jqGrid().trigger("reloadGrid");
+                },
+                error: function () {
+                    alert('Something happened!');
+                },
+                complete: pollUpdates
+            });
+        }, 5000);
+    }
+
+    function updateRows() {
+        $("tr.jqgrow:has(td[title='Error'])").addClass("gridErrorColor");
+
+        var menuSelector = "#myMenu";
+        var contextMenuTargetSelector = "tr.jqgrow";
+
+        $(contextMenuTargetSelector).bind("contextmenu", function (e) {
+            e.preventDefault();
+            $(menuSelector).css({ top: e.pageY + "px", left: e.pageX + "px" }).show(100);
+
+            //identify the nearest jqgrow row
+            var rowId = $(e.target).closest("tr.jqgrow").attr("id");
+            $(menuSelector).data('rowId', rowId);
+        });
+        $("body").mouseup(function (e) {
+            var container = $(menuSelector);
+            if (container.has(e.target).length == 0) {
+                container.hide();
+            }
+        });
+        $(document).mouseup(function (e) {
+            var container = $(contextMenuTargetSelector);
+            if (container.has(e.target).length == 0) {
+                $(menuSelector).hide();
+            }
+        });
+    }
+
+    function showLogs() {
+        var rowId = $("#myMenu").data('rowId');
+        var logUrl = '@Url.Action("Log","Log")'.concat("?messageId=").concat(rowId);
+        //now make a call to show the logs
+        $("#popupDialog").load(logUrl, function() {
+            $("#popupDialog").dialog({ autoOpen: false });
+            $("#popupDialog").dialog("option", "width", 700).dialog("option", "height", 500).dialog("option","title","Logs").dialog("open");
+        });
+    }
+    
+    function showPublishedMsg() {
+        var rowId = $("#myMenu").data('rowId');
+        var logUrl = '@Url.Action("PublishedMessage","Log")'.concat("?messageId=").concat(rowId);
+        //now make a call to show the logs
+        $("#popupDialog").load(logUrl, function () {
+            $("#popupDialog").dialog({ autoOpen: false });
+            $("#popupDialog").dialog("option", "width", 700).dialog("option", "height", 500).dialog("option","title","Published Message").dialog("open");
+        });
+    }
+
+
+    function showTradeMsg() {
+        var rowId = $("#myMenu").data('rowId');
+        var logUrl = '@Url.Action("TradeMessage","Log")'.concat("?messageId=").concat(rowId);
+        //now make a call to show the logs
+        $("#popupDialog").load(logUrl, function () {
+            $("#popupDialog").dialog({ autoOpen: false });
+            $("#popupDialog").dialog("option", "width", 700).dialog("option", "height", 500).dialog("option", "title", "Trade Message").dialog("open");
+        });
+    }
+
+</script>

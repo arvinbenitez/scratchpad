@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Bicylce Diploma Generator";
+}
+
+<h2>Bicylce Diploma Generator</h2>
+
+<fieldset>
+  <legend>Enter information</legend>
+  @{ Html.BeginForm("Generate", "Home"); }
+  Name: @Html.TextBox("name")
+  <br/>
+  Distance: @Html.TextBox("distance")
+  <br/>
+  Date: @Html.TextBox("date")
+  <br/>
+  Race name: @Html.TextBox("raceName")
+  <br/>
+  Show rulers: @Html.CheckBox("showRulers")
+  <br/>
+  <input type="submit" value="Generate"/>
+
+  @{Html.EndForm();}
+</fieldset>
+

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MarketDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MarketDataModelStoreContainer">
+          <EntitySet Name="MKT_Market" EntityType="MarketDataModel.Store.MKT_Market" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="REF_TradeGroup" EntityType="MarketDataModel.Store.REF_TradeGroup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="REF_TradingGroup" EntityType="MarketDataModel.Store.REF_TradingGroup" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="MKT_Market">
+          <Key>
+            <PropertyRef Name="MarketId" />
+          </Key>
+          <Property Name="MarketId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MarketName" Type="varchar" MaxLength="32" />
+          <Property Name="Description" Type="varchar" MaxLength="32" />
+          <Property Name="LUTime" Type="datetime" Nullable="false" />
+          <Property Name="LUUserId" Type="int" Nullable="false" />
+          <Property Name="DisplayName" Type="varchar" MaxLength="50" />
+          <Property Name="IsBookingMarket" Type="bit" Nullable="false" />
+          <Property Name="RequireLogin" Type="bit" Nullable="false" />
+          <Property Name="IsPermissionable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_TradeGroup">
+          <Key>
+            <PropertyRef Name="TradeGroupId" />
+          </Key>
+          <Property Name="TradeGroupId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="IsPowerTradeGroup" Type="bit" Nullable="false" />
+          <Property Name="DataCacheTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_TradingGroup">
+          <Key>
+            <PropertyRef Name="TradingGroupId" />
+          </Key>
+          <Property Name="TradingGroupId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShortCode" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="StatusId" Type="tinyint" Nullable="false" />
+          <Property Name="BarcapCounterpartyName" Type="varchar" MaxLength="200" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MarketDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MarketDataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Markets" EntityType="MarketDataModel.Market" />
+          <EntitySet Name="TradeGroups" EntityType="MarketDataModel.TradeGroup" />
+          <EntitySet Name="TradingGroups" EntityType="MarketDataModel.TradingGroup" />
+        </EntityContainer>
+        <EntityType Name="Market">
+          <Key>
+            <PropertyRef Name="MarketId" />
+          </Key>
+          <Property Name="MarketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MarketName" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="LUTime" Type="DateTime" Nullable="false" />
+          <Property Name="LUUserId" Type="Int32" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="IsBookingMarket" Type="Boolean" Nullable="false" />
+          <Property Name="RequireLogin" Type="Boolean" Nullable="false" />
+          <Property Name="IsPermissionable" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TradeGroup">
+          <Key>
+            <PropertyRef Name="TradeGroupId" />
+          </Key>
+          <Property Name="TradeGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="IsPowerTradeGroup" Type="Boolean" Nullable="false" />
+          <Property Name="DataCacheTypeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TradingGroup">
+          <Key>
+            <PropertyRef Name="TradingGroupId" />
+          </Key>
+          <Property Name="TradingGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShortCode" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="StatusId" Type="Byte" Nullable="false" />
+          <Property Name="BarcapCounterpartyName" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MarketDataModelStoreContainer" CdmEntityContainer="MarketDataContext">
+          <EntitySetMapping Name="Markets"><EntityTypeMapping TypeName="MarketDataModel.Market"><MappingFragment StoreEntitySet="MKT_Market">
+            <ScalarProperty Name="MarketId" ColumnName="MarketId" />
+            <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="LUTime" ColumnName="LUTime" />
+            <ScalarProperty Name="LUUserId" ColumnName="LUUserId" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+            <ScalarProperty Name="IsBookingMarket" ColumnName="IsBookingMarket" />
+            <ScalarProperty Name="RequireLogin" ColumnName="RequireLogin" />
+            <ScalarProperty Name="IsPermissionable" ColumnName="IsPermissionable" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TradeGroups"><EntityTypeMapping TypeName="MarketDataModel.TradeGroup"><MappingFragment StoreEntitySet="REF_TradeGroup">
+            <ScalarProperty Name="TradeGroupId" ColumnName="TradeGroupId" />
+            <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+            <ScalarProperty Name="IsPowerTradeGroup" ColumnName="IsPowerTradeGroup" />
+            <ScalarProperty Name="DataCacheTypeId" ColumnName="DataCacheTypeId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TradingGroups"><EntityTypeMapping TypeName="MarketDataModel.TradingGroup"><MappingFragment StoreEntitySet="REF_TradingGroup">
+            <ScalarProperty Name="TradingGroupId" ColumnName="TradingGroupId" />
+            <ScalarProperty Name="ShortCode" ColumnName="ShortCode" />
+            <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+            <ScalarProperty Name="BarcapCounterpartyName" ColumnName="BarcapCounterpartyName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MarketData">
+        <EntityTypeShape EntityType="MarketDataModel.Market" Width="1.5" PointX="0.75" PointY="0.75" Height="2.41404296875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketDataModel.TradeGroup" Width="1.5" PointX="2.75" PointY="0.75" Height="1.5923063151041674" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketDataModel.TradingGroup" Width="1.5" PointX="2.75" PointY="3.75" Height="1.592306315104167" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

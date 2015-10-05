@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Test Page";
+}
+
+<h2>Index</h2>
+<div id="enclosure">
+    <input type="file" id="first "/>
+    <input type="file" id="second"/>
+    <button type="button" id="ajaxButton">Hit Me Baby</button></div>
+<div id="result">
+    <h2>The results will be here</h2>
+    <ul id="resultList"></ul>
+</div>
+
+<div id="result">
+    <h2>The 2nd ajax call results will be here</h2>
+    <ul id="resultList2"></ul>
+</div>
+
+
+<script type="text/javascript">
+    var attachments = [];
+    $(document).ready(function () {
+        $("#ajaxButton", document).on("click", function () {
+            $("input[type='file']", document).each(function (i,value) {
+                var fileName = $(value).val();
+                if (fileName != ''){
+                    attachments.push(new fileAttachment(fileName));
+                }
+            });
+            $.each(attachments, function (i, value) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Test/PostTheFile?filename=" + value.fileName,
+                    success: function (result) {
+                        $("#resultList").append("<li>" + result + "</li>");
+                        WillBeAnotherAjax(value);
+                    },
+                });
+            });
+        });
+    });
+
+    function WillBeAnotherAjax(attachment) {
+        $.ajax({
+            type: "POST",
+            url: "/Test/PostTheFile2?filename=" + attachment.fileName,
+            success: function (result) {
+                $("#resultList2").append("<li>" + result + "</li>");
+            },
+        });
+    }
+
+    function fileAttachment(fileName) {
+        var innerfileName = fileName;
+        return {
+            fileName: innerfileName
+        }
+    }
+</script>

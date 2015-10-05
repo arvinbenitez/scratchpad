@@ -1,0 +1,25 @@
+﻿@using CIT.CAB.Web.Controllers
+@model CIT.CAB.Web.Entity.TMB_PublishedMessage
+@Styles.Render("~/Content/highlightercss")
+@Scripts.Render("~/bundles/highlighter")
+<div>
+    @{
+        if (Model != null)
+        {
+        <div style="border-width: 1px; border-color: blue;">
+            <pre name="code" class="xml:nocontrols">@LogController.FormatXml(Model.MessageContent)</pre>
+        </div>
+        }
+        else
+        {
+        <div>
+            There is no published message for this trade.</div>
+        }
+    }
+</div>
+<script type="text/javascript">
+    $(function () {
+        dp.SyntaxHighlighter.ClipboardSwf = '/flash/clipboard.swf';
+        dp.SyntaxHighlighter.HighlightAll('code');
+    });
+</script>
