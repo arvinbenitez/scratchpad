@@ -67,6 +67,7 @@
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryLedger.cs" />
     <Compile Include="InventorySummary.cs" />
+    <Compile Include="SmsMessage.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
     <Compile Include="OrderStatus.cs" />

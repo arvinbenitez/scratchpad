@@ -25,6 +25,7 @@ namespace AguaDeMaria
             ControllerBuilder.Current.SetControllerFactory(new FunqControllerFactory(container));
             SetConfig(CreateEndpointHostConfig());
 
+
             JsConfig.EmitCamelCaseNames = true;
 
             Plugins.Add(new ValidationFeature());
@@ -37,6 +38,8 @@ namespace AguaDeMaria
             ConfigureAuthorization(container);
 
             MapperConfiguration.Configure();
+
+            ServiceResolver.Initialize(container);
         }
 
         private static void ConfigureAuthorization(Container container)
