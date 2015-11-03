@@ -34,7 +34,7 @@
                 @Html.LabelFor(x => x.ExpenseDate)
             </td>
             <td>
-                @Html.TextBoxFor(x => x.ExpenseDate)
+                @Html.TextBoxFor(x => x.ExpenseDate, new Dictionary<string, object>() { { "readonly", "true" }})
                 @Html.ValidationMessageFor(x => x.ExpenseDate)
             </td>
         </tr>

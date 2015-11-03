@@ -33,7 +33,7 @@
                 @Html.LabelFor(x => x.InvoiceDate)
             </td>
             <td>
-                @Html.TextBoxFor(x=> x.InvoiceDate)
+                @Html.TextBoxFor(x => x.InvoiceDate, new Dictionary<string, object>() {{ "readonly", "true" }})
             </td>
         </tr>
         <tr>
