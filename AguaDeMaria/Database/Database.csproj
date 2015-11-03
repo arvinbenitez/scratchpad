@@ -45,10 +45,9 @@
     <Content Include="Deployed\2015.06.21.InventorySummary.sql" />
     <Content Include="Deployed\ExpenseScripts.sql" />
     <Content Include="Deployed\InventoryLedgerScripts.sql" />
+    <Content Include="ToBeDeployed\20151102.00.AB.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ToBeDeployed\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

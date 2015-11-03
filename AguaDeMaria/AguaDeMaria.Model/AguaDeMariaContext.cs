@@ -50,6 +50,7 @@ namespace AguaDeMaria.Model
 
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<ExpenseSummary> ExpenseSummaries { get; set; }
+        public virtual DbSet<SmsMessage> SmsMessages { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -180,6 +181,7 @@ namespace AguaDeMaria.Model
                 .WithRequired(e => e.ExpenseType);
 
             modelBuilder.Entity<ExpenseSummary>();
+            modelBuilder.Entity<SmsMessage>();
         }
     }
 }
