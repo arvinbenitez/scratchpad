@@ -5,3 +5,5 @@ AguaDeMaria/AguaDeMaria.Database/
 AguaDeMaria/AguaDeMaria.Database/AguaDeMaria.Database.dbmdl
 *.user
 *.suo
+DataGridExample/*
+Nautilo/packages/*/*
